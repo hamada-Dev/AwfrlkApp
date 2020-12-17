@@ -18,11 +18,14 @@ class CreateDeliveryMotocyclesTable extends Migration
             $table->string('user_license')->unique();
             $table->string('moto_license')->unique();
             $table->string('moto_number')->unique();
-            $table->dateTime('license_renew_date');
-            $table->dateTime('license_expire_date');
+            $table->dateTime('license_renew_date')->nullable();
+            $table->dateTime('license_expire_date')->nullable();
             $table->string('type');
             $table->string('color');
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
+            
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

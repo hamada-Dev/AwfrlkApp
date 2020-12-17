@@ -17,7 +17,9 @@ class CreateAreasTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->float('trans_price');
-            $table->bigInteger('parent_id');
+            $table->bigInteger('parent_id')->default(0);
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
             $table->timestamps();
         });
     }

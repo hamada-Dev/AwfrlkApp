@@ -52,7 +52,19 @@ Route::group(
 
             //products
             Route::resource('productupdates', 'ProductUpdatesController')->only(['index']);
-    
+            
+            //offers
+            Route::resource('offers', 'OffersController')->except('show');
+
+            //areas
+            Route::resource('areas', 'AreasController')->except('show');
+            Route::get('AreaChildern/{parent_id}',"AreasController@childern")->name("areas.childern");
+            //deliveryMoto
+            Route::resource('deliverymotocycles', 'DeliveryMotocyclesController')->except('show');
+            //useroffers
+            Route::resource('useroffers', 'UserOffersController')->except('show');
+
+
             
         });
         

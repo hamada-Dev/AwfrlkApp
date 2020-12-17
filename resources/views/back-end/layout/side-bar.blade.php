@@ -38,9 +38,33 @@
                     <p>@lang('site.products')</p>
                 </a>
             </li>
+            {{-- shico code --}}
+            <li class="nav-item {{is_active('offers')}}">
+                <a class="nav-link" href="{{route('offers.index')}}">
+                    <i class="material-icons">library_books</i>
+                    <p>@lang('site.offers')</p>
+                </a>
+            </li>
 
-           
-
+            <li class="nav-item {{is_active('areas')}}">
+                <a class="nav-link" href="{{route('areas.index')}}">
+                    <i class="material-icons">library_books</i>
+                    <p>@lang('site.areas')</p>
+                </a>
+            </li>
+            
+            <li class="nav-item {{is_active('deliverymotocycles')}}">
+                <a class="nav-link" href="{{route('deliverymotocycles.index')}}">
+                    <i class="material-icons">library_books</i>
+                    <p>@lang('site.deliverymotocycles')</p>
+                </a>
+            </li>
+            <li class="nav-item {{is_active('useroffer')}}">
+                <a class="nav-link" href="{{route('useroffers.index')}}">
+                    <i class="material-icons">library_books</i>
+                    <p>@lang('site.useroffers')</p>
+                </a>
+            </li>
             <!-- your sidebar here -->
         </ul>
     </div>

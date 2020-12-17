@@ -20,6 +20,8 @@ class CreateOffersTable extends Migration
             $table->integer('offer_days')->comment('number of offer day');
             $table->tinyInteger('avilable')->default(1)->comment('0=> notAvilable 1=> avilable');
             $table->bigInteger('area_id')->unsigned();
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
             $table->timestamps();
 
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
