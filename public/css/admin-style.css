@@ -1,0 +1,206 @@
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Quicksand, Arial, sans-serif;
+}
+.side-bar{
+	/*display: none;*/
+	background-color: #2C2E3E;
+	position: fixed;
+	height: 100%;
+	width: 300px;
+}
+.fa-bars{
+	position: fixed;
+    z-index: 1;
+    color: black;
+    font-size: 30px;
+    left: 36px;
+    top: 36px;
+    cursor: pointer;
+}
+.fa-times{
+	display: none;
+	position: fixed;
+    z-index: 1;
+    color: white;
+    font-size: 30px;
+    left: 36px;
+    top: 36px;
+    cursor: pointer;
+}
+.logo-container{
+	text-align: center;
+	background-color:#1a1b25;
+}
+.btnselect{
+	text-align: left;
+	color: #ffffff80;
+	background-color: #2C2E3E;
+	width: 100%;
+	height: 60px;
+	border: 0;
+	font-size: 20px;
+	padding-left: 20px;
+	transition: 0.5s;
+	font-weight: 100;
+}
+.btnselect:hover{
+	background-color:black;
+	padding-left: 30px;
+	color: white;
+}
+.fas{
+	font-size: 12px;
+}
+.admin-title{
+	color: white;
+	padding: 20px;
+	margin: 0;
+	font-size: 25px;
+}
+.form-container{
+	margin-left: 330px;
+	padding-top: 40px;
+}
+.header{
+	border-bottom-style: groove;
+    border-width: thin;
+    font-size: 29px;
+}
+.form-field{
+    margin-left: 50px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    padding: 20px;
+}
+input[type="text"]{
+	border-radius: 2px;
+    outline: none;
+    border-style: solid;
+    border-width: thin;
+    padding-left: 5px;
+    width: 400px;
+    height: 30px;
+    margin-bottom:20px;
+}
+label{
+	width: 180px;
+	margin-bottom: 20px;
+	text-align: right;
+    margin-right: 3%;
+}
+#selectpar{
+	display: block;
+}
+.submit-con{
+	text-align: right;
+}
+button[type="submit"]{
+	width: 170px;
+    height: 30px;
+    background-color: green;
+    color: white;
+    border: 0;
+    border-radius: 3px;
+}
+.alert{
+	color: #fd790e;
+	margin: 0;
+}
+.textarea-con{
+	display: inline-block;
+	vertical-align: text-top;
+	margin-bottom: 15px;
+}
+.imgofrev{
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	object-fit: cover;
+	vertical-align: middle;
+}
+.allrevs{
+}
+.nameofrev{
+	margin: 0;
+	font-weight: bold;
+}
+.placeofrev{
+	color: #989898;
+}
+
+.descofrev{
+	color: black;
+	height: 100%;
+}
+.btnremoverev{
+	background-color: transparent;
+	color: red;
+	border:0;
+	padding-left: 0;
+}
+.btneditetrip{
+	background-color: transparent;
+	color:green;
+	border:0;
+	padding-left: 0;
+}
+.btnimages{
+	background-color: transparent;
+	color:#9ea900;
+	border:0;
+	padding-left: 0;
+}
+.reiconedite{
+	color: green;
+    position: unset;
+    display: inline-block;
+}
+.reiconimg{
+	color: #9ea900;
+    position: unset;
+    display: inline-block;
+}
+.reiconremove{
+	color: red;
+    position: unset;
+    display: inline-block;
+}
+.singlerev{
+	background-color:#f3f3f3;
+	margin-bottom: 20px;
+	margin-left: 5%;
+    border-radius: 8px;
+    padding: 15px;
+}
+.addnewimg{
+	background-color: red;
+    text-align: center;
+    height: 30px;
+    border-radius: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+	margin: 0;
+	color:white;
+}
+.addpicssub{
+	background-color: #00d600;
+    border: 0;
+    color: white;
+    height: 30px;
+    width: 61px;
+    font-size: 17px;
+    border-radius: 5px;
+}
+.addnewcar{
+	border-style: solid;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    border-width: 1px;
+    height: 30px;
+	border-radius: 10px;
+	outline: none;
+	text-transform:uppercase;
+	padding-left: 5px;
+}
