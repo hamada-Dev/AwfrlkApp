@@ -15,6 +15,7 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string("name");
             $table->float('price');
             $table->integer('trips_count');
             $table->integer('offer_days')->comment('number of offer day');

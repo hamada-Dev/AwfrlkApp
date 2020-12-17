@@ -1,6 +1,7 @@
 <?php
 
 return [
+  'awfrlk'=>'أوفرلك',
 
     'home'=>'الرئيسية',
     'users'=>'المشرفين',
@@ -24,7 +25,10 @@ return [
     //categories
     'categories'=>'الأقسام',
     'category'=>'قسم',
+    //products
+    'products'=>"المنتجات",
     //offers
+    "offer_name"=>"أسم العرض",
     'offers'=>'العروض',
     'offer'=>"العرض",
     'price'=>'السعر',

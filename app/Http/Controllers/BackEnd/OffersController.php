@@ -58,6 +58,7 @@ class OffersController extends BackEndController
     {
         $request->validate([
             'price' => ['required', 'numeric', 'max:10000','min:2'],
+            'name' => ['required', 'max:100','min:5'],
             'trips_count'   =>  ['required', 'numeric','min:1'],
             'offer_days'   =>  ['required', 'numeric', 'max:60','min:1'],
             'avilable' =>['required', 'numeric'],
@@ -91,6 +92,7 @@ class OffersController extends BackEndController
     public function update(Request $request, Offer $offer)
     {
         $request->validate([
+            'name' => ['required', 'max:100','min:5'],
             'price' => ['required', 'numeric', 'max:10000','min:2'],
             'trips_count'   =>  ['required', 'numeric','min:1'],
             'offer_days'   =>  ['required', 'numeric', 'max:60','min:1'],

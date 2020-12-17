@@ -105,7 +105,8 @@ class UserOffersController extends BackEndController
         $num=Offer::select("trips_count","offer_days")->where("id",$request->offer_id)->first();
         $request["decrement_trip"]=$num->trips_count;
         $request["end_date"]= date('Y-m-d', strtotime(' + '. $num->offer_days . ' day'));
-        $this->model->update($request->all());
+        
+        $userOffer->update($request->all());
         session()->flash('success', __('site.updated_successfully'));
         return redirect()->route('useroffers.index');
         

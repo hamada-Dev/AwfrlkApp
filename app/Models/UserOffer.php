@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserOffer extends Model
 {
-    protected $fillable=["user_id","offer_id","decrement_trip","end_date"];
+    protected $guarded = [];
     protected $table="user_offers";
-    protected $hidden=["created_at","updated_at"];
-
     public function user()
     {
         return $this->belongsTo(User::class);

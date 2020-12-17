@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+  'awfrlk'=>'Awfrlk',
     'home' => 'Dashboard',
     'users' => 'Users',
     'desc' => 'Here you can add- delete- update ',
@@ -48,7 +48,10 @@ return [
     'parent_category' => 'Parent Category',
     'trans_price' => 'Transport Price',
     'product_number' => 'Product Num',
+    //products
+    'products'=>"Products",
       //offers
+      "offer_name"=>"Offer Name",
       'offers'=>'Offers',
       'offer'=>"Offer",
       'price'=>'Price',

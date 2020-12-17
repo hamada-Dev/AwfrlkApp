@@ -6,7 +6,7 @@
 -->
     <div class="logo">
         <a href="{{route('home.index')}}" class="simple-text logo-normal" target="_blank">
-           Awfrlk
+         @lang("site.awfrlk")
         </a>
     </div>
     <div class="sidebar-wrapper">

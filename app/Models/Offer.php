@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Scopes\NonDeleteIScope;
 class Offer extends Model
 {
-    protected $fillable = ['price','trips_count','offer_days','area_id','avilable','deleted_by'];
-    protected $hidden=["created_at",'updated_at'];
-    
+    protected $guarded = [];
+
     public function user(){
         return $this-> belongsToMany( User::class,'user_offers')->withPivot(['decrement_trip', 'end_date',]);
         
