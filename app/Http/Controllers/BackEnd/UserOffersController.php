@@ -133,4 +133,5 @@ class UserOffersController extends BackEndController
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route($this->getClassNameFromModel() . '.index');
     }
+ 
 }

@@ -64,7 +64,7 @@ class OffersController extends BackEndController
             'avilable' =>['required', 'numeric'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
         ]);
-        $request['added_by'] = auth()->user()->id;
+                $request['added_by'] = auth()->user()->id;
 
         Offer::create($request->all());
         session()->flash('success', __('site.added_successfully'));

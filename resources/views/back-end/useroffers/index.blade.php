@@ -53,7 +53,7 @@
                             {{$row->user->firstName}} {{$row->user->lastName}}
                         </td>
                         <td>
-                           {{$row->offer->name}}
+                                {{$row->offer->name}}
                         </td>
                         <td class="td-actions text-right">
                             @include('back-end.buttons.edit')
