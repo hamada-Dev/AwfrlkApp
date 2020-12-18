@@ -65,6 +65,12 @@
                     <p>@lang('site.useroffers')</p>
                 </a>
             </li>
+            <li class="nav-item {{is_active('orders')}}">
+                <a class="nav-link" href="{{route('orders.index')}}">
+                    <i class="material-icons">library_books</i>
+                    <p>@lang('site.orders')</p>
+                </a>
+            </li>
             <!-- your sidebar here -->
         </ul>
     </div>
