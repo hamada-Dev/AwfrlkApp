@@ -35,6 +35,9 @@
                     @lang('site.id')
                 </th>
                 <th>
+                    @lang('site.offer_name')
+                </th>
+                <th>
                     @lang('site.price')
                 </th>
                 <th>
@@ -63,7 +66,9 @@
                 <td>
                     {{$row->id}}
                 </td>
-
+                <td>
+                    {{$row->name}}
+                </td>
                 <td>
                     {{$row->price}}
                 </td>

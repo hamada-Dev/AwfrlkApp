@@ -42,7 +42,7 @@ class DeliveryMotocyclesController extends BackEndController
             'color' =>['required'],
             'user_id' => ['required','exists:users,id'],
         ]);
-
+        $request['added_by'] = auth()->user()->id;
         $this->model->create($request->all());
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('deliverymotocycles.index');

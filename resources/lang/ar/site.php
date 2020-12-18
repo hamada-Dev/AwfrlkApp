@@ -1,6 +1,7 @@
 <?php
 
 return [
+  'awfrlk'=>'أوفرلك',
 
   'home' => 'الرئيسية',
   'users' => 'المشرفين',
@@ -21,9 +22,43 @@ return [
   'repeat_password' => 'تكرار كلمة المرور',
   'password' => 'كلمة المرور',
 
-  //categories
-  'categories' => 'الأقسام',
-  'category' => 'قسم',
+    //categories
+    'categories'=>'الأقسام',
+    'category'=>'قسم',
+    //products
+    'products'=>"المنتجات",
+    //offers
+    "offer_name"=>"أسم العرض",
+    'offers'=>'العروض',
+    'offer'=>"العرض",
+    'price'=>'السعر',
+    'trips_count'=>'عدد الطلبات',
+    'offer_days'=>'عدد الايام',
+    'avilable'=>'متاح',
+    'Active'=>'مفعل',
+    'NotActive'=>'غير مفعل',
+    'areas'=>'منطقة',
+    'area_id'=>'تسلسل المنطقة',
+    'choose-area'=>' أختر المنطقة',
+    "avilable_situation"=>"أختر حالة العرض",
+    //Areas
+    'areas'=>'المناطق',
+    'area'=>'منطقة',
+    'trans_price'=>"سعر الخدمة",
+    'choose-govern'=>"أختر المركز",
+    'parent_id'=>'تسلسل المركز',
+    'number_place'=>'عدد الاماكن',
+    'view_places'=>'المناطق',
+          //user_offer
+          'user_id'=>'أسم العميل',
+          'offer_id'=>'بيانت العرض',
+          'choose_user'=>'أختر عميل',
+          'choose_offer'=>'أختر عرض',
+          'useroffers'=>'عرض للعميل',
+          'useroffer'=>'عرض للعميل',
+          'USEROFFER'=>'عرض للعميل',
+          'cl_name'=>'اسم العميل',
+          'offer_data'=>"بيانات العرض",
 
   //offers
   'offers' => 'العروض',

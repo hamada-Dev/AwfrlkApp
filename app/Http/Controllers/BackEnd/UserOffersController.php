@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UserOffer;
 use App\Models\User;
 use App\Models\Offer;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -67,6 +68,7 @@ class UserOffersController extends BackEndController
         $num=Offer::select("trips_count","offer_days")->where("id",$request->offer_id)->first();
         $request["decrement_trip"]=$num->trips_count;
         $request["end_date"]= date('Y-m-d', strtotime(' + '. $num->offer_days . ' day'));;
+        $request['added_by'] = auth()->user()->id;
 
         $this->model->create($request->all());
 
@@ -95,7 +97,7 @@ class UserOffersController extends BackEndController
         return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('users','offers','row', 'module_name_singular', 'module_name_plural'))->with($append);
     } //end of edit
 
-    public function update(Request $request, UserOffer $userOffer)
+    public function update(Request $request,$id)
     {
         
         $request->validate([
@@ -105,9 +107,10 @@ class UserOffersController extends BackEndController
         $num=Offer::select("trips_count","offer_days")->where("id",$request->offer_id)->first();
         $request["decrement_trip"]=$num->trips_count;
         $request["end_date"]= date('Y-m-d', strtotime(' + '. $num->offer_days . ' day'));
-        $this->model->update($request->all());
+        $userOffer=$this->model->find($id);
+        $userOffer->update($request->all());
         session()->flash('success', __('site.updated_successfully'));
-        return redirect()->route('useroffers.index');
+        return redirect()->route('useroffers.index');            
         
     }
 
@@ -130,4 +133,5 @@ class UserOffersController extends BackEndController
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route($this->getClassNameFromModel() . '.index');
     }
+ 
 }

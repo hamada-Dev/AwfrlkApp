@@ -58,11 +58,13 @@ class OffersController extends BackEndController
     {
         $request->validate([
             'price' => ['required', 'numeric', 'max:10000','min:2'],
+            'name' => ['required', 'max:100','min:5'],
             'trips_count'   =>  ['required', 'numeric','min:1'],
             'offer_days'   =>  ['required', 'numeric', 'max:60','min:1'],
             'avilable' =>['required', 'numeric'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
         ]);
+                $request['added_by'] = auth()->user()->id;
 
         Offer::create($request->all());
         session()->flash('success', __('site.added_successfully'));
@@ -91,6 +93,7 @@ class OffersController extends BackEndController
     public function update(Request $request, Offer $offer)
     {
         $request->validate([
+            'name' => ['required', 'max:100','min:5'],
             'price' => ['required', 'numeric', 'max:10000','min:2'],
             'trips_count'   =>  ['required', 'numeric','min:1'],
             'offer_days'   =>  ['required', 'numeric', 'max:60','min:1'],
