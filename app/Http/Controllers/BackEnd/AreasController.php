@@ -53,7 +53,7 @@ class AreasController extends BackEndController
             'trans_price'   =>  ['required', 'numeric','min:1'],
             'parent_id'   =>  ['numeric'],
         ]);
-
+        $request['added_by'] = auth()->user()->id;
         Area::create($request->all());
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('areas.index');
@@ -123,4 +123,5 @@ class AreasController extends BackEndController
         return view('back-end.'.$this->getClassNameFromModel().'.Childern', compact('areas','rows','module_name_singular', 'module_name_plural'))->with($append);
 
     }
+    
 }

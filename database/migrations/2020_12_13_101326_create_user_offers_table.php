@@ -20,7 +20,11 @@ class CreateUserOffersTable extends Migration
             $table->integer('decrement_trip')->comment('this number of trip offer that dec every order');
             $table->timestamps();
             $table->dateTime('end_date')->nullable()->comment(' = this.created_at + offers.offer_days');
-
+            $table->bigInteger('added_by')->unsigned()->comment('who added');
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('offer_id')->references('id')->on('offers')->onDelete('cascade');

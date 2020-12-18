@@ -23,9 +23,11 @@ class CreateDeliveryMotocyclesTable extends Migration
             $table->string('type');
             $table->string('color');
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('added_by')->unsigned()->comment('who added');
             $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
             $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
-            
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
