@@ -81,7 +81,7 @@
                         </td>
 
                         <td>
-                            {{$row->country}}
+                            {{$row->adress}}
                         </td>
                         <td>
                             {{$row->group}}

@@ -21,8 +21,8 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="#" class="btn btn-white btn-round ">
-        @lang('site.add') @lang('site.'.$module_name_singular)
+    <a href="" class="btn btn-white btn-round ">
+        @lang('site.'.$module_name_singular)
     </a>
 </div>
 @endslot
@@ -43,6 +43,10 @@
                 <th>
                     @lang('site.date')
                 </th>
+
+                <th>
+                    @lang('site.user')
+                </th>
                 {{-- <th class="text-right">
                     @lang('site.actions')
                 </th> --}}
@@ -57,17 +61,20 @@
                 <td>
                     {{$row->id}}
                 </td>
-
-                <td>
-                    {{$row->product->price}}
-                </td>
-
                 <td>
                     {{$row->product->name}}
                 </td>
 
                 <td>
-                    {{ $row->product->created_at}}
+                    {{$row->price}}
+                </td>
+
+                <td>
+                    {{ $row->created_at}}
+                </td>
+                
+                <td>
+                    {{ $row->updated_by}}
                 </td>
 
                 {{-- <td class="td-actions text-right">

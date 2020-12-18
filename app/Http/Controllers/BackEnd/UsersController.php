@@ -40,13 +40,21 @@ class UsersController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'firstName' => ['required', 'string', 'max:191'],
-            'lastName' => ['required', 'string', 'max:191'],
-            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
-
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'min:5'],
+            'c_password' => ['required', 'same:password'],
+            'gender' => ['required', Rule::in([0, 1])],
+            'phone' => ['required', 'unique:users'],
+            'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
+            'ssn' => ['required', 'integer', 'unique:users'],
+            'adress' => ['required', 'string', 'max:255'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'image'     => ['image']
         ]);
-        $request_data=$request->except(['image', 'password','api_token']);
+
+        $request_data=$request->except(['image', 'password', 'c_password', 'api_token']);
 
         // store image
         if ($request->image){
@@ -103,7 +111,7 @@ class UsersController extends BackEndController
 
         \Intervention\Image\Facades\Image::make($request->image)->resize(300, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->save(public_path('uploads/user_images/'. $request->image->hashName()));
+        })->save(public_path('uploads/users_images/'. $request->image->hashName()));
     }
 
 }

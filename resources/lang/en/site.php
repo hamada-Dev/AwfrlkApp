@@ -61,13 +61,17 @@ return [
       'area_id'=>'Area ID',
       'choose-area'=>'Choose Area',
       'avilable_situation'=>"Choose Offer situation",
+
       //Areas
+      'adress' => 'Adress',
+
       'trans_price'=>"Srvice Price",
       'choose-govern'=>"Choose Markaze",
       'parent_id'=>"Markaze Serial",
       'number_place'=>'Number Of Place',
       'view_places'=>'Areas',
       //user_offer
+      'ssn' => 'SSN',
       'user_id'=>'User Name',
       'offer_id'=>'Offer Data',
       'choose_user'=>'Choose User',

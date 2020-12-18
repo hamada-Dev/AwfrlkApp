@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Models\Skill;
 use Carbon\Carbon;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -38,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Resource::withoutWrapping();
         view()->share('categories', Category::get());
         // view()->share('destinations', Destination::get());
         // view()->share('hotels', Hotel::get());

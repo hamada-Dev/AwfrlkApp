@@ -20,6 +20,14 @@ class User extends Authenticatable implements MustVerifyEmail
     //        'firstName', 'email', 'password', 'group', 'image', 'provider_id','api_token'
     //    ];
 
+    protected $appends = ['image_path'];
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/users_images/' . $this->image);
+    } //end of path
+
+    
     public function video()
     {
 
@@ -71,27 +79,30 @@ class User extends Authenticatable implements MustVerifyEmail
     // start relation table 
     public function userOffer()
     {
-        return $this-> belongsToMany( Offer::class,'user_offers')->withPivot(['decrement_trip', 'end_date',]);
-    }
-    
-    public function deliveryMoto()
-    {
-        return $this-> hasOne(DeliveryMotocycle::class);
-    }
-    
-    public function deliveryStatus()
-    {
-        return $this-> hasMany(DeliveryStatusy::class);
+        return $this->belongsToMany(Offer::class, 'user_offers')->withPivot(['decrement_trip', 'end_date',]);
     }
 
-    public function area(){
+    public function deliveryMoto()
+    {
+        return $this->hasOne(DeliveryMotocycle::class);
+    }
+
+    public function deliveryStatus()
+    {
+        return $this->hasMany(DeliveryStatusy::class);
+    }
+
+    public function area()
+    {
         return $this->belongsTo(Area::class);
     }
     // order relation 
-    public function ordersUser(){
+    public function ordersUser()
+    {
         return $this->hasMany(Order::class, 'client_id');
     }
-    public function ordersDelivery(){
+    public function ordersDelivery()
+    {
         return $this->hasMany(Order::class, 'delivery_id');
     }
 }

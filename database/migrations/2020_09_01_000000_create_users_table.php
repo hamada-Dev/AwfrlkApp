@@ -24,8 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('phone')->unique();
             $table->string('adress');
+            $table->string('image')->default('user.png');
             $table->string('area_id')->nullable();
-            $table->string('user_code');
+            $table->string('user_code')->nullable();
             $table->string('api_token');
             $table->rememberToken();
             $table->timestamps();

@@ -16,13 +16,17 @@ class Category extends Model
         static::addGlobalScope(new NonDeleteIScope);
     }
 
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path', 'product_count'];
 
     public function getImagePathAttribute()
     {
-
         return asset('uploads/categories_images/' . $this->image);
-    } //end of path
+    } //end of image path 
+    
+    public function getProductCountAttribute()
+    {
+        return $this->product->count();
+    } //end of product count in this category 
 
     public function product()
     {

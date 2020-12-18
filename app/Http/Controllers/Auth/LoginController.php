@@ -27,8 +27,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request)
     {
-        if ( auth()->user()->group == 'admin' ) {// do your margic here
+        if (auth()->user()->group == 'admin') { // do your margic here
             return redirect()->route('home.index');
+        }elseif(auth()->user()->group == 'user'){
+            return redirect('api/category');
         }
 
         return redirect()->back();
@@ -38,15 +40,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-     protected $redirectTo = '/website';
-//
-//    /**
-//     * @param string $redirectTo
-//     */
-//    public function setRedirectTo(string $redirectTo): void
-//    {
-//        $this->redirectTo = $redirectTo;
-//    }
+    protected $redirectTo = '/website';
+    //
+    //    /**
+    //     * @param string $redirectTo
+    //     */
+    //    public function setRedirectTo(string $redirectTo): void
+    //    {
+    //        $this->redirectTo = $redirectTo;
+    //    }
 
     /**
      * Create a new controller instance.
@@ -74,27 +76,26 @@ class LoginController extends Controller
     {
         try {
 
-            $provider=='twitter' ?
-            $user = \Laravel\Socialite\Facades\Socialite::driver($provider)->user():
-            $user = \Laravel\Socialite\Facades\Socialite::driver($provider)->stateless()->user();
+            $provider == 'twitter' ?
+                $user = \Laravel\Socialite\Facades\Socialite::driver($provider)->user() :
+                $user = \Laravel\Socialite\Facades\Socialite::driver($provider)->stateless()->user();
 
 
             $finduser = User::where('provider_id', $user->id)->first();
 
-            if($finduser){
+            if ($finduser) {
 
                 Auth::login($finduser);
 
                 return redirect()->route('home');
-
-            }else{
+            } else {
 
                 $newUser = User::create([
                     'name' => $user->name,
-                    'email' =>  $provider=='twitter' ? $user->nickname : $user->email,
-                    'provider_id'=> $user->id,
-                    'api_token'=> str_random(60),
-                    'image'=>$user->avatar,
+                    'email' =>  $provider == 'twitter' ? $user->nickname : $user->email,
+                    'provider_id' => $user->id,
+                    'api_token' => str_random(60),
+                    'image' => $user->avatar,
                 ]);
 
                 Auth::login($newUser);
@@ -102,10 +103,9 @@ class LoginController extends Controller
                 return redirect()->route('home');
                 //return redirect()->back();
             }
-
         } catch (Exception $e) {
 
-            return redirect('auth/'. $provider);
+            return redirect('auth/' . $provider);
         }
     }
 }
