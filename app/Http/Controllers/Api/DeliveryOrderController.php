@@ -3,20 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderRecourse;
-use App\Models\Order;
 use Illuminate\Http\Request;
 
-class OrderController extends BaseController
+class DeliveryOrderController extends Controller
 {
-
-    public $model;
-
-    public function __construct(Order $model)
-    {
-        $this->model = $model;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,11 +14,7 @@ class OrderController extends BaseController
      */
     public function index()
     {
-        $userOrder = OrderRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
-        if (!empty($userOrder))
-            return $this->sendResponse($userOrder, 'orderdata');
-        else
-            return $this->sendError('300', 'there is no order for this user');
+        return response()->json(['data' => 'aya']);
     }
 
     /**
@@ -39,12 +25,7 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'area_id'   =>  ['required', 'numeric', 'exists:areas,id'],
-        ]);
-        return $request;
-
-        $this->model->create($request);
+        //
     }
 
     /**

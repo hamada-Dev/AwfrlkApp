@@ -31,16 +31,28 @@ Route::group(['namespace' => 'Api'], function () {
 
             // product route 
             Route::resource('order', 'OrderController');
+
+            // all offer route 
+            Route::resource('offer', 'OfferController');
+
+            //  user route 
+            Route::resource('user', 'UserController');
+
+            // user offer route 
+            Route::resource('userOffer', 'UserOfferController');
         });
 
         // route group for delivery
         Route::group(['middleware' => 'deliveryGroup'], function () {
+
+            Route::resource('deliveryOrder', 'DeliveryOrderController');
+
         });
 
 
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+        // Route::get('/user', function (Request $request) {
+        //     return $request->user();
+        // });
         Route::post('/login', 'UsersController@login');
 
 
