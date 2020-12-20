@@ -43,6 +43,9 @@
                 <th>
                     @lang('site.amount')
                 </th>
+                <th>
+                    @lang('site.price')
+                </th>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -64,6 +67,9 @@
                 </td>
                 <td>
                     {{$row->amount}}
+                </td>
+                <td>
+                    {{$row->price}}
                 </td>
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

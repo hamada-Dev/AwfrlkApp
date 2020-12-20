@@ -3,7 +3,6 @@
 
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.status')</label>
         <select name="status" class="form-control @error('status') is-invalid @enderror">
             <option value="">@lang('site.choose-status')</option>
             <option value="0" @if(isset($row) && $row->status=0) selected  @endif >@lang('site.waiting')</option>
@@ -20,7 +19,6 @@
 
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.delivery_id')</label>
         <select name="delivery_id" class="form-control @error('delivery_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-deliver')</option>
             @foreach($delivers as $deliver)
@@ -37,7 +35,6 @@
 
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.client_id')</label>
         <select name="client_id" class="form-control @error('client_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-client')</option>
             @foreach($users as $user)
@@ -53,7 +50,6 @@
 </div>
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.area_id')</label>
         <select name="area_id" class="form-control @error('area_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-area')</option>
             @foreach($areas as $area)

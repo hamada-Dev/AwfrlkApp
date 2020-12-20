@@ -6,7 +6,7 @@
 -->
     <div class="logo">
         <a href="{{route('home.index')}}" class="simple-text logo-normal" target="_blank">
-         @lang("site.awfrlk")
+           @lang('site.awfrlk')
         </a>
     </div>
     <div class="sidebar-wrapper">
@@ -63,18 +63,6 @@
                 <a class="nav-link" href="{{route('useroffers.index')}}">
                     <i class="material-icons">library_books</i>
                     <p>@lang('site.useroffers')</p>
-                </a>
-            </li>
-            <li class="nav-item {{is_active('orders')}}">
-                <a class="nav-link" href="{{route('orders.index')}}">
-                    <i class="material-icons">library_books</i>
-                    <p>@lang('site.orders')</p>
-                </a>
-            </li>
-            <li class="nav-item {{is_active('orderdetails')}}">
-                <a class="nav-link" href="{{route('orderdetails.index')}}">
-                    <i class="material-icons">library_books</i>
-                    <p>@lang('site.orderdetails')</p>
                 </a>
             </li>
             <!-- your sidebar here -->

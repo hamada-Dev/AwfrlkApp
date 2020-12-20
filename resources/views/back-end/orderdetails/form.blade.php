@@ -6,7 +6,6 @@
 
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.order_id')</label>
         <select name="order_id" class="form-control @error('order_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-order')</option>
             @foreach($orders as $order)
@@ -23,7 +22,6 @@
 
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
-        <label class="bmd-label-floating">@lang('site.product_id')</label>
         <select name="product_id" class="form-control @error('product_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-product')</option>
             @foreach($products as $product)

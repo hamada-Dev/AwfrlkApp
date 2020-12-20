@@ -43,6 +43,7 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.group')</label>
             <select name="group" class="form-control @error('group') is-invalid @enderror">
+               <option value="...">@lang('site.choose-group')</option>
                 @foreach ($groupList as $item)
                 <option value="{{$item}}" {{isset($row) && $row->group == $item ? 'selected' : ''}}>{{$item}}</option>
                 @endforeach
@@ -107,9 +108,11 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.gender')</label>
+
             <select name="gender" class="form-control @error('gender') is-invalid @enderror">
-                <option value="1" {{isset($row) && $row->gender == 'Male' ? 'selected' : ''}}>Male</option>
-                <option value="0" {{isset($row) && $row->gender == 'Female' ? 'selected' : ''}}>Female</option>
+                <option value="...">@lang('site.choose-gender')</option>
+                <option value="1" {{isset($row) && $row->gender == 'Male' ? 'selected' : ''}}>@lang('site.male')</option>
+                <option value="0" {{isset($row) && $row->gender == 'Female' ? 'selected' : ''}}>@lang('site.female')</option>
             </select>
             @error('gender')
             <span class="invalid-feedback" role="alert">

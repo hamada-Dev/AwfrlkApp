@@ -21,7 +21,23 @@ class OrderDetailsController extends BackEndController
         parent::__construct($model);
     }
 
+    public function index(Request $request)
+    {
 
+        $rows = $this->model;
+        $rows = $this->filter($rows);
+
+        $rows = $rows->whereHas('order')->when($request->order_id, function ($query) use ($request) {
+            $query->where('order_id', $request->order_id);
+        })->paginate(5);
+
+        
+        $module_name_plural=$this->getClassNameFromModel();
+        $module_name_singular=$this->getSingularModelName();
+
+        return view('back-end.'.$this->getClassNameFromModel().'.index', compact('rows', 'module_name_singular', 'module_name_plural'));
+
+    } //end of index
 
     public function create()
     {
@@ -48,7 +64,7 @@ class OrderDetailsController extends BackEndController
 
         ]);
         // delivery_price is limit from area id
-        $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price;
+        $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price * $request->amount;
         $this->model->create($request->all());
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('orderdetails.index');
@@ -84,7 +100,8 @@ class OrderDetailsController extends BackEndController
 
         ]);
         // delivery_price is limit from area id
-            $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price;
+        $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price * $request->amount;
+
             $order->update($request->all());
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('orderdetails.index');
@@ -109,6 +126,5 @@ class OrderDetailsController extends BackEndController
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
     }
-    
 
 }

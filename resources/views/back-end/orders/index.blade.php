@@ -66,10 +66,9 @@
             @foreach($rows as $row)
 
             <tr>
-
                 <td>
-                <a class="btn btn-danger btn-sm" href="">
-                        @lang("site.details") 
+                <a class="btn btn-danger btn-sm" href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}">
+                     {{$row->orderDetails->count()}}   @lang("site.products") 
                     </a>  
                 </td>
 

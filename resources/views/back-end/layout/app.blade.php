@@ -89,7 +89,17 @@
                 padding-inline-start: 12px;
                 margin-inline-end: 20px;
             }
-
+            .sidebar .nav li a, .sidebar .nav li .dropdown-menu a
+            {
+                padding:5px 10px;
+            }
+            .sidebar .nav li > a, .off-canvas-sidebar .nav li > a
+            {
+                margin:5px 10px;
+            }
+            .sidebar .nav, .off-canvas-sidebar .nav {
+                 margin-top: 5px !impotant;
+                }
         </style>--}}
 
         <style>
@@ -149,7 +159,7 @@
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap-material-design.min.js"></script>
     <script src="/assets/js/default-passive-events.js"></script>
-    <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!-- <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="/assets/js/buttons.js"></script>
 

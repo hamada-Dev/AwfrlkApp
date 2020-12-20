@@ -2,11 +2,21 @@
 
 return [
   'awfrlk'=>'أوفرلك',
-
   'home' => 'الرئيسية',
   'users' => 'المشرفين',
   'desc' => 'فى هذا الجدول يمكنك إضافة - حذف - تعديل  ',
   'language' => 'اللغه',
+  'login' => 'دخول',
+  'logout' => 'خروج',
+  'register' => 'تسجبل',
+  'description' => 'الوصف ',
+ //register
+ 'enter' => 'دخول',
+ 'haveAccount' => 'هل لديك حساب ؟',
+ 'destination' => 'Destination',
+ 'destinations' => 'Destinations',
+ 'profile' => 'الملف الشخصى',
+ 'settings' => 'الإعدادات',
 
   //users
   'actions' => 'الأحداث',
@@ -15,18 +25,37 @@ return [
   'edit' => 'تعديل',
   'edit_desc' => 'ادخل جميع البيانات المطلوبة',
   'user' => 'مشرف',
-
+  'group' => 'الصلاحية',
+  'phone' => 'الهاتف',
+  'gender' => 'الجنس',
   'id' => 'رقم التعريف',
   'name' => 'الاسم',
   'email' => 'البريد الإلكترونى',
   'repeat_password' => 'تكرار كلمة المرور',
   'password' => 'كلمة المرور',
-
+  'country'=>'العنوان',
+  'firstName'=>'الاسم الاول',
+  'lastName'=>'الاسم الاخر',
+  'image'=>"الصورة",
+  'choose-group'=>'أختر الصلاحية',
+  'choose-gender'=>'أختر الجنس',
+  'male'=>'ذكر',
+  'female'=>'أنثى',
+  'unit'=>'الوحدة',
+  
     //categories
     'categories'=>'الأقسام',
     'category'=>'قسم',
+    'trans_price' => ' تكلفة التوصيل',
+    'product_number' => 'عدد المنتجات',
+    'choose-category'=>'أختر القسم',
+    'choose-unit'=>' أختر الوحدة',
+
     //products
     'products'=>"المنتجات",
+    'Product'=>'منتج',
+    'Product'=>"المنتج",
+    "PRODUCT"=>"المنتج",
     //offers
     "offer_name"=>"أسم العرض",
     'offers'=>'العروض',

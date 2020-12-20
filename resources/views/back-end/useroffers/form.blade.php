@@ -1,7 +1,6 @@
 {{csrf_field()}}
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.user_id')</label>
             <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-user')</option>
                 @foreach($users as $user)
@@ -18,7 +17,6 @@
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.offer_id')</label>
             <select name="offer_id" class="form-control @error('offer_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose_offer')</option>
                 @foreach($offers as $offer)

@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'awfrlk'=>'Awfrlk',
+   'awfrlk'=>'Awfrlk',
     'home' => 'Dashboard',
     'users' => 'Users',
     'desc' => 'Here you can add- delete- update ',
@@ -22,16 +22,17 @@ return [
     'edit' => 'Update',
     'edit_desc' => 'Complete All Required Data',
     'user' => 'User',
-    'group' => 'Group',
+    'group' => 'Permission',
     'phone' => 'Phone',
     'gender' => 'Gender',
-
+    'country'=>'Country',
     'destination' => 'Destination',
     'destinations' => 'Destinations',
-
+    'firstName'=>'FirstName',
+  'lastName'=>'LastName',
     'profile' => 'My Profile',
     'settings' => 'Settings',
-
+    'image'=>"Image",
     'id' => 'ID',
     'name' => 'Name',
     'firstName' => 'First Name',
@@ -39,7 +40,10 @@ return [
     'email' => 'Email',
     'repeat_password' => 'Repeat Password',
     'password' => 'Password',
-
+    'choose-group'=>'Choose Permission',
+    'choose-gender'=>'Choose Gender ',
+    'male'=>'Male',
+    'female'=>'Female',
     //categories
     'categories' => 'Categories',
     'category' => 'Category',
@@ -47,9 +51,15 @@ return [
     'meta_keywords' => 'Meta Keywords',
     'parent_category' => 'Parent Category',
     'trans_price' => 'Transport Price',
-    'product_number' => 'Product Num',
+    'product_number' => 'Products Numbers',
+    'unit'=>'Unit',
+    'Product'=>"Product",
+    "PRODUCT"=>"Product",
+    'choose-category'=>'Choose Category',
+    'choose-unit'=>'Choose Unit',
     //products
     'products'=>"Products",
+    'Product'=>'Product',
       //offers
       "offer_name"=>"Offer Name",
       'offers'=>'Offers',
