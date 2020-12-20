@@ -46,7 +46,8 @@ class RegisterController extends BaseController
             'firstName' => $request['firstName'],
             'lastName' => $request['lastName'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'password' => bcrypt($request['password']),
+            // 'password' => Hash::make($request['password']),
             'gender' => $request['gender'],
             'phone' => $request['phone'],
             'ssn' => $request['ssn'],
@@ -67,8 +68,8 @@ class RegisterController extends BaseController
     public function logoutApi()
     {
         if (Auth::check()) {
-            // Auth::user()->AauthAcessToken()->delete();
-            Auth::user()->token()->revoke();
+            Auth::user()->AauthAcessToken()->delete();
+            // Auth::user()->token()->revoke();
             return $this->sendResponse('success you are logged out ', 200);
         }
     } //end of logout Api

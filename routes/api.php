@@ -45,8 +45,14 @@ Route::group(['namespace' => 'Api'], function () {
         // route group for delivery
         Route::group(['middleware' => 'deliveryGroup'], function () {
 
-            Route::resource('deliveryOrder', 'DeliveryOrderController');
+            // delivery route 
+            Route::resource('delivery', 'DeliveryController');
 
+            // delivery order route 
+            Route::resource('deliveryOrder', 'DeliveryOrderController');
+            
+            // delivery statua route 
+            Route::resource('deliveryStatus', 'DeliveryStatusController');
         });
 
 

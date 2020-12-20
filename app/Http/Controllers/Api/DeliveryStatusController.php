@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderDeliveryRecourse;
-use App\Models\Order;
+use App\Http\Resources\DeliveryStatusRecourse;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class DeliveryOrderController extends Controller
+class DeliveryStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class DeliveryOrderController extends Controller
      */
     public function index()
     {
-       
-        return OrderDeliveryRecourse::collection(Order::where('delivery_id', auth()->user()->id)->get());
+        // return User::where('delivery_id', auth()->user()->id)->get();
+        return DeliveryStatusRecourse::collection(User::where('id', auth()->user()->id)->get());
     }
 
     /**
@@ -28,7 +28,7 @@ class DeliveryOrderController extends Controller
      */
     public function store(Request $request)
     {
-       //
+        //
     }
 
     /**
@@ -39,7 +39,7 @@ class DeliveryOrderController extends Controller
      */
     public function show($id)
     {
-        // return Order::where("day(created_at)" , $id)->get();
+        //
     }
 
     /**

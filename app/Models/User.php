@@ -89,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function deliveryStatus()
     {
-        return $this->hasMany(DeliveryStatusy::class);
+        return $this->hasMany(DeliveryStatus::class);
     }
 
     public function area()

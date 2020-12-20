@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderRecourse;
+use App\Http\Resources\OrderUserRecourse;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -24,7 +24,7 @@ class OrderController extends BaseController
      */
     public function index()
     {
-        $userOrder = OrderRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
+        $userOrder = OrderUserRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
         if (!empty($userOrder))
             return $this->sendResponse($userOrder, 'orderdata');
         else
