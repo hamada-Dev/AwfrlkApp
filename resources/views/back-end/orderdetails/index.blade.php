@@ -35,18 +35,14 @@
                     @lang('site.id')
                 </th>
                 <th>
-                    @lang('site.name')
+                    @lang('site.product_id')
                 </th>
                 <th>
-                    @lang('site.trans_price')
+                    @lang('site.order_id')
                 </th>
                 <th>
-                    @lang('site.number_place')
+                    @lang('site.amount')
                 </th>
-                {{-- <th>
-                    @lang('site.parent_id')
-                </th> --}}
-                
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -57,29 +53,18 @@
             @foreach($rows as $row)
 
             <tr>
-
                 <td>
                     {{$row->id}}
                 </td>
-
                 <td>
-                    {{$row->name}}
+                   {{$row->product->name}} @lang("site.price"){{($row->price)}}/{{($row->product->unit)}}
                 </td>
                 <td>
-                        {{$row->trans_price}}
+                    {{$row->order->client_id}}
                 </td>
-                <td>                    
-                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">@lang('site.view_places')</a>
+                <td>
+                    {{$row->amount}}
                 </td>
-                {{-- <td>
-                    @foreach ($rows as $area)           
-                        @if( $row->parent_id==$area->id)
-                            {{$area->name}}
-                        @endif
-                    @endforeach
-                        
-                </td> --}}
-
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')

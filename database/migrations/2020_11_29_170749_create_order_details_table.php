@@ -20,7 +20,10 @@ class CreateOrderDetailsTable extends Migration
             $table->bigInteger('product_id')->unsigned();
             $table->bigInteger('order_id')->unsigned();
             $table->timestamps();
-
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
+           
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 

@@ -65,7 +65,9 @@ Route::group(
             Route::resource('useroffers', 'UserOffersController')->except('show');
             //orders
             Route::resource('orders', 'OredersController')->except("show");
-            
+            //orderDetails
+            Route::resource('orderdetails', 'OrderDetailsController')->except("show");
+
         });
         
        

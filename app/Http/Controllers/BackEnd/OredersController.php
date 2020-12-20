@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\Area;
 use Illuminate\Http\Request;
@@ -139,5 +140,5 @@ class OredersController extends BackEndController
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
     }
-
+    
 }

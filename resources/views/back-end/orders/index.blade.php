@@ -55,6 +55,10 @@
                 <th>
                     @lang('site.arrival_date')
                 </th>
+                
+                <th class="text-right">
+                    @lang('site.actions')
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -64,7 +68,9 @@
             <tr>
 
                 <td>
-                    {{$row->id}}
+                <a class="btn btn-danger btn-sm" href="">
+                        @lang("site.details") 
+                    </a>  
                 </td>
 
                 <td>

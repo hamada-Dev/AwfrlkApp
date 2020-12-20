@@ -97,6 +97,16 @@ return [
       'color'=>'Color Of Motocycle',
       'user_id'=>'Delivery Name',
       'choose-user'=>'Choose User',
+      
+  //orderDetails
+  "orderdetails"=>"Order Details",
+  "orderdetail"=>"Order Detail",
+  "product_id"=>"Product",
+  "order_id"=>"Order",
+  "amount"=>"Amonut",
+  "choose-order"=>"Choose Order",
+  "choose-product"=>"Choose Product",
+  "details"=>"Details",
     //porders
     "orders"=>'Orders',
     "order"=>'Order',

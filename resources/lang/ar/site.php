@@ -126,9 +126,18 @@ return [
   "finished"=>"إنتهاء",
   "not_arrive"=>"لم يصل ",
   "not_buy"=>"لم يشترى",
+  //orderDetails
+  "orderdetails"=>"تفاصيل الطلب",
+  "orderdetail"=>"تفاصيل الطلب",
+  "product_id"=>"المنتج",
+  "order_id"=>"الطلب",
+  "amount"=>"الكمية",
+  "choose-order"=>"أختر الطلب",
+  "choose-product"=>"أختر المنتج",
   //skills
   'skills' => 'المهارات',
   'skill' => 'مهارة',
+  "details"=>"تفاصيل",
 
   //tags
   'tags' => 'الإشارات',
