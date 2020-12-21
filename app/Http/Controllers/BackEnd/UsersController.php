@@ -78,10 +78,9 @@ class UsersController extends BackEndController
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'password' => ['confirmed'],
         ]);
 
-        $request_data=$request->except(['password', 'image']);
+        $request_data=$request->except(['password', 'image','c_password']);
 
         // store image
         if ($request->image){

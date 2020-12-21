@@ -83,7 +83,7 @@
                     {{$row->price}} £
                 </td>
                 <td>
-                    <img src="{{$row->image_path}}" alt="category Image" style="height:100px" width="100px"
+                    <img src="{{$row->image_path}}" alt="category Image" style="height:60px; width:60px"
                         class="img img-thumbnail">
                 </td>
 

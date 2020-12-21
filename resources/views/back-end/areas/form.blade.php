@@ -29,7 +29,6 @@
 
     <div class="col-md-12">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.parent_id')</label>
             <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-govern')</option>
                 @foreach($areas as $area)

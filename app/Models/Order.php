@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\NonDeleteIScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -10,6 +11,11 @@ class Order extends Model
 
     protected $appends = ['order_price', 'product_count'];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new NonDeleteIScope);
+    }
     public function getOrderPriceAttribute()
     {
         return $this->orderDetails->sum('price');

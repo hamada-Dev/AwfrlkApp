@@ -70,11 +70,9 @@
                 </td>
 
                 <td>
-                    <img src="{{$row->image_path}}" alt="category Image" style="height:100px" width="100px"
-                        class="img img-thumbnail">
+                    <img src="{{$row->image_path}}" alt="category Image" style="height:60px; width:60px" class="img img-thumbnail">
                 </td>
 
-                           
                 <td>
                     <a href="{{ route('products.index', ['category_id' => $row->id]) }}"> {{$row->product->count()}}</a>
                     

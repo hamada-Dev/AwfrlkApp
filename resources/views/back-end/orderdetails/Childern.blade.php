@@ -41,15 +41,11 @@
                     @lang('site.trans_price')
                 </th>
                 <th>
-                    @lang('site.number_place')
+                    @lang('site.parent_id')
                 </th>
                 {{-- <th>
                     @lang('site.parent_id')
                 </th> --}}
-                
-                <th class="text-right">
-                    @lang('site.actions')
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -66,19 +62,17 @@
                     {{$row->name}}
                 </td>
                 <td>
-                        {{$row->trans_price}}
+                    {{$row->trans_price}}
                 </td>
-                <td>                    
-                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">@lang('site.view_places')</a>
-                </td>
-                {{-- <td>
-                    @foreach ($rows as $area)           
+            
+               <td>
+                    @foreach ($areas as $area)           
                         @if( $row->parent_id==$area->id)
                             {{$area->name}}
                         @endif
                     @endforeach
                         
-                </td> --}}
+                </td>
 
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

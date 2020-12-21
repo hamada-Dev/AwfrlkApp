@@ -2,11 +2,21 @@
 
 return [
   'awfrlk'=>'أوفرلك',
-
   'home' => 'الرئيسية',
   'users' => 'المشرفين',
   'desc' => 'فى هذا الجدول يمكنك إضافة - حذف - تعديل  ',
   'language' => 'اللغه',
+  'login' => 'دخول',
+  'logout' => 'خروج',
+  'register' => 'تسجبل',
+  'description' => 'الوصف ',
+ //register
+ 'enter' => 'دخول',
+ 'haveAccount' => 'هل لديك حساب ؟',
+ 'destination' => 'Destination',
+ 'destinations' => 'Destinations',
+ 'profile' => 'الملف الشخصى',
+ 'settings' => 'الإعدادات',
 
   //users
   'actions' => 'الأحداث',
@@ -15,18 +25,37 @@ return [
   'edit' => 'تعديل',
   'edit_desc' => 'ادخل جميع البيانات المطلوبة',
   'user' => 'مشرف',
-
+  'group' => 'الصلاحية',
+  'phone' => 'الهاتف',
+  'gender' => 'الجنس',
   'id' => 'رقم التعريف',
   'name' => 'الاسم',
   'email' => 'البريد الإلكترونى',
   'repeat_password' => 'تكرار كلمة المرور',
   'password' => 'كلمة المرور',
-
+  'country'=>'العنوان',
+  'firstName'=>'الاسم الاول',
+  'lastName'=>'الاسم الاخر',
+  'image'=>"الصورة",
+  'choose-group'=>'أختر الصلاحية',
+  'choose-gender'=>'أختر الجنس',
+  'male'=>'ذكر',
+  'female'=>'أنثى',
+  'unit'=>'الوحدة',
+  
     //categories
     'categories'=>'الأقسام',
     'category'=>'قسم',
+    'trans_price' => ' تكلفة التوصيل',
+    'product_number' => 'عدد المنتجات',
+    'choose-category'=>'أختر القسم',
+    'choose-unit'=>' أختر الوحدة',
+
     //products
     'products'=>"المنتجات",
+    'Product'=>'منتج',
+    'Product'=>"المنتج",
+    "PRODUCT"=>"المنتج",
     //offers
     "offer_name"=>"أسم العرض",
     'offers'=>'العروض',
@@ -49,16 +78,16 @@ return [
     'parent_id'=>'تسلسل المركز',
     'number_place'=>'عدد الاماكن',
     'view_places'=>'المناطق',
-          //user_offer
-          'user_id'=>'أسم العميل',
-          'offer_id'=>'بيانت العرض',
-          'choose_user'=>'أختر عميل',
-          'choose_offer'=>'أختر عرض',
-          'useroffers'=>'عرض للعميل',
-          'useroffer'=>'عرض للعميل',
-          'USEROFFER'=>'عرض للعميل',
-          'cl_name'=>'اسم العميل',
-          'offer_data'=>"بيانات العرض",
+    //user_offer
+    'user_id'=>'أسم العميل',
+    'offer_id'=>'بيانت العرض',
+    'choose_user'=>'أختر عميل',
+    'choose_offer'=>'أختر عرض',
+    'useroffers'=>'عرض للعميل',
+    'useroffer'=>'عرض للعميل',
+    'USEROFFER'=>'عرض للعميل',
+    'cl_name'=>'اسم العميل',
+    'offer_data'=>"بيانات العرض",
 
   //offers
   'offers' => 'العروض',
@@ -108,10 +137,36 @@ return [
   'color' => 'اللون',
   'user_id' => 'أسم الطيار',
   'choose-user' => 'أختر المستخدم',
-
+  //orders
+  "orders"=>'طلبات',
+  "order"=>'طلب',
+  "status"=>'الحالة',
+  "choose-status"=>'أختر الحالة',
+  "end_shoping_date"=>' الانتهاء من التسوق',
+  "arrival_date"=>'تاريخ التسليم',
+  "feedback"=>'التعليق',
+  "delivery_id"=>'الطيار',
+  "choose-deliver"=>'أختر الطيار',
+  "client_id"=>'العميل',
+  "choose-client"=>'أختر العميل',
+  "area_id"=>'المنطقة',
+  "choose-area"=>'أختر المنطقة',
+  "waiting"=>"إنتظار",
+  "finished"=>"إنتهاء",
+  "not_arrive"=>"لم يصل ",
+  "not_buy"=>"لم يشترى",
+  //orderDetails
+  "orderdetails"=>"تفاصيل الطلب",
+  "orderdetail"=>"تفاصيل الطلب",
+  "product_id"=>"المنتج",
+  "order_id"=>"الطلب",
+  "amount"=>"الكمية",
+  "choose-order"=>"أختر الطلب",
+  "choose-product"=>"أختر المنتج",
   //skills
   'skills' => 'المهارات',
   'skill' => 'مهارة',
+  "details"=>"تفاصيل",
 
   //tags
   'tags' => 'الإشارات',
