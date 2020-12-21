@@ -70,7 +70,7 @@ class RegisterController extends BaseController
         if (Auth::check()) {
             Auth::user()->AauthAcessToken()->delete();
             // Auth::user()->token()->revoke();
-            return $this->sendResponse('success you are logged out ', 200);
+            return $this->sendResponse(' you are logged out successfully', 200);
         }
     } //end of logout Api
 
