@@ -14,8 +14,9 @@ class RegisterController extends BaseController
 
     public $successStatus = 200;
 
-    public function register(Request $request){
-        $validator= Validator::make($request->all(), [
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -26,29 +27,40 @@ class RegisterController extends BaseController
             'ssn' => ['required', 'integer', 'unique:users'],
             'adress' => ['required', 'string', 'max:255'],
             'area_id' => ['nullable', 'exists:areas,id'],
+            'image' => ['nullable', 'image'],
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('error validation', $validator->errors());
         }
 
-        $user= User::create([
+        if ($request->image) {
+            $this->uploadImage($request);
+            $image = $request->image->hashName();
+        } 
+        else {
+            $image = "default.png";
+        }
+
+        $user = User::create([
             'firstName' => $request['firstName'],
             'lastName' => $request['lastName'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'password' => bcrypt($request['password']),
+            // 'password' => Hash::make($request['password']),
             'gender' => $request['gender'],
             'phone' => $request['phone'],
             'ssn' => $request['ssn'],
             'adress' => $request['adress'],
             'area_id' => $request['area_id'],
             'api_token' => '',
+            'image' => $image,
         ]);
-           
+
         // $user->sendApiEmailVerificationNotification();
         $success['message'] = 'Please confirm email by clicking on verify user button sent to you on your email';
-        $success['token']= $user->createToken('MyApp')->accessToken;
-        $success['name']= $user->firstName. ' '. $user->lastName;
+        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['name'] = $user->firstName . ' ' . $user->lastName;
 
         return $this->sendResponse($success, 'User Created Successfully');
     } // end of register function
@@ -56,15 +68,23 @@ class RegisterController extends BaseController
     public function logoutApi()
     {
         if (Auth::check()) {
-            // Auth::user()->AauthAcessToken()->delete();
-            Auth::user()->token()->revoke();
+            Auth::user()->AauthAcessToken()->delete();
+            // Auth::user()->token()->revoke();
+            return $this->sendResponse('success you are logged out ', 200);
         }
-    }//end of logout Api
+    } //end of logout Api
 
     public function details()
     {
-    $user = Auth::user();
-    return response()->json(['User' => $user], $this-> successStatus);
+        $user = Auth::user();
+        return response()->json(['User' => $user], $this->successStatus);
     }
 
+    protected function uploadImage($request)
+    {
+        \Intervention\Image\Facades\Image::make($request->image)->save(public_path('uploads/users_images/' . $request->image->hashName()));
+        //            ->resize(300, null, function ($constraint) {
+        //            $constraint->aspectRatio();
+
+    }
 }

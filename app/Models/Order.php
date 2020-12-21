@@ -38,6 +38,11 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'client_id');
+    }
+    
+    public function delivery()
+    {
+        return $this->belongsTo(User::class, 'delivery_id');
     }
 }

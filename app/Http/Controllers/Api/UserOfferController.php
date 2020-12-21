@@ -3,20 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderUserRecourse;
-use App\Models\Order;
+use App\Http\Resources\UserOfferResource;
+use App\Models\Offer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class OrderController extends BaseController
+class UserOfferController extends Controller
 {
-
-    public $model;
-
-    public function __construct(Order $model)
-    {
-        $this->model = $model;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,11 +17,8 @@ class OrderController extends BaseController
      */
     public function index()
     {
-        $userOrder = OrderUserRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
-        if (!empty($userOrder))
-            return $this->sendResponse($userOrder, 'orderdata');
-        else
-            return $this->sendError('300', 'there is no order for this user');
+        return UserOfferResource::collection( User::with(['userOffer' => function($q){ return $q->orderby('end_date','DESC');}])->where('id', auth()->user()->id)->get());
+        // return UserOfferResource::collection( User::where('id', auth()->user()->id)->get());
     }
 
     /**
@@ -39,12 +29,7 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'area_id'   =>  ['required', 'numeric', 'exists:areas,id'],
-        ]);
-        return $request;
-
-        $this->model->create($request);
+        //
     }
 
     /**
