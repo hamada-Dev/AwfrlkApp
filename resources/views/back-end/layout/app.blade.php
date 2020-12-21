@@ -13,7 +13,9 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="/assets/css/material-icons.css" />
     <!-- Material Kit CSS -->
+
     <link href="/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
 
 
@@ -23,111 +25,121 @@
     <script src="/assets/plugins/noty/noty.min.js"></script>
 
 
+
     @if (app()->getLocale() == 'ar')
 
-        <!--  Material Dashboard CSS    -->
-        <link href="/assets/css/rtl/material-dashboard.css" rel="stylesheet"/>
+    <!--  Material Dashboard CSS    -->
+    <link href="/assets/css/rtl/material-dashboard.css" rel="stylesheet" />
 
-        <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/assets/css/rtl/bootstrap-rtl.min.css" rel="stylesheet" />
 
-        {{--<style>
-            html[dir="rtl"] .icon {
-                -moz-transform: scaleX(-1);
-                -o-transform: scaleX(-1);
-                -webkit-transform: scaleX(-1);
-                transform: scaleX(-1);
-                filter: FlipH;
-                -ms-filter: "FlipH";
-            }
 
-            .wrapper .boxContainer .fancyBox {
-                text-align: left;
-                padding-left: 10px;
-                text-decoration: underline;
-                color: #4A8CF7;
-            }
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
 
-            .wrapper .boxContainer .fancyBox {
-                text-decoration: underline;
-                color: #4A8CF7;
-            }
+    {{-- <style>
+        html[dir="rtl"] .icon {
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            filter: FlipH;
+            -ms-filter: "FlipH";
+        }
 
-            html[dir="ltr"] .wrapper .boxContainer .fancyBox {
-                text-align: left;
-                padding-left: 10px;
-            }
+        .wrapper .boxContainer .fancyBox {
+            text-align: left;
+            padding-left: 10px;
+            text-decoration: underline;
+            color: #4A8CF7;
+        }
 
-            html[dir="rtl"] .wrapper .boxContainer .fancyBox {
-                text-align: right;
-                padding-right: 10px;
-            }
+        .wrapper .boxContainer .fancyBox {
+            text-decoration: underline;
+            color: #4A8CF7;
+        }
 
-            html[dir="rtl"] .sidebar {
-                text-align: right;
-                padding: 0 0 0 10px;
-            }
+        html[dir="ltr"] .wrapper .boxContainer .fancyBox {
+            text-align: left;
+            padding-left: 10px;
+        }
 
-            .content {
-                text-align: left;
-            }
-            html[dir="rtl"] .content {
-                text-align: right;
-            }
-            .content {
-                text-align: start;
-            }
+        html[dir="rtl"] .wrapper .boxContainer .fancyBox {
+            text-align: right;
+            padding-right: 10px;
+        }
 
-            .content {
-                padding-left: 12px;
-                margin-right: 20px;
-            }
-            html[dir="rtl"] .content body {
-                padding-left: 0;
-                padding-right: 12px;
-                margin-left: 20px;
-                margin-right: 0px;
-                padding-inline-start: 12px;
-                margin-inline-end: 20px;
-            }
-            .sidebar .nav li a, .sidebar .nav li .dropdown-menu a
-            {
-                padding:5px 10px;
-            }
-            .sidebar .nav li > a, .off-canvas-sidebar .nav li > a
-            {
-                margin:5px 10px;
-            }
-            .sidebar .nav, .off-canvas-sidebar .nav {
-                 margin-top: 5px !impotant;
-                }
-        </style>--}}
+        html[dir="rtl"] .sidebar {
+            text-align: right;
+            padding: 0 0 0 10px;
+        }
 
-        <style>
-            .content {
-                text-align: left;
-            }
-            html[dir="rtl"] .content {
-                text-align: right;
-                padding-left: 0;
-                padding-right: 12px;
-                margin-left: 20px;
-                margin-right: 0px;
-                padding-inline-start: 12px;
-                margin-inline-end: 20px;
-            }
+        .content {
+            text-align: left;
+        }
 
-        </style>
+        html[dir="rtl"] .content {
+            text-align: right;
+        }
+
+        .content {
+            text-align: start;
+        }
+
+        .content {
+            padding-left: 12px;
+            margin-right: 20px;
+        }
+
+        html[dir="rtl"] .content body {
+            padding-left: 0;
+            padding-right: 12px;
+            margin-left: 20px;
+            margin-right: 0px;
+            padding-inline-start: 12px;
+            margin-inline-end: 20px;
+        }
+
+        .sidebar .nav li a,
+        .sidebar .nav li .dropdown-menu a {
+            padding: 5px 10px;
+        }
+
+        .sidebar .nav li>a,
+        .off-canvas-sidebar .nav li>a {
+            margin: 5px 10px;
+        }
+
+        .sidebar .nav,
+        .off-canvas-sidebar .nav {
+            margin-top: 5px !impotant;
+        }
+
+        .content {
+            text-align: left;
+        }
+
+        html[dir="rtl"] .content {
+            text-align: right;
+            padding-left: 0;
+            padding-right: 12px;
+            margin-left: 20px;
+            margin-right: 0px;
+            padding-inline-start: 12px;
+            margin-inline-end: 20px;
+        }
+    </style> --}}
     @endif
     <style>
-        select{
+        select {
             background-color: #202940 !important;
         }
 
-        textarea{
+        textarea {
             margin-bottom: 15px !important;
             position: relative !important;
         }
-        .nicEdit-pane{
+
+        .nicEdit-pane {
             position: fixed;
             top: 1px;
         }
@@ -136,24 +148,24 @@
 </head>
 
 <body class="dark-edition">
-<div class="wrapper ">
-    @include('back-end.layout.side-bar')
-    <div class="main-panel" style="    background-color: #202940;">
-        <!-- Navbar -->
+    <div class="wrapper ">
+        @include('back-end.layout.side-bar')
+        <div class="main-panel" style="    background-color: #202940;">
+            <!-- Navbar -->
 
-        <!-- End Navbar -->
-        <div class="content">
-            <div class="container-fluid">
-                @yield('content')
-                @include('partials._session')
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                    @include('partials._session')
+                </div>
             </div>
+            @include('back-end.layout.footer')
         </div>
-        @include('back-end.layout.footer')
     </div>
-</div>
 
     <!--   Core JS Files   -->
-{{--Jquery--}}
+    {{--Jquery--}}
     <script src="/assets/js/core/jquery.min.js"></script>
 
     <script src="/assets/js/core/popper.min.js"></script>
@@ -172,11 +184,13 @@
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="/assets/demo/demo.js"></script>
 
-<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        bkLib.onDomLoaded(nicEditors.allTextAreas);
+    </script>
 
 
-<script src="/assets/frontend/js/paper-kit.js?v=2.2.0" type="text/javascript"></script>
+    <script src="/assets/frontend/js/paper-kit.js?v=2.2.0" type="text/javascript"></script>
     <script>
         $(function () {
             $("[data-toggle=popover]").popover();
