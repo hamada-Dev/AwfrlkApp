@@ -58,13 +58,13 @@ class OrderDetailsController extends BackEndController
     {
         $request->validate([
 
-            'amount' => ['required','numeric','min:1','max:200'],
+            'amount' => ['required'],
             'product_id' =>['required', 'numeric','exists:products,id'],
             'order_id' =>['required', 'numeric','exists:orders,id'],
 
         ]);
         // delivery_price is limit from area id
-        $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price * $request->amount;
+        $request["price"]=floatval(Product::select("price")->where("id",$request->product_id)->first()->price) * floatval($request->amount);
         $this->model->create($request->all());
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('orderdetails.index');
@@ -90,19 +90,19 @@ class OrderDetailsController extends BackEndController
         $orders=Order::all();  
                 return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('products','orders','row', 'module_name_singular', 'module_name_plural'))->with($append);
     }
-    public function update(Request $request, Order $order)
+    public function update(Request $request,  $order)
     {
         $request->validate([
 
-            'amount' => ['required','numeric','min:1','max:200'],
+            'amount' => ['required'],
             'product_id' =>['required', 'numeric','exists:products,id'],
             'order_id' =>['required', 'numeric','exists:orders,id'],
 
         ]);
         // delivery_price is limit from area id
-        $request["price"]=Product::select("price")->where("id",$request->product_id)->first()->price * $request->amount;
+        $request["price"]=floatval(Product::select("price")->where("id",$request->product_id)->first()->price) * floatval($request->amount);
 
-            $order->update($request->all());
+            $this->model->find($order)->update($request->all());
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('orderdetails.index');
         

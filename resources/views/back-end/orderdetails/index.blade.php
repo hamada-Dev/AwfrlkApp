@@ -60,13 +60,13 @@
                     {{$row->id}}
                 </td>
                 <td>
-                   {{$row->product->name}} @lang("site.price"){{($row->price)}}/{{($row->product->unit)}}
+                   {{$row->product->name}} @lang("site.price"){{($row->product->price)}}/{{($row->product->unit)}}
                 </td>
                 <td>
                     {{$row->order->client_id}}
                 </td>
                 <td>
-                    {{$row->amount}}
+                {{$row->amount}} 
                 </td>
                 <td>
                     {{$row->price}}

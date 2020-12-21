@@ -27,42 +27,54 @@
 
             <li class="nav-item {{is_active('categories')}}">
                 <a class="nav-link" href="{{route('categories.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">category</i>
                     <p>@lang('site.categories')</p>
                 </a>
             </li>
 
             <li class="nav-item {{is_active('products')}}">
                 <a class="nav-link" href="{{route('products.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">cake</i>
                     <p>@lang('site.products')</p>
                 </a>
             </li>
             {{-- shico code --}}
             <li class="nav-item {{is_active('offers')}}">
                 <a class="nav-link" href="{{route('offers.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">local_offer</i>
                     <p>@lang('site.offers')</p>
                 </a>
             </li>
 
             <li class="nav-item {{is_active('areas')}}">
                 <a class="nav-link" href="{{route('areas.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">location_on</i>
                     <p>@lang('site.areas')</p>
                 </a>
             </li>
             
             <li class="nav-item {{is_active('deliverymotocycles')}}">
                 <a class="nav-link" href="{{route('deliverymotocycles.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">two_wheeler</i>
                     <p>@lang('site.deliverymotocycles')</p>
                 </a>
             </li>
             <li class="nav-item {{is_active('useroffer')}}">
                 <a class="nav-link" href="{{route('useroffers.index')}}">
-                    <i class="material-icons">library_books</i>
+                    <i class="material-icons">redeem</i>
                     <p>@lang('site.useroffers')</p>
+                </a>
+            </li>
+            <li class="nav-item {{is_active('orders')}}">
+                <a class="nav-link" href="{{route('orders.index')}}">
+                    <i class="material-icons">shop</i>
+                    <p>@lang('site.orders')</p>
+                </a>
+            </li>
+            <li class="nav-item {{is_active('orderdetails')}}">
+                <a class="nav-link" href="{{route('orderdetails.index')}}">
+                    <i class="material-icons">shopping_cart</i>
+                    <p>@lang('site.orderdetails')</p>
                 </a>
             </li>
             <!-- your sidebar here -->

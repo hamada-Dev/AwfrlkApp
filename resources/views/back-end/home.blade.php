@@ -19,7 +19,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-person-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.users')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -33,7 +33,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-book-</i>
+                        <i class="material-icons">-category-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.categories')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -47,7 +47,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-cake-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.products')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -61,7 +61,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-local_offer-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.offers')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -75,7 +75,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-location_on-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.areas')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -89,7 +89,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-two_wheeler-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.deliverymotocycles')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -103,7 +103,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-shop-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.orders')</h2>
                     <h3 class="card-title text-center" style='color:black'>
@@ -117,7 +117,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">-tv-</i>
+                        <i class="material-icons">-shopping_cart-</i>
                     </div>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.orderdetails')</h2>
                     <h3 class="card-title text-center" style='color:black'>
