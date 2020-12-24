@@ -8,30 +8,30 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    {{--<link href="/assets/frontend/css/paper-kit.css?v=2.2.0" rel="stylesheet" />--}}
+    {{--<link href="{{asset('assets/frontend/css/paper-kit.css?v=2.2.0')}}" rel="stylesheet" />--}}
 
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/material-icons.css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/material-icons.css')}}" />
+
     <!-- Material Kit CSS -->
+    <link href="{{asset('assets/css/material-dashboard.css?v=2.1.0')}}" rel="stylesheet" />
 
-    <link href="/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
 
 
 
     {{--noty--}}
-    <link rel="stylesheet" href="/assets/plugins/noty/noty.css">
-    <script src="/assets/plugins/noty/noty.min.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/plugins/noty/noty.css')}}">
+    <script src="{{asset('assets/plugins/noty/noty.min.js')}}"></script>
 
 
 
     @if (app()->getLocale() == 'ar')
 
     <!--  Material Dashboard CSS    -->
-    <link href="/assets/css/rtl/material-dashboard.css" rel="stylesheet" />
+    {{-- <link href="{{asset('assets/css/rtl/material-dashboard.css')}}" rel="stylesheet" /> --}}
 
-    <link href="/assets/css/rtl/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="{{asset('assets/css/rtl/bootstrap-rtl.min.css')}}" rel="stylesheet" />
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -150,7 +150,7 @@
 <body class="dark-edition">
     <div class="wrapper ">
         @include('back-end.layout.side-bar')
-        <div class="main-panel" style="    background-color: #202940;">
+        <div class="main-panel" style="background-color: #202940; @if (app()->getLocale() == 'ar') float:left; @endif">
             <!-- Navbar -->
 
             <!-- End Navbar -->
@@ -166,31 +166,47 @@
 
     <!--   Core JS Files   -->
     {{--Jquery--}}
-    <script src="/assets/js/core/jquery.min.js"></script>
+    <script src="{{asset('assets/js/core/jquery.min.js')}}"></script>
 
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap-material-design.min.js"></script>
-    <script src="/assets/js/default-passive-events.js"></script>
-    <!-- <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
+    <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/bootstrap-material-design.min.js')}}"></script>
+    <script src="{{asset('assets/js/default-passive-events.js')}}"></script>
+
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="/assets/js/buttons.js"></script>
+    <script async defer src="{{asset('assets/js/buttons.js')}}"></script>
 
     <!-- Chartist JS -->
-    <script src="/assets/js/plugins/chartist.min.js"></script>
+    <script src="{{asset('assets/js/plugins/chartist.min.js')}}"></script>
     <!--  Notifications Plugin    -->
-    <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+    <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
+
+    {{-- this is for scrollbar that destroy design if local = ar --}}
+    <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script> --}}
+    {{-- <script>
+        $("#selector").niceScroll({
+            cursorcolor : 'red',
+            cursorwidth : '40px',
+        });
+    </script> --}}
+
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/assets/js/material-dashboard.js?v=2.1.0"></script>
+    <script src="{{asset('assets/js/material-dashboard.js?v=2.1.0')}}"></script>
+
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-    <script src="/assets/demo/demo.js"></script>
+    <script src="{{asset('assets/demo/demo.js')}}"></script>
+
+
 
     <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
     <script type="text/javascript">
         bkLib.onDomLoaded(nicEditors.allTextAreas);
     </script>
 
+    <script src="{{asset('assets/frontend/js/paper-kit.js?v=2.2.0')}}" type="text/javascript"></script>
 
-    <script src="/assets/frontend/js/paper-kit.js?v=2.2.0" type="text/javascript"></script>
+
+
     <script>
         $(function () {
             $("[data-toggle=popover]").popover();
@@ -422,6 +438,27 @@
         });//end of delete
     </script>
 
+        {{-- more edit in ar local becouse package matrial have more than error  --}}
+    @if (app()->getLocale() == 'ar')
+    <script>
+        $('.sidebar .nav-link').each( function () { 
+         $(this).children().css('display', 'flex');
+    });
+
+    $('label').each(function(){
+        $(this).css('display', 'flex');
+    }) 
+    
+    $('.card-header .col-md-8').each(function(){
+        $(this).children().css('display', 'flex');
+    })
+    
+    $('.col-md-8 .card-header ').each(function(){
+        $(this).children().css('display', 'flex');
+    })
+
+   </script>
+    @endif
 </body>
 
 </html>

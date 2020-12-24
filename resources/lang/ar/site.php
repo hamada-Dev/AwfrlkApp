@@ -54,8 +54,8 @@ return [
     //products
     'products'=>"المنتجات",
     'Product'=>'منتج',
-    'Product'=>"المنتج",
-    "PRODUCT"=>"المنتج",
+    'product'=>'منتج',
+
     //offers
     "offer_name"=>"أسم العرض",
     'offers'=>'العروض',

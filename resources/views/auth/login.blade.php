@@ -26,7 +26,7 @@
 					</span>
                 <div class="img-container">
                     {{-- <a href="{{route('frontend.welcome')}}"><img src="/assets/images/logo-off.png"></a> --}}
-                    <a href=""><img src="/assets/images/logo-off.png"></a>
+                    <a href=""><img src="{{asset('assets/images/eg.jpg')}}"></a>
                 </div>
 
                 <div class="wrap-input100 validate-input m-t-30 m-b-35" data-validate = "Enter Email">
@@ -68,12 +68,12 @@
 
                     <li>
 							<span class="txt1">
-								Don’t have an account?
+								Don’t have an account? 
 							</span>
-
-                        <a href="{{route('register')}}" class="txt2">
+                            <small style="color: red;">Admin have to add you</small>
+                        {{-- <a href="{{route('register')}}" class="txt2">
                             Sign up
-                        </a>
+                        </a> --}}
                     </li>
 
                     <li>

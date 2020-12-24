@@ -1,4 +1,5 @@
-<div class="sidebar" data-color="purple" data-background-color="black" data-image="/assets/img/sidebar-2.jpg">
+<div class="sidebar" @if (app()->getLocale() == 'ar') style="right = 0;" @endif data-color="purple"
+    data-background-color="black" data-image="/assets/img/sidebar-2.jpg">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -6,7 +7,7 @@
 -->
     <div class="logo">
         <a href="{{route('home.index')}}" class="simple-text logo-normal" target="_blank">
-           @lang('site.awfrlk')
+            @lang('site.awfrlk')
         </a>
     </div>
     <div class="sidebar-wrapper">
@@ -52,7 +53,7 @@
                     <p>@lang('site.areas')</p>
                 </a>
             </li>
-            
+
             <li class="nav-item {{is_active('deliverymotocycles')}}">
                 <a class="nav-link" href="{{route('deliverymotocycles.index')}}">
                     <i class="material-icons">two_wheeler</i>

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Technical_Videos'),
+    'name' => env('APP_NAME', 'Awfrlk'),
 
     /*
     |--------------------------------------------------------------------------

@@ -20,7 +20,7 @@
                             notifications
                         </p>
                         <div class="ripple-container"></div></a>
-                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu  @if (app()->getLocale() == 'ar') dropdown-menu-left @else dropdown-menu-right @endif  " aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" rel="alternate" hreflang="" href="{{route('logout')}}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -42,7 +42,7 @@
                             @lang('language')
                         </p>
                         <div class="ripple-container"></div></a>
-                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu @if (app()->getLocale() == 'ar') dropdown-menu-left @else dropdown-menu-right @endif " aria-labelledby="navbarDropdownMenuLink">
                         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                 <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ $properties['native'] }}

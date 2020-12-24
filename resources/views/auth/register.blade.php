@@ -24,7 +24,7 @@
 				
 					</span>
                 <div class="img-container">
-                    <a href="{{route('frontend.welcome')}}"><img src="/assets/images/logo-off.png"></a>
+                    <a href=""><img src="{{asset('assets/images/eg.jpg')}}"></a>
                 </div>
 
 
@@ -158,7 +158,7 @@
 								Go To Home Page
 							</span>
 
-                        <a href="{{route('frontend.welcome')}}" class="txt2">
+                        <a href="" class="txt2">
                             Home
                         </a>
                     </li>

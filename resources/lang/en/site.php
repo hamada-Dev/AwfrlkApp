@@ -53,13 +53,10 @@ return [
     'trans_price' => 'Transport Price',
     'product_number' => 'Products Numbers',
     'unit'=>'Unit',
-    'Product'=>"Product",
-    "PRODUCT"=>"Product",
+
     'choose-category'=>'Choose Category',
     'choose-unit'=>'Choose Unit',
-    //products
-    'products'=>"Products",
-    'Product'=>'Product',
+  
       //offers
       "offer_name"=>"Offer Name",
       'offers'=>'Offers',
@@ -138,6 +135,7 @@ return [
     // products
     'products'  =>  'Products',
     'product'  =>  'Product',
+
     'choose-category'  =>  'Choose Category',
     'choose-unit'  =>  'Choose Unit',
     'unit'  =>  'Unit',
