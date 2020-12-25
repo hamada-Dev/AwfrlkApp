@@ -57,8 +57,8 @@
             <label class="bmd-label-floating">@lang('site.avilable')</label>
             <select name="avilable" class="form-control @error('avilable') is-invalid @enderror">
                 <option value="">@lang("site.avilable_situation")</option>
-                <option value="0"  @if((isset($row) && $row->avilable==0)) selected @endif >@lang('site.Active')</option>
-                <option value="1" @if((isset($row) && $row->avilable==1)) selected @endif>@lang('site.NotActive')</option>
+                <option value="1"  @if((isset($row) && $row->avilable==1)) selected @endif >@lang('site.Active')</option>
+                <option value="0" @if((isset($row) && $row->avilable==0)) selected @endif>@lang('site.NotActive')</option>
             </select>
             @error('avilable')
             <span class="invalid-feedback" role="alert">

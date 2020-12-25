@@ -21,8 +21,6 @@ class OffersController extends BackEndController
     }
 
 
-
-
     public function index(Request $request)
     {
         //get all data of Model

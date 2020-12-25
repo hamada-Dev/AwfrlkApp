@@ -29,9 +29,9 @@
                     <a href=""><img src="{{asset('assets/images/eg.jpg')}}"></a>
                 </div>
 
-                <div class="wrap-input100 validate-input m-t-30 m-b-35" data-validate = "Enter Email">
+                <div class="wrap-input100 validate-input m-t-30 m-b-35" data-validate = "Enter email">
                     <input class="input100" type="text" name="email" autocomplete="off">
-                    <span class="focus-input100" data-placeholder="Email"></span>
+                    <span class="focus-input100" data-placeholder="email"></span>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
                         <p style="color: red">{{ $message }}</p>

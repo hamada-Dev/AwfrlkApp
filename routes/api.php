@@ -23,7 +23,7 @@ Route::group(['namespace' => 'Api'], function () {
         // this group i can add all  route and controller for all client in my site 
         Route::group(['middleware' => 'userGroup'], function () {
 
-            // category route  
+            // category route   
             Route::get('/category', 'CategoriesController@allCategories');
 
             // product route 
@@ -34,6 +34,9 @@ Route::group(['namespace' => 'Api'], function () {
 
             // all offer route 
             Route::resource('offer', 'OfferController');
+
+            // all area route 
+            Route::resource('area', 'AreasController');
 
             //  user route 
             Route::resource('user', 'UserController');
@@ -50,7 +53,7 @@ Route::group(['namespace' => 'Api'], function () {
 
             // delivery order route 
             Route::resource('deliveryOrder', 'DeliveryOrderController');
-            
+
             // delivery statua route 
             Route::resource('deliveryStatus', 'DeliveryStatusController');
         });
@@ -60,8 +63,6 @@ Route::group(['namespace' => 'Api'], function () {
         //     return $request->user();
         // });
         Route::post('/login', 'UsersController@login');
-
-
 
 
         Route::get('email/resend', 'VerificationApiController@resend')->name('verificationapi.resend');

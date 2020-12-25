@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Auth\Notifications\VerifyEmail;
 use App\Notifications\PasswordResetNotification;
 use App\Notifications\VerifyApiEmail;
+use App\Scopes\NonDeleteIScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,7 +80,8 @@ class User extends Authenticatable implements MustVerifyEmail
     // start relation table 
     public function userOffer()
     {
-        return $this->belongsToMany(Offer::class, 'user_offers')->withPivot(['decrement_trip', 'end_date',]);
+        // return $this->belongsToMany(Offer::class, 'user_offers')->withPivot(['decrement_trip', 'end_date',]);
+        return $this->belongsToMany(Offer::class, 'user_offers');
     }
 
     public function deliveryMoto()
@@ -105,4 +107,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class, 'delivery_id');
     }
+    
 }

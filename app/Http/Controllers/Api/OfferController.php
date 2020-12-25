@@ -16,6 +16,7 @@ class OfferController extends Controller
      */
     public function index()
     {
+        
         return OfferResource::collection(Offer::latest()->get());
     }
 

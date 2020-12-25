@@ -53,7 +53,7 @@ class UserOffersController extends BackEndController
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $users=User::where("group","user")->get();
-        $offers=Offer::where("avilable","0")->get();
+        $offers=Offer::get();
 
         return view('back-end.'.$this->getClassNameFromModel().'.create', compact('users','offers','module_name_singular', 'module_name_plural'))->with($append);
     } 
@@ -65,8 +65,9 @@ class UserOffersController extends BackEndController
             'user_id'   =>  ['required', 'numeric', 'exists:users,id'],
             'offer_id'   =>  ['required', 'numeric', 'exists:offers,id'],
         ]);
-        $num=Offer::select("trips_count","offer_days")->where("id",$request->offer_id)->first();
+        $num=Offer::select("trips_count","offer_days", "price")->where("id",$request->offer_id)->first();
         $request["decrement_trip"]=$num->trips_count;
+        $request["price"]=$num->price;
         $request["end_date"]= date('Y-m-d', strtotime(' + '. $num->offer_days . ' day'));;
         $request['added_by'] = auth()->user()->id;
 

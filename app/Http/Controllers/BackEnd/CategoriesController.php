@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackEnd;
 
 
 use App\Models\Category;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;

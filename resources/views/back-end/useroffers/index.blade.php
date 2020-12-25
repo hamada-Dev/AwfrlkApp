@@ -33,10 +33,10 @@
                         @lang('site.id')
                     </th>
                     <th>
-                        @lang('site.product_id')
+                        @lang('site.user')
                     </th>
                     <th>
-                        @lang('site.order_id')
+                        @lang('site.offer')
                     </th>
                     <th class="text-right">
                         @lang('site.actions')

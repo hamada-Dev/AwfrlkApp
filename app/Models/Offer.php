@@ -3,21 +3,13 @@
 namespace App\Models;
 
 use App\Scopes\AvilableScope;
-use Illuminate\Database\Eloquent\Model;
 use App\Scopes\NonDeleteIScope;
+use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
 {
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::addGlobalScope(new NonDeleteIScope);
-        static::addGlobalScope(new AvilableScope);
-    }
-
-    
     public function user()
     {
         return $this->belongsToMany(User::class, 'user_offers')->withPivot(['decrement_trip', 'end_date',]);
@@ -26,5 +18,13 @@ class Offer extends Model
     public function area()
     {
         return $this->belongsTo(Area::class);
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new NonDeleteIScope);
+        static::addGlobalScope(new AvilableScope);
     }
 }

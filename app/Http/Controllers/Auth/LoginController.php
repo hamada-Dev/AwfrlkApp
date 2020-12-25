@@ -19,6 +19,7 @@ class LoginController extends Controller
         logout as performLogout;
     }
 
+
     public function logout(Request $request)
     {
         $this->performLogout($request);

@@ -16,7 +16,10 @@ class UserOfferResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'myOffer' => MyOfferResource::collection($this->userOffer),
+            'offer'            => $this->offer->name,
+            'decrement_trip'   => $this->decrement_trip,
+            'price'            => $this->price,
+            'area'             => $this->offer->area->name,
         ];
     }
 }

@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserOfferResource;
-use App\Models\Offer;
-use App\Models\User;
+use App\Models\UserOffer;
 use Illuminate\Http\Request;
 
-class UserOfferController extends Controller
+class UserOfferController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,11 @@ class UserOfferController extends Controller
      */
     public function index()
     {
-        return UserOfferResource::collection( User::with(['userOffer' => function($q){ return $q->orderby('end_date','DESC');}])->where('id', auth()->user()->id)->get());
-        // return UserOfferResource::collection( User::where('id', auth()->user()->id)->get());
+        $userOffer = UserOffer::with('user')->whereHas("offer")->where('user_id', auth()->user()->id)->latest()->get();
+        if ($userOffer->count() > 0)
+            return $this->sendResponse(UserOfferResource::collection($userOffer), 'user offer data');
+        else
+            return $this->sendError('no data', 'this user has no offer', 500);
     }
 
     /**

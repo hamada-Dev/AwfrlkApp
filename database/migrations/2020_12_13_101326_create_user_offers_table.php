@@ -18,6 +18,7 @@ class CreateUserOffersTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('offer_id')->unsigned();
             $table->integer('decrement_trip')->comment('this number of trip offer that dec every order');
+            $table->double('price')->comment('the price of offer becouse if user update offer this userOffer not have problem');
             $table->timestamps();
             $table->dateTime('end_date')->nullable()->comment(' = this.created_at + offers.offer_days');
             $table->bigInteger('added_by')->unsigned()->comment('who added');

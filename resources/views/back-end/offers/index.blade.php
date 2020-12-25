@@ -82,7 +82,7 @@
                 </td>
 
                 <td>
-                    @if($row->avilable==0)
+                    @if($row->avilable==1)
                          @lang('site.Active')
                     @else
                         @lang('site.NotActive')

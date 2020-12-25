@@ -20,6 +20,7 @@
             <select name="offer_id" class="form-control @error('offer_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose_offer')</option>
                 @foreach($offers as $offer)
+                <h1>{{$offer->name}}</h1>
                     <option value="{{$offer->id}}" @if((isset($row) && $row->offer_id == $offer->id) || (request() != NULL && request()->offer_id == $offer->id ) || old('offer_id') == $offer->id) selected @endif>{{$offer->name}}</option>
                 @endforeach
             </select>
