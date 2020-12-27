@@ -7,7 +7,7 @@ use App\Http\Resources\AreaResource;
 use App\Models\Area;
 use Illuminate\Http\Request;
 
-class AreasController extends Controller
+class AreasController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,11 @@ class AreasController extends Controller
      */
     public function index()
     {
-        $areas = Area::get();
-        return AreaResource::collection($areas);
+        $areas = Area::where('parent_id', 0)->get();
+        if ($areas->count() > 0)
+            return $this->sendResponse(AreaResource::collection($areas), 200);
+        else
+            return $this->sendError('theres No Area Yet');
     }
 
     /**
@@ -39,7 +42,11 @@ class AreasController extends Controller
      */
     public function show($id)
     {
-        //
+        $areas = Area::where('parent_id', $id)->get();
+        if ($areas->count() > 0)
+            return $this->sendResponse(AreaResource::collection($areas), 200);
+        else
+            return $this->sendError('theres No Area Yet');
     }
 
     /**

@@ -18,7 +18,11 @@ class UserController extends BaseController
      */
     public function index()
     {
-       
+        $user = User::where('id', auth()->user()->id)->get();
+        if ($user->count() > 0)
+            return $this->sendResponse(UserResource::collection($user), 200);
+        else
+            return $this->sendError('no user with this id ', ['data' => 'no data ',], 404);
     }
 
     /**
@@ -40,11 +44,7 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-        $user =User::where('id', $id)->get();
-        if($user->count() > 0)
-        return $this->sendResponse(  UserResource::collection($user) , 200);
-        else
-        return $this->sendError('no user with this id ', ['data' => 'no data ',], 404);
+        //
     }
 
     /**
@@ -56,21 +56,21 @@ class UserController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('id', $id)->get();
+
         $request->validate([
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id),],
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id),],
             'password' => ['required', 'min:5'],
             'c_password' => ['required', 'same:password'],
-            'gender' => ['required', Rule::in([0, 1])],
-            'phone' => ['required', Rule::unique('users')->ignore($id),],
-            'ssn' => ['required', 'integer', Rule::unique('users')->ignore($id),],
+            'gender' => ['nullable', Rule::in([0, 1])],
+            'phone' => ['required', 'size:11', Rule::unique('users')->ignore($id),],
+            'ssn' => ['nullable', 'size:14', Rule::unique('users')->ignore($id),],
             'adress' => ['required', 'string', 'max:255'],
             'area_id' => ['nullable', 'exists:areas,id'],
-
         ]);
-            $request_date = $request->except(['image', 'c_password', '_token', ]);
+        $request_date = $request->except(['image', 'c_password', '_token',]);
         if ($request->image) {
             if ($user->image != 'default.png') {
                 Storage::disk('public_uploads')->delete('/users_images/' . $user->image);
@@ -78,13 +78,13 @@ class UserController extends BaseController
             $this->uploadImage($request);
             $request_date['image'] = $request->image->hashName();
         }
-        
+
         $updateUser = $user->update($request_date);
 
-        if($updateUser)
-        return $this->sendResponse( $request_date, 'updated sucesffuly');
+        if ($updateUser)
+            return $this->sendResponse($request_date, 'updated sucesffuly');
         else
-        return $this->sendError('no updata', ['data' => $user,], 404);
+            return $this->sendError('no updata', ['data' => $user,], 404);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,45 +17,50 @@ class RegisterController extends BaseController
 
     public function register(Request $request)
     {
+        // if (auth()->user()) {
+        //     return User::where('id', auth()->user()->id)->get();
+        //     return new UserResource(User::where('id', auth()->user()->id)->get());
+        // }
+
+
         $validator = Validator::make($request->all(), [
             'firstName' => ['required', 'string', 'max:255'],
-            'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'lastName' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:5'],
             'c_password' => ['required', 'same:password'],
-            'gender' => ['required', Rule::in([0, 1])],
-            'phone' => ['required', 'unique:users'],
-            'ssn' => ['required', 'integer', 'unique:users'],
+            // 'gender' => ['required', Rule::in([0, 1])],
+            'phone' => ['required', 'unique:users', 'size:11'],
+            // 'ssn' => ['required', 'unique:users', 'size:14'],
             'adress' => ['required', 'string', 'max:255'],
             'area_id' => ['nullable', 'exists:areas,id'],
-            'image' => ['nullable', 'image'],
+            // 'image' => ['nullable', 'image'],
         ]);
-
         if ($validator->fails()) {
             return $this->sendError('error validation', $validator->errors());
         }
+        // return $request;
 
         if ($request->image) {
             $this->uploadImage($request);
             $image = $request->image->hashName();
-        } 
-        else {
+        } else {
             $image = "default.png";
         }
 
         $user = User::create([
             'firstName' => $request['firstName'],
-            'lastName' => $request['lastName'],
-            'email' => $request['email'],
+            // 'lastName' => $request['lastName'],
+            // 'email' => $request['email'],
             'password' => bcrypt($request['password']),
             // 'password' => Hash::make($request['password']),
-            'gender' => $request['gender'],
+            // 'gender' => $request['gender'],
             'phone' => $request['phone'],
-            'ssn' => $request['ssn'],
+            // 'ssn' => $request['ssn'],
             'adress' => $request['adress'],
             'area_id' => $request['area_id'],
             'api_token' => '',
-            'image' => $image,
+            // 'image' => $image,
         ]);
 
         // $user->sendApiEmailVerificationNotification();

@@ -17,7 +17,10 @@ class DeliveryController extends BaseController
     public function index()
     {
         $delivery = User::where('id', auth()->user()->id)->get();
-        return $this->sendResponse( DeliveryRecourse::collection($delivery), 200);
+        if ($delivery->count() > 0)
+            return $this->sendResponse(DeliveryRecourse::collection($delivery), 200);
+        else
+            return $this->sendError('theres No Devlivery  Yet');
     }
 
     /**

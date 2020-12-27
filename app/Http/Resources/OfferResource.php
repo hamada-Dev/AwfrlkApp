@@ -16,6 +16,7 @@ class OfferResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            'offer_id'    => $this->id,
             'name'        => $this->name,
             'price'       => $this->price,
             'trips_count' => $this->trips_count,

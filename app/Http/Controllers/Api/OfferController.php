@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OfferResource;
 use App\Models\Offer;
+use App\Models\UserOffer;
 use Illuminate\Http\Request;
 
-class OfferController extends Controller
+class OfferController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,11 @@ class OfferController extends Controller
      */
     public function index()
     {
-        
-        return OfferResource::collection(Offer::latest()->get());
+        $offers = Offer::latest()->get();
+        if ($offers->count() > 0)
+            return $this->sendResponse(OfferResource::collection($offers), 200);
+        else
+            return $this->sendError('theres No Offer Yet');
     }
 
     /**
@@ -28,7 +32,21 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $offerCheck = Offer::find($request->offer_id);
+        if ($offerCheck) {
+
+            $request["offer_id"] = $offerCheck->id;
+            $request["user_id"] = auth()->user()->id;
+            $request["decrement_trip"] = $offerCheck->trips_count;
+            $request["price"] = $offerCheck->price;
+            $request["end_date"] = date('Y-m-d', strtotime(' + ' . $offerCheck->offer_days . ' day'));;
+            $request['added_by'] = auth()->user()->id;
+
+            UserOffer::create($request->all());
+            return $this->sendResponse('you take this offer sucessfully', 200);
+        } else {
+            return $this->sendError('This Offer Not Find', ['No Data'], 404);
+        }
     }
 
     /**
@@ -39,7 +57,9 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        return OfferResource::collection(Offer::whereHas(['user', function($q){return $q->select('offer_id', 'user_id', 'decrement_trip');}])->get());
+        // return OfferResource::collection(Offer::whereHas(['user', function ($q) {
+        //     return $q->select('offer_id', 'user_id', 'decrement_trip');
+        // }])->get());
     }
 
     /**

@@ -17,9 +17,11 @@ class UserOfferResource extends JsonResource
         // return parent::toArray($request);
         return [
             'offer'            => $this->offer->name,
-            'decrement_trip'   => $this->decrement_trip,
+            'remaine_trip'     => $this->decrement_trip,
             'price'            => $this->price,
             'area'             => $this->offer->area->name,
+            'created_at'       => date('d-M-Y H:i A', strtotime($this->created_at)),
+            'end_date'         => date('d-M-Y H:i A', strtotime($this->end_date)),
         ];
     }
 }
