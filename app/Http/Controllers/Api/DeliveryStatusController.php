@@ -7,7 +7,7 @@ use App\Http\Resources\DeliveryStatusRecourse;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class DeliveryStatusController extends Controller
+class DeliveryStatusController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,12 @@ class DeliveryStatusController extends Controller
     public function index()
     {
         // return User::where('delivery_id', auth()->user()->id)->get();
-        return DeliveryStatusRecourse::collection(User::where('id', auth()->user()->id)->get());
+        $deliveryStatus = User::where('id', auth()->user()->id)->get();
+
+        if ($deliveryStatus->count() > 0)
+            return $this->sendResponse(DeliveryStatusRecourse::collection($deliveryStatus), 200);
+        else
+            return $this->sendError('There is no order for this delivery', ['No Data'], 404);
     }
 
     /**

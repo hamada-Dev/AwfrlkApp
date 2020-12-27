@@ -24,25 +24,27 @@ Route::group(['namespace' => 'Api'], function () {
         Route::group(['middleware' => 'userGroup'], function () {
 
             // category route   
-            Route::get('/category', 'CategoriesController@allCategories'); //good
+            Route::get('/category', 'CategoriesController@allCategories');
 
             // product route 
-            Route::resource('product', 'ProductController'); //good
+            Route::resource('product', 'ProductController');
 
             // product route 
-            Route::resource('order', 'OrderController');
+            Route::resource('order', 'OrderController'); //--------->>>
 
             // all offer route 
-            Route::resource('offer', 'OfferController');  //good
-
-            // all area route 
-            Route::resource('area', 'AreasController');  //good
-
-            //  user route 
-            Route::resource('user', 'UserController'); //good
+            Route::resource('offer', 'OfferController'); 
 
             // user offer route 
-            Route::resource('userOffer', 'UserOfferController'); //good
+            Route::resource('userOffer', 'UserOfferController'); 
+
+            // all area route 
+            Route::resource('area', 'AreasController');  
+
+            //  user route 
+            Route::resource('user', 'UserController'); 
+
+
         });
 
         // route group for delivery

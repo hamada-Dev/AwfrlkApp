@@ -7,7 +7,7 @@ use App\Http\Resources\OrderDeliveryRecourse;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class DeliveryOrderController extends Controller
+class DeliveryOrderController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,12 @@ class DeliveryOrderController extends Controller
      */
     public function index()
     {
-       
-        return OrderDeliveryRecourse::collection(Order::where('delivery_id', auth()->user()->id)->get());
+        $delivryOrder =  Order::where('delivery_id', auth()->user()->id)->get();
+
+        if ($delivryOrder->count() > 0)
+            return $this->sendResponse(OrderDeliveryRecourse::collection($delivryOrder), 200);
+        else
+            return $this->sendError('There is no order for this delivery', ['No Data'], 404);
     }
 
     /**
@@ -28,7 +32,7 @@ class DeliveryOrderController extends Controller
      */
     public function store(Request $request)
     {
-       //
+        //
     }
 
     /**

@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'phone'       => $this->phone,
             'adress'      => $this->adress,
             'image'       => $this->image_path,
-            'area_id'     => $this->area->name,
+            'area_id'     => $this->area_id == null ? $this->area_id : $this->area->name,
         ];
     }
 }
