@@ -15,10 +15,13 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('amount');
-            $table->float('price');
-            $table->bigInteger('product_id')->unsigned();
+            $table->float('amount')->nullable()->comment('this is for pharmacy order or from home to home');
+            $table->float('price')->nullable()->comment('this is for pharmacy order or from home to home');
+            $table->string('image')->nullable()->comment('this is for pharmacy order');
+            $table->bigInteger('product_id')->unsigned()->nullable()->comment('this is for pharmacy order or from home to home');
+            $table->string('product_home')->nullable()->comment('this is for home order');
             $table->bigInteger('order_id')->unsigned();
+            
             $table->timestamps();
             $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
             $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');

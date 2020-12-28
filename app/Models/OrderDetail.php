@@ -9,6 +9,13 @@ class OrderDetail extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['image_path'];
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/orders_images/' . $this->image);
+    } //end of path
+
     public static function boot()
     {
         parent::boot();

@@ -21,7 +21,7 @@ class OfferResource extends JsonResource
             'price'       => $this->price,
             'trips_count' => $this->trips_count,
             'offer_days'  => $this->offer_days,
-            'area_id'     => $this->area->name,        
+            'area_id'     => $this->area_id == null ? null : $this->area->name,        
         ];
     }
 }
