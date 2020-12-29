@@ -17,9 +17,11 @@ class OrderDetailsRecourse extends JsonResource
         // return parent::toArray($request);
 
         return [
-            'product_name' => $this->product->name,
+            'product_name' => $this->product == null ? Null : $this->product->name,
             'amount'       => $this->amount,
             'price'        => $this->price,
+            'image'        => $this->image == null ? null : $this->image_path ,
+            'product_home' => $this->product_home,
             'created_at'   => $this->created_at->diffForHumans(),
         ];
     }

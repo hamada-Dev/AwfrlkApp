@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Api'], function () {
 
+    // all area route becouse we need this in register 
+    Route::resource('area', 'AreasController'); 
+
     Route::group(['middleware' => 'auth:api'], function () {
 
         Route::post('logout', 'RegisterController@logoutApi');
@@ -37,9 +40,6 @@ Route::group(['namespace' => 'Api'], function () {
 
             // user offer route 
             Route::resource('userOffer', 'UserOfferController'); 
-
-            // all area route 
-            Route::resource('area', 'AreasController');  
 
             //  user route 
             Route::resource('user', 'UserController'); 

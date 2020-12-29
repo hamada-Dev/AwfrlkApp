@@ -31,7 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function video()
     {
-
         return $this->hasMany(Video::class);
     }
 
@@ -75,6 +74,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ScopeDelivery($query)
     {
         return $query->where('group', 'delivery');
+    } 
+    
+    public function ScopeDeliveryActive($query)
+    {
+        return $query->where('group', 'delivery')->where('delivery_status', 1);
     }
 
     // start relation table 
