@@ -42,7 +42,17 @@ return [
   'male'=>'ذكر',
   'female'=>'أنثى',
   'unit'=>'الوحدة',
-  
+  'salary'=>'المرتب',
+  'commission'=>'العلاوة',
+  'delivery'=>'الطيار',
+  'deliveryStatus'=>'حالة الطيار',
+    'busy'=>'مشغول',
+    'active'=>'نشط',
+    'notActive'=>'غير نشط',
+    'black_list'=>'قائمة سوداء',
+    'delivery_status'=>'حالة الطيار',
+    'out_status'=>'غير ذلك',
+    'choose-delivery_status'=>'أختر حالة الطيار',
     //categories
     'categories'=>'الأقسام',
     'category'=>'قسم',

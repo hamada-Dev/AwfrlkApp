@@ -4,7 +4,7 @@
 
 @endphp
 @section('title')
-    @lang('site.'.$module_name_plural)
+    @lang('site.delivery')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
     @component('back-end.layout.nav-bar')
 
         @slot('nav_title')
-            @lang('site.'.$module_name_plural)
+            @lang('site.delivery')
         @endslot
 
     @endcomponent
@@ -21,16 +21,16 @@
         @slot('add_button')
             <div class="col-md-4 text-right">
                 <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">
-                    @lang('site.add') @lang('site.'.$module_name_singular)
+                    @lang('site.add') @lang('site.delivery')
                 </a>
             </div>
         @endslot
         <div class="table-responsive">
             <table class="table">
                 <thead class=" text-primary">
-                <tr><th>
+                <tr>
+                    <th>
                         @lang('site.id')
-                        
                     </th>
                     <th>
                         @lang('site.name')
@@ -47,13 +47,11 @@
                     <th>
                         @lang('site.country')
                     </th>
+                   
                     <th>
-                         @lang('site.status')
+                         @lang('site.delivery_status')
                     </th>
-
-                    <th>
-                        @lang('site.group')
-                    </th>
+                    
                     <th class="text-right">
                         @lang('site.actions')
                     </th>
@@ -92,6 +90,7 @@
                         <td>
                             {{$row->adress}}
                         </td>
+                       
                         <th>
                             @if($row->delivery_status==0)
                             <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-success btn-sm'>
@@ -112,11 +111,6 @@
                             @else
                             @endif
                         </th>
-
-                        <td>
-                            {{$row->group}}
-                        </td>
-
                         <td class="td-actions text-right">
                             @include('back-end.buttons.edit')
                             @include('back-end.buttons.delete')
