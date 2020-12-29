@@ -25,8 +25,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('delivery_id')->nullable()->unsigned();
             $table->bigInteger('client_id')->unsigned();
             $table->bigInteger('area_id')->unsigned();
-            $table->bigInteger('area_id_from')->unsigned();
-            $table->string('adress_from')->unsigned();
+            $table->bigInteger('area_id_from')->nullable()->unsigned();
+            $table->string('adress_from')->nullable();
             
             $table->timestamps();
             $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');

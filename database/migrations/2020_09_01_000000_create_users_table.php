@@ -17,20 +17,19 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('firstName');
             $table->string('lastName')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('ssn')->unique()->nullable();
             $table->tinyInteger('gender')->nullable();
-            $table->string('phone')->unique();
-            $table->string('adress');
+            $table->string('phone')->unique()->nullable();
+            $table->string('adress')->nullable();
             $table->string('image')->default('user.png');
             $table->string('area_id')->nullable();
             $table->string('user_code')->nullable();
             $table->string('api_token');
             $table->rememberToken();
             $table->timestamps();
-
             // $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
         });
     }

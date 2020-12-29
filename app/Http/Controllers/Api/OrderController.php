@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DeliveryRecourse;
 use App\Http\Resources\OrderUserRecourse;
 use App\Models\Area;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +43,9 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        // this for 
+        $ActiveDelivery = User::deliveryActive()->get();
+
+        // this for add order 
         if ($request->product_id) {
             $request->validate([
                 'product_id.*'   =>  ['required', 'numeric', 'exists:products,id'],
@@ -62,55 +66,32 @@ class OrderController extends BaseController
                         'product_id' => $request->product_id[$i],
                     ]);
                 }
+                // request of image for pharmacy 
+                if ($request->image) {
+                    $this->pharmacy($request, $newOrder, $ActiveDelivery);
+                }
 
                 DB::commit();
-                return $this->sendResponse(['data' => 'add product order   sucessfully'], 200);
+                return $this->sendResponse(['data' => 'add product || pharmacy order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
             } catch (\Exception $ex) {
                 DB::rollback();
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
             }
         } elseif ($request->image) {
-            $request->validate([
-                'image'   =>  ['image'],
-                // 'area_id'      =>  ['required', 'numeric', 'exists:areas,id'],
-            ]);
-
-            $this->uploadImage($request);
-
-            try {
-                DB::beginTransaction();
-                $newOrder = $this->model->create([
-                    'client_id'      => auth()->user()->id,
-                    'delivery_price' => auth()->user()->area->trans_price,
-                    'area_id'        =>  $request->area_id ?? auth()->user()->area_id,
-                ]);
-
-                $newOrder->orderDetails()->create([
-                    'image'     => $request->image->hashName(),
-                ]);
-
-                DB::commit();
-                return $this->sendResponse(['data' => 'add pharmacy order  sucessfully'], 200);
-            } catch (\Exception $ex) {
-                DB::rollback();
-                return $this->sendError(['data' => 'cant add this order please try again'], 404);
-            }
+            return $this->pharmacy($request, null, $ActiveDelivery);
         } elseif ($request->adress_from) {
-
-
             $request->validate([
                 'area_id_from'   =>  ['required', 'numeric', 'exists:areas,id'],
                 // 'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
                 'product_home.*'   =>  ['required', 'string',],
             ]);
 
-
             try {
                 DB::beginTransaction();
                 $areaTransFrom = Area::select('trans_price')->where('id', $request->area_id_from)->first();
 
                 $newOrder = $this->model->create([
-                    'client_id'      => auth()->user()->id,
+                    'client_id'      =>  auth()->user()->id,
                     'area_id'        =>  $request->area_id ?? auth()->user()->area_id,
                     'area_id_from'   =>  $request->area_id_from,
                     'adress_from'    =>  $request->adress_from,
@@ -124,7 +105,7 @@ class OrderController extends BaseController
                 }
 
                 DB::commit();
-                return $this->sendResponse(['data' => 'add home order   sucessfully'], 200);
+                return $this->sendResponse(['data' => 'add home order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
             } catch (\Exception $ex) {
                 DB::rollback();
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
@@ -166,12 +147,36 @@ class OrderController extends BaseController
         //
     }
 
+    protected function pharmacy($request, $newOrder = null, $ActiveDelivery = null)
+    {
+        try {
+            DB::beginTransaction();
+            $request->validate([
+                'image'   =>  ['image'],
+            ]);
+            if ($newOrder == null) {
+                $newOrder = $this->model->create([
+                    'client_id'      => auth()->user()->id,
+                    'delivery_price' => auth()->user()->area->trans_price,
+                    'area_id'        =>  $request->area_id ?? auth()->user()->area_id,
+                ]);
+            }
+            $this->uploadImage($request);
+            $newOrder->orderDetails()->create([
+                'image'     => $request->image->hashName(),
+            ]);
+            DB::commit();
+            return $this->sendResponse(['data' => 'add pharmacy order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return $this->sendError(['data' => 'cant add this order please try again'], 404);
+        }
+    }
 
     protected function uploadImage($request)
     {
-        \Intervention\Image\Facades\Image::make($request->image)->save(public_path('uploads/orders_images/' . $request->image->hashName()));
-        //            ->resize(300, null, function ($constraint) {
-        //            $constraint->aspectRatio();
-
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(800, 500);
+        // save file as jpg with medium quality
+        $img->save(public_path('uploads/orders_images/' . $request->image->hashName()), 70);
     }
 }

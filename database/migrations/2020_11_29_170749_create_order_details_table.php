@@ -18,7 +18,7 @@ class CreateOrderDetailsTable extends Migration
             $table->float('amount')->nullable()->comment('this is for pharmacy order or from home to home');
             $table->float('price')->nullable()->comment('this is for pharmacy order or from home to home');
             $table->string('image')->nullable()->comment('this is for pharmacy order');
-            $table->bigInteger('product_id')->unsigned()->nullable()->comment('this is for pharmacy order or from home to home');
+            $table->bigInteger('product_id')->nullable()->unsigned()->comment('this is for pharmacy order or from home to home');
             $table->string('product_home')->nullable()->comment('this is for home order');
             $table->bigInteger('order_id')->unsigned();
             
