@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\DeliveryNotifyEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DeliveryRecourse;
 use App\Http\Resources\OrderUserRecourse;
@@ -70,6 +71,14 @@ class OrderController extends BaseController
                 if ($request->image) {
                     $this->pharmacy($request, $newOrder, $ActiveDelivery);
                 }
+
+                ////////////////////////////////////////////////
+                $data = [
+                    'user_id'   =>  auth()->user()->id,
+                    'order_id'  =>  $newOrder->id,
+                ];
+                event(new DeliveryNotifyEvent($data));
+                ////////////////////////////////////////////////
 
                 DB::commit();
                 return $this->sendResponse(['data' => 'add product || pharmacy order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
