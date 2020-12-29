@@ -18,7 +18,6 @@
                     <p>@lang('site.home')</p>
                 </a>
             </li>
-
             <li class="nav-item {{is_active('users')}}">
                 <a class="nav-link" href="{{route('users.index')}}">
                     <i class="material-icons">person</i>
@@ -26,13 +25,28 @@
                 </a>
             </li>
 
+            
+            <li class="nav-item {{is_active('delivery')}}">
+                <a class="nav-link" href="{{route('users.delivery')}}">
+                    <i class="material-icons">person</i>
+                    <p>@lang('site.delivery')</p>
+                </a>
+            </li>
+
+            <li class="nav-item {{is_active('blcklist')}}">
+                <a class="nav-link" href="{{route('users.showblacklist')}}">
+                    <i class="material-icons">person</i>
+                    <p>@lang('site.black_list')</p>
+                </a>
+            </li>
+            
             <li class="nav-item {{is_active('categories')}}">
                 <a class="nav-link" href="{{route('categories.index')}}">
                     <i class="material-icons">category</i>
                     <p>@lang('site.categories')</p>
                 </a>
             </li>
-
+            
             <li class="nav-item {{is_active('products')}}">
                 <a class="nav-link" href="{{route('products.index')}}">
                     <i class="material-icons">cake</i>

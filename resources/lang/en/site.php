@@ -44,6 +44,17 @@ return [
     'choose-gender'=>'Choose Gender ',
     'male'=>'Male',
     'female'=>'Female',
+    'salary'=>'Salary',
+    'commission'=>'Commission',
+    'delivery'=>'Delivery',
+    'deliveryStatus'=>'Delivery Status',
+    'busy'=>'Busy',
+    'active'=>'Active',
+    'notActive'=>'Not Active',
+    'black_list'=>'Black List',
+    'delivery_status'=>'Devilery Status',
+    'out_status'=>'Out This',
+    'choose-delivery_status'=>'Choose Delivery Status',
     //categories
     'categories' => 'Categories',
     'category' => 'Category',
@@ -53,7 +64,6 @@ return [
     'trans_price' => 'Transport Price',
     'product_number' => 'Products Numbers',
     'unit'=>'Unit',
-
     'choose-category'=>'Choose Category',
     'choose-unit'=>'Choose Unit',
   

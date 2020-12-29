@@ -33,9 +33,9 @@ class DeliveryMotocyclesController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'user_license' => ['required', 'max:10000','min:2'],
-            'moto_license'   =>  ['required', 'max:10000','min:1'],
-            'moto_number'   =>  ['required'],
+            'user_license' => ['required', 'max:10000','min:2','unique:delivery_motocycles'],
+            'moto_license'   =>  ['required', 'max:10000','min:1','unique:delivery_motocycles'],
+            'moto_number'   =>  ['required','unique:delivery_motocycles'],
             'license_renew_date' =>['required'],
             'license_expire_date' =>['required'],
             'type' =>['required'],

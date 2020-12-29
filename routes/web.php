@@ -67,6 +67,14 @@ Route::group(
             Route::resource('orders', 'OredersController')->except("show");
             //orderDetails
             Route::resource('orderdetails', 'OrderDetailsController')->except("show");
+            //to seperate the delivery
+            Route::get('/showDelivey','UsersController@showDelivery')->name('users.delivery');
+            //delivery history status
+            Route::get("deliveystatus/{delivery_id}",'UsersController@statusDelivery')->name('users.deliverystatus');
+            //add in black list
+            Route::get("blacklist/{id}",'UsersController@addBlacklist')->name('users.blacklist');
+           //show black list
+            Route::get("blacklist",'UsersController@showBlacklist')->name('users.showblacklist');
 
         });
         

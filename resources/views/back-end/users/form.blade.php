@@ -39,16 +39,27 @@
     @php
     $groupList = ['admin', 'delivery', 'emp', 'user'];
     @endphp
+    
+
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.group')</label>
-            <select name="group" class="form-control @error('group') is-invalid @enderror">
-               <option value="...">@lang('site.choose-group')</option>
-                @foreach ($groupList as $item)
-                <option value="{{$item}}" {{isset($row) && $row->group == $item ? 'selected' : ''}}>{{$item}}</option>
-                @endforeach
-            </select>
-            @error('group')
+            <label class="bmd-label-floating">@lang('site.ssn')</label>
+            <input type="number" name="ssn"  value="{{ isset($row) ? $row->ssn : old('ssn') }}"
+                class="form-control @error('ssn') is-invalid @enderror">
+            @error('ssn')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.salary')</label>
+            <input type="number" name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
+                class="form-control @error('salary') is-invalid @enderror">
+            @error('salary')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -58,10 +69,10 @@
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.ssn')</label>
-            <input type="number" name="ssn"  value="{{ isset($row) ? $row->ssn : old('ssn') }}"
-                class="form-control @error('ssn') is-invalid @enderror">
-            @error('ssn')
+            <label class="bmd-label-floating">@lang('site.commission')</label>
+            <input type="text" name="commission"  value="{{ isset($row) ? $row->commission : old('commission') }}"
+                class="form-control @error('commission') is-invalid @enderror">
+            @error('commission')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -105,16 +116,55 @@
             @enderror
         </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.group')</label>
+            <select name="group" class="form-control @error('group') is-invalid @enderror">
+               <option value="...">@lang('site.choose-group')</option>
+                @foreach ($groupList as $item)
+                <option value="{{$item}}" {{isset($row) && $row->group == $item ? 'selected' : ''}}>{{$item}}</option>
+                @endforeach
+            </select>
+            @error('group')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.gender')</label>
 
             <select name="gender" class="form-control @error('gender') is-invalid @enderror">
                 <option value="...">@lang('site.choose-gender')</option>
-                <option value="1" {{isset($row) && $row->gender == 'Male' ? 'selected' : ''}}>@lang('site.male')</option>
-                <option value="0" {{isset($row) && $row->gender == 'Female' ? 'selected' : ''}}>@lang('site.female')</option>
+                <option value="1" {{isset($row) && $row->gender == '1' ? 'selected' : ''}}>@lang('site.male')</option>
+                <option value="0" {{isset($row) && $row->gender == '0' ? 'selected' : ''}}>@lang('site.female')</option>
             </select>
             @error('gender')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.delivery_status')</label>
+
+            <select name="delivery_status" class="form-control @error('delivery_status') is-invalid @enderror">
+                <option value="...">@lang('site.choose-delivery_status')</option>
+                <option value="0" {{isset($row) && $row->delivery_status == '0' ? 'selected' : ''}}>@lang('site.busy')</option>
+                <option value="1" {{isset($row) && $row->delivery_status == '1' ? 'selected' : ''}}>@lang('site.active')</option>
+                <option value="2" {{isset($row) && $row->delivery_status == '2' ? 'selected' : ''}}>@lang('site.notActive')</option>
+                <option value="3" {{isset($row) && $row->delivery_status == '3' ? 'selected' : ''}}>@lang('site.black_list')</option>
+                <option value="4" {{isset($row) && $row->delivery_status == '4' ? 'selected' : ''}}>@lang('site.out_status')</option>
+
+            </select>
+            @error('delivery_status')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
