@@ -94,6 +94,7 @@ return array(
     'App\\Notifications\\PasswordResetNotification' => $baseDir . '/app/Notifications/PasswordResetNotification.php',
     'App\\Notifications\\VerifyApiEmail' => $baseDir . '/app/Notifications/VerifyApiEmail.php',
     'App\\OauthAccessToken' => $baseDir . '/app/OauthAccessToken.php',
+    'App\\Promocode' => $baseDir . '/app/Promocode.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

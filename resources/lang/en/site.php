@@ -66,7 +66,18 @@ return [
     'unit'=>'Unit',
     'choose-category'=>'Choose Category',
     'choose-unit'=>'Choose Unit',
-  
+  //promocodes
+  'choose_confirm'=>'Choose Situation',
+  'valide'=>"Valide",
+  'notValide'=>'Not Valide',
+  'serial'=>'Serial',
+  'promocodes'=>'Promocode',
+  'promocode'=>'Promocode',
+  'Promocode'=>'Promocode',
+  'confirm'=>'Confirm',
+  'PROMOCODE'=>'Promocode',
+'discount'=>'Discount',
+'user_name'=>'Client Name',
       //offers
       "offer_name"=>"Offer Name",
       'offers'=>'Offers',

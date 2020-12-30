@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->bigInteger('ssn')->unique()->nullable();
             $table->tinyInteger('gender')->nullable();
+            $table->float("salary")->nullable();
+            $table->double("commission")->nullable();
             $table->string('phone')->unique()->nullable();
             $table->float("salary")->nullable();
             $table->double("commission")->nullable();
@@ -30,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('area_id')->nullable();
             $table->string('user_code')->nullable();
             $table->string('api_token');
+            
             $table->rememberToken();
             $table->timestamps();
             // $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');

@@ -75,7 +75,7 @@ class UsersController extends BackEndController
         User::create($request_data);
         if($request->group=='delivery')
         {
-            return redirect()->route('deliverymotocycles.create');
+            return redirect()->route('deliverymotocycles.create')->with("del_id",$request->id);
         }
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('users.index');

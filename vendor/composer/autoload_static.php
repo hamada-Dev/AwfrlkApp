@@ -606,6 +606,7 @@ class ComposerStaticInitbcc787ad43e9cbe41a81e1060b12c349
         'App\\Notifications\\PasswordResetNotification' => __DIR__ . '/../..' . '/app/Notifications/PasswordResetNotification.php',
         'App\\Notifications\\VerifyApiEmail' => __DIR__ . '/../..' . '/app/Notifications/VerifyApiEmail.php',
         'App\\OauthAccessToken' => __DIR__ . '/../..' . '/app/OauthAccessToken.php',
+        'App\\Promocode' => __DIR__ . '/../..' . '/app/Promocode.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

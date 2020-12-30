@@ -92,6 +92,12 @@
                     <p>@lang('site.orderdetails')</p>
                 </a>
             </li>
+            <li class="nav-item {{is_active('promocodes')}}">
+                <a class="nav-link" href="{{route('promocodes.index')}}">
+                    <i class="material-icons">gift</i>
+                    <p>@lang('site.promocodes')</p>
+                </a>
+            </li>
             <!-- your sidebar here -->
         </ul>
     </div>

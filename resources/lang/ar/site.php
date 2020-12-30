@@ -60,6 +60,18 @@ return [
     'product_number' => 'عدد المنتجات',
     'choose-category'=>'أختر القسم',
     'choose-unit'=>' أختر الوحدة',
+  //promocodes
+  'choose_confirm'=>'أختر الحالة',
+  'valide'=>"صالح",
+  'notValide'=>'غير صالح',
+  'serial'=>'التسلسل',
+  'promocodes'=>'البروموكود',
+  'promocode'=>'البرموكود',
+  'Promocode'=>'البرموكود',
+  'confirm'=>'الحالة',
+  'PROMOCODE'=>'البروموكود',
+  'discount'=>'نسبة الخصم',
+  'user_name'=>'أسم العميل',
 
     //products
     'products'=>"المنتجات",
