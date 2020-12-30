@@ -27,7 +27,7 @@ class ProductsController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-
+        
         $rows = $rows->whereHas('category')->when($request->category_id, function ($query) use ($request) {
             $query->where('category_id', $request->category_id);
         })->paginate(5);

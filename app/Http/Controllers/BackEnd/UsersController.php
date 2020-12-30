@@ -150,8 +150,8 @@ class UsersController extends BackEndController
     {
         $rows = $this->model->find($delivery_id);
         $rows = $rows->deliveryStatus;
-        return view('back-end.'.$this->getClassNameFromModel().'.deliverystatus', compact('rows'));
         // return $rows;
+        return view('back-end.'.$this->getClassNameFromModel().'.deliverystatus', compact('rows'));
     }
    
 

@@ -20,6 +20,7 @@ class CreateOrderDetailsTable extends Migration
             $table->string('image')->nullable()->comment('this is for pharmacy order');
             $table->bigInteger('product_id')->nullable()->unsigned()->comment('this is for pharmacy order or from home to home');
             $table->string('product_home')->nullable()->comment('this is for home order');
+            $table->string('description')->nullable()->comment('this is discription for product');
             $table->bigInteger('order_id')->unsigned();
             
             $table->timestamps();

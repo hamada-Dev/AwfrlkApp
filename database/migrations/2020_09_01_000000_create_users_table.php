@@ -22,10 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->bigInteger('ssn')->unique()->nullable();
             $table->tinyInteger('gender')->nullable();
-            $table->string('phone')->unique();
-            $table->string('adress');
             $table->float("salary")->nullable();
             $table->double("commission")->nullable();
+            $table->string('phone')->unique()->nullable();
+            $table->float("salary")->nullable();
+            $table->double("commission")->nullable();
+            $table->string('adress')->nullable();
             $table->string('image')->default('user.png');
             $table->string('area_id')->nullable();
             $table->string('user_code')->nullable();

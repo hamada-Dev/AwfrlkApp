@@ -148,6 +148,12 @@
 </head>
 
 <body class="dark-edition">
+
+    <audio id="audioNotify">
+        <source src="{{asset('audio/amr.mp3')}}" type="audio/ogg">
+        <source src="{{asset('audio/amr.mp3')}}" type="audio/mpeg">
+    </audio>
+
     <div class="wrapper ">
         @include('back-end.layout.side-bar')
         <div class="main-panel" style="background-color: #202940; @if (app()->getLocale() == 'ar') float:left; @endif">
@@ -438,7 +444,7 @@
         });//end of delete
     </script>
 
-        {{-- more edit in ar local becouse package matrial have more than error  --}}
+    {{-- more edit in ar local becouse package matrial have more than error  --}}
     @if (app()->getLocale() == 'ar')
     <script>
         $('.sidebar .nav-link').each( function () { 
@@ -457,8 +463,50 @@
         $(this).children().css('display', 'flex');
     })
 
-   </script>
+    </script>
     @endif
+    {{-- -------------------------   pusher plugin -------------------------- --}}
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('af2b4f6752717c614a6a', {
+      cluster: 'eu'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        document.getElementById('audioNotify').play();
+        var name = data.first_name,
+            url = "{{route('home.index')}}";
+        // alert(JSON.stringify(data));
+
+        console.log(name);
+        var order = new Noty({
+                text: "هناك طلب ما من العميل " + name ,
+                type: "warning",
+                layout: 'bottomRight',
+                killer: true,
+                timeout: 60000,
+                buttons: [
+                    Noty.button("<a href='{{route("home.index")}}'> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
+                        // that.window.location = "";
+                        that.closest('form').submit();
+                        document.getElementById('audioNotify').pause();
+                    }),
+
+                    Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
+                        order.close();
+                        document.getElementById('audioNotify').pause();
+                    })
+                ]
+            });
+            order.show()
+
+    });
+    </script>
+
 </body>
 
 </html>
