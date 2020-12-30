@@ -77,6 +77,8 @@ Route::group(
             Route::get("blacklist",'UsersController@showBlacklist')->name('users.showblacklist');
             //promocodes
             Route::resource('promocodes', 'promocodesController')->except('show');
+            //advances
+            Route::resource('advances', 'advancesController')->except('show');
 
         });
         

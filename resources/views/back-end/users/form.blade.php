@@ -57,7 +57,7 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.salary')</label>
-            <input type="number" name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
+            <input type="number" step='0.01' name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
                 class="form-control @error('salary') is-invalid @enderror">
             @error('salary')
             <span class="invalid-feedback" role="alert">

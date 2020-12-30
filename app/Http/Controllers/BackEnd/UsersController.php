@@ -72,6 +72,8 @@ class UsersController extends BackEndController
 
         $request_data['password']= Hash::make($request->password);
         $request_data['api_token']=hash('md5','user');
+        $request['added_by']=auth()->user()->id;
+
         User::create($request_data);
         if($request->group=='delivery')
         {
@@ -125,6 +127,19 @@ class UsersController extends BackEndController
         
 
     }//end of update
+
+    public function destroy($id)
+    {
+        $promo = User::findOrFail($id);
+            $promo->update([
+                'deleted_by'    => auth()->user()->id,
+                'delete_date'   => now(),
+            ]);
+            // $product->delete();
+
+            session()->flash('success', __('site.deleted_successfully'));
+            return redirect()->route($this->getClassNameFromModel() . '.index');
+    }
 
     protected function uploadImage($request){
 

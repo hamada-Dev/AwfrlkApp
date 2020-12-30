@@ -72,7 +72,17 @@ return [
   'PROMOCODE'=>'البروموكود',
   'discount'=>'نسبة الخصم',
   'user_name'=>'أسم العميل',
-
+//advances
+'Advances'=>'السلفة',
+'Advance'=>'السلفة',
+'advance'=>'السلفة',
+'advances'=>'السلفة',
+'ADVNACES'=>'السلفة',
+'user_delivey'=>' الطيار',
+'choose_user_delivery'=>'أختر الطيار',
+'getmoney'=>'ما أستلمت',
+'givemoney'=>'ما سلمت',
+'Reset'=>'الباقى',
     //products
     'products'=>"المنتجات",
     'Product'=>'منتج',
