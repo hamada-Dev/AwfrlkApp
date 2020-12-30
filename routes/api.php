@@ -35,7 +35,7 @@ Route::group(['namespace' => 'Api'], function () {
             // product route 
             Route::resource('order', 'OrderController'); //--------->>>
 
-            // all offer route 
+            // all offer route  
             Route::resource('offer', 'OfferController'); 
 
             // user offer route 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OfferResource;
+use App\Http\Resources\UserOfferResource;
 use App\Models\Offer;
 use App\Models\UserOffer;
 use Illuminate\Http\Request;
@@ -32,7 +33,13 @@ class OfferController extends BaseController
      */
     public function store(Request $request)
     {
+        // check for this offer is find or not 
         $offerCheck = Offer::find($request->offer_id);
+
+        $checkAvilableOffer =  $this->checkAvilableOffer(auth()->user()->id);
+        if (!empty($checkAvilableOffer))
+            return $checkAvilableOffer;
+
         if ($offerCheck) {
 
             $request["offer_id"] = $offerCheck->id;
@@ -83,5 +90,17 @@ class OfferController extends BaseController
     public function destroy($id)
     {
         //
+    }
+    // to get all offer that not finish yet 
+    // SELECT * FROM `user_offers` where decrement_trip > 0 && end_date > now()
+    protected function checkAvilableOffer($id)
+    {
+        $avilableOffer = UserOffer::where('user_id', $id)
+            ->where('decrement_trip', '>', 0)
+            ->where('end_date', '>', now())->get();
+
+        if ($avilableOffer->count() > 0)
+            return $this->sendResponse(UserOfferResource::collection($avilableOffer), "can't subscribe for this offer becouse you have an offer yet", 500);
+        //     you can subscribe this offer 
     }
 }
