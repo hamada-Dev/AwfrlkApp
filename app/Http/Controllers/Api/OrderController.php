@@ -6,9 +6,11 @@ use App\Events\DeliveryNotifyEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DeliveryRecourse;
 use App\Http\Resources\OrderUserRecourse;
+use App\Http\Resources\UserOfferResource;
 use App\Models\Area;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\UserOffer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,9 +46,22 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        // $obj = json_decode($request,true);
-
+        // get all active delivery 
         $ActiveDelivery = User::deliveryActive()->get();
+
+        // check if user has promocode or not 
+        $checkPromo = $this->checkUserPromo(auth()->user()->id);
+        //  check if user has offer or not 
+        $checkOffer = $this->checkUserOffer(auth()->user()->id);
+
+        if(!empty($checkPromo)){
+            return $checkPromo;
+        }elseif(!empty($checkOffer)){
+            // return $checkOffer;
+            return $checkOffer['decrement_trip'];
+        }
+
+        return 'aya';
         // this for add order 
         if ($request->product_id) {
             try {
@@ -193,6 +208,20 @@ class OrderController extends BaseController
             DB::rollback();
             return $this->sendError(['data' => 'cant add this order please try again'], 404);
         }
+    }
+
+    protected function checkUserPromo($id)
+    {
+    }
+    protected function checkUserOffer($id)
+    {
+        $avilableOffer = UserOffer::where('user_id', $id)
+            ->where('decrement_trip', '>', 0)
+            ->where('end_date', '>', now())->first();
+
+        if ($avilableOffer->count() > 0)
+            return $avilableOffer;
+        //     you can subscribe this offer 
     }
 
     protected function uploadImage($request)
