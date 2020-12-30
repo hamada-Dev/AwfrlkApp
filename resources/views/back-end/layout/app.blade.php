@@ -478,26 +478,27 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
         document.getElementById('audioNotify').play();
+        var name = data.first_name,
+            url = "{{route('home.index')}}";
         // alert(JSON.stringify(data));
 
-
+        console.log(name);
         var order = new Noty({
-                text: "هناك طلب ما من العميل " + data,
-                // text: "@lang('site.confirm_delete')",
+                text: "هناك طلب ما من العميل " + name ,
                 type: "warning",
                 layout: 'bottomRight',
                 killer: true,
                 timeout: 60000,
                 buttons: [
-                    Noty.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
+                    Noty.button("<a href='{{route("home.index")}}'> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
+                        // that.window.location = "";
                         that.closest('form').submit();
                         document.getElementById('audioNotify').pause();
                     }),
 
-                    Noty.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
+                    Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
                         order.close();
                         document.getElementById('audioNotify').pause();
-
                     })
                 ]
             });

@@ -16,11 +16,13 @@ class DeliveryNotifyEvent implements ShouldBroadcast
 
     public $user_id;
     public $order_id;
+    public $first_name;
 
     public function __construct($message)
     {
-        $this->user_id  = $message['user_id'];
-        $this->order_id = $message['order_id'];
+        $this->user_id    = $message['user_id'];
+        $this->order_id   = $message['order_id'];
+        $this->first_name = $message['firstName'];
     }
 
     public function broadcastOn()
