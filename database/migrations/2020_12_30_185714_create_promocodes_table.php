@@ -15,15 +15,21 @@ class CreatePromocodesTable extends Migration
     {
         Schema::create('promocodes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("user_id");
-            $table->string("name");
+            $table->bigInteger("user_id")->nullable()->unsigned();
+            $table->string("name")->comment("name of promocode");
             $table->string('serial')->unique()->nullable();
-            $table->integer("confirm");
-            $table->integer("discount");
-            $table->integer("added_by");
-            $table->integer('deleted_by')->nullable();
+            $table->tinyInteger("confirm")->comment(" 1 is valide 0 is not valide");
+            $table->integer("discount")->unsigned()->comment("discount for percent");
+            $table->dateTime("end_date")->nullable()->comment("the end date for promocodes");
+            $table->bigInteger("added_by")->unsigned()->comment('who added');
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
             $table->dateTime("delete_date")->nullable();
+
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
+
         });
     }
 

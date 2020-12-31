@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         App\Models\User::create([
-            'firstName' => 'Super',
+            'name' => 'Super',
             'lastName' => 'Admin',
             'email' => 'super@eg.com',
             'phone' => '010',
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'user_code' => str_random(5),
         ]);
         App\Models\User::create([
-            'firstName' => 'employee',
+            'name' => 'employee',
             'lastName' => 'eeeee',
             'email' => 'emp@eg.com',
             'phone' => '011',
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
             'user_code' => str_random(5),
         ]);
         App\Models\User::create([
-            'firstName' => 'delivery',
+            'name' => 'delivery',
             'lastName' => 'dd',
             'email' => 'delivery@eg.com',
             'phone' => '012',
@@ -52,7 +52,7 @@ class UsersTableSeeder extends Seeder
         ]); 
         
         App\Models\User::create([
-            'firstName' => 'user',
+            'name' => 'user',
             'lastName' => 'uu',
             'email' => 'user@eg.com',
             'phone' => '015',

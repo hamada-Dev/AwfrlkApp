@@ -42,7 +42,7 @@ class UsersController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'firstName' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:5'],
@@ -86,7 +86,7 @@ class UsersController extends BackEndController
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'firstName' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'salary' => ['required'],

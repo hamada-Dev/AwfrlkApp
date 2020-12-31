@@ -49,6 +49,9 @@
                 <td>
                 @lang('site.discount')
                 </td>
+                <td>
+                @lang('site.end_date')
+                </td>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -63,7 +66,9 @@
                     {{$row->id}}
                 </td>
                 <td>
-                    {{$row->user->firstName}} {{$row->user->lastName}}
+                @if($row->user_id != null)
+                    {{$row->user->name}} {{$row->user->lastName}}
+                @endif    
                 </td>
                 <td>
                     {{$row->name}}
@@ -79,7 +84,10 @@
                     @endif
                 </td>
                 <td>
-                {{$row->discount}}%
+                     {{$row->discount}}%
+                </td>
+                <td>
+                    {{$row->end_date}}
                 </td>
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

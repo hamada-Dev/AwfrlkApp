@@ -22,7 +22,7 @@
         <select name="delivery_id" class="form-control @error('delivery_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-deliver')</option>
             @foreach($delivers as $deliver)
-            <option value="{{$deliver->id}}" @if((isset($row) && $deliver->id== $row->delivery_id) || (request() != NULL && request()->delivery_id == $deliver->id ) || old('delivery_id') == $deliver->id) selected @endif>{{$deliver->firstName}} {{$deliver->lastName  }} </option>
+            <option value="{{$deliver->id}}" @if((isset($row) && $deliver->id== $row->delivery_id) || (request() != NULL && request()->delivery_id == $deliver->id ) || old('delivery_id') == $deliver->id) selected @endif>{{$deliver->name}} {{$deliver->lastName  }} </option>
             @endforeach
         </select>
         @error('delivery_id')

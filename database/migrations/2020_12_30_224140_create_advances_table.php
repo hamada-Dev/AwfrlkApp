@@ -15,13 +15,18 @@ class CreateAdvancesTable extends Migration
     {
         Schema::create('advances', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("user_id");
+            $table->bigInteger("user_id")->unsigned();
             $table->integer("getmoney");
             $table->integer("givemoney")->nullable();
-            $table->integer("added_by");
-            $table->integer('deleted_by')->nullable();
+            $table->bigInteger("added_by")->unsigned()->comment('who added');
+            $table->bigInteger('deleted_by')->nullable()->unsigned();
             $table->dateTime("delete_date")->nullable();
+
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
 
         });
     }

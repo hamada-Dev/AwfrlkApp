@@ -60,7 +60,7 @@
                     {{$row->id}}
                 </td>
                 <td>
-                    {{$row->user->firstName}} {{$row->user->lastName}}
+                    {{$row->user->name}} {{$row->user->lastName}}
                 </td>
                 <td>
                     {{$row->getmoney}}
@@ -69,11 +69,11 @@
                     {{$row->givemoney}}
                 </td>
                 <td>
-                @if($row->givemoney != null)
-                    @php 
-                    echo   $row->getmoney -$row->givemoney;
-                    @endphp
-                @endif                    
+                 @if($row->givemoney != null)
+                    <a class="btn btn-danger btn-sm" href="{{ route('orders.index', ['delivery_id' => $row->user_id]) }}">
+                        @php echo $row->getmoney-$row->givemoney; @endphp 
+                    </a>
+                @endif                   
                 </td>
                 
                 <td class="td-actions text-right">

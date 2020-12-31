@@ -91,7 +91,7 @@
             <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-user')</option>
                 @foreach($users as $user)
-                <option value="{{$user->id}}" @if((isset($row) && $row->user_id == $user->id)|| (request() != NULL && request()->user_id == $user->id ) || old('user_id') == $user->id) selected @endif>{{$user->firstName}}</option>
+                <option value="{{$user->id}}" @if((isset($row) && $row->user_id == $user->id)|| (request() != NULL && request()->user_id == $user->id ) || old('user_id') == $user->id) selected @endif>{{$user->name}}</option>
                 @endforeach
             </select>
             @error('user_id')

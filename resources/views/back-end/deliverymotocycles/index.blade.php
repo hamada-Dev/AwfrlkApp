@@ -101,7 +101,7 @@
                     {{$row->color}}
                 </td> --}}
                 <td>
-                    {{$row->user->firstName}}
+                    {{$row->user->name}}
                 </td>
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

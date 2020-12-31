@@ -50,7 +50,7 @@
                             {{$row->id}}
                         </td>
                         <td>
-                            {{$row->user->firstName}} {{$row->user->lastName}}
+                            {{$row->user->name}} {{$row->user->lastName}}
                         </td>
                         <td>
                                 {{$row->offer->name}}

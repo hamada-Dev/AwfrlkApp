@@ -53,7 +53,6 @@ class promocodesController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' =>['required', 'numeric','exists:users,id'],
             'name' => ['required', 'max:100','min:5'],
             'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
             'discount' =>['required', 'numeric'],
@@ -90,7 +89,6 @@ class promocodesController extends BackEndController
     public function update(Request $request,$id)
     {
         $request->validate([
-            'user_id' =>['required', 'numeric','exists:users,id'],
             'name' => ['required', 'max:100','min:5'],
             'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
             'discount' =>['required', 'numeric'],
