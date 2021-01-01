@@ -34,7 +34,9 @@
                 <th>
                     @lang('site.id')
                 </th>
-           
+                <th>
+                    @lang('site.totalPrice')
+                </th>
                 <th>
                     @lang('site.status')
                 </th>
@@ -63,7 +65,10 @@
             </tr>
         </thead>
         <tbody>
-
+            @php
+                $sumtotal=0;
+                $sumdel=0;
+            @endphp
             @foreach($rows as $row)
 
             <tr>
@@ -72,7 +77,12 @@
                      {{$row->orderDetails->count()}}   @lang("site.products") 
                     </a>  
                 </td>
-               
+                <td>
+                    {{$row->orderDetails->sum('price')}}
+                    @php 
+                    $sumtotal+=$row->orderDetails->sum('price');
+                    @endphp
+                </td>
                 <td>
                     @if ($row->status==0)
                         <a href="" class="btn btn-primary btn-sm">@lang("site.waiting")</a>
@@ -114,6 +124,9 @@
                 </td>
                 <td>
                   {{ $row->delivery_price }}  
+                  @php 
+                    $sumdel+=$row->delivery_price;
+                  @endphp
                 </td>
                
                 <td class="td-actions text-right">
@@ -122,6 +135,43 @@
                 </td>
             </tr>
             @endforeach
+            <tr>
+                <th>
+                    -
+                </th>
+
+                <th>
+                   @php echo $sumtotal; @endphp
+                </th>
+                    
+                <th>
+                    -
+                </th>
+                <th>
+                    -
+                </th>
+                <th>
+                    -
+                </th>
+                <th>
+                    -
+                </th>
+                <th>
+                    -
+                </th>
+                <th>
+                    -
+                </th>
+                <th>
+                    @php echo $sumdel; @endphp
+                </th>
+                
+                <th>
+                    -
+                </th>
+            
+            
+            </tr>
 
         </tbody>
     </table>
