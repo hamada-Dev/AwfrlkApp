@@ -70,9 +70,13 @@
                 </td>
                 <td>
                  @if($row->givemoney != null)
-                    <a class="btn btn-danger btn-sm" href="{{ route('orders.index', ['delivery_id' => $row->user_id]) }}">
-                        @php echo $row->getmoney-$row->givemoney; @endphp 
+                    <a class="btn btn-danger btn-sm" href="{{ route('orders.index', ['delivery_id' => $row->user_id,'created_at'=>$row->created_at]) }}">
+                      @lang('site.details_Orders')
                     </a>
+                @else
+                 <a class="btn btn-primary btn-sm" href="{{ route('advances.countreset', ['delivery_id' => $row->user_id,'created_at'=>$row->created_at,'id'=>$row->id]) }}">
+                 @lang('site.count')
+                 </a>
                 @endif                   
                 </td>
                 

@@ -135,6 +135,8 @@
                 </td>
             </tr>
             @endforeach
+            </tbody>
+            <tfoot>
             <tr>
                 <th>
                     -
@@ -168,12 +170,9 @@
                 
                 <th>
                     -
-                </th>
-            
-            
+                </th>     
             </tr>
-
-        </tbody>
+        </tfoot>
     </table>
     {{$rows->links()}}
 </div>
