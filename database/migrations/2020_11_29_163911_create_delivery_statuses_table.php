@@ -15,7 +15,7 @@ class CreateDeliveryStatusesTable extends Migration
     {
         Schema::create('delivery_statuses', function (Blueprint $table) {   
             $table->bigIncrements('id');
-            $table->string('status');
+            $table->tinyInteger('status')->default(1)->comment('0=>busy 1=>active 2=>notactive');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
 

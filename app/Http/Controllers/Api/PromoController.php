@@ -16,7 +16,11 @@ class PromoController extends BaseController
      */
     public function index()
     {
-        //
+        $promoCode  = Promocode::where('user_id', auth()->user()->id)->where('confirm', 1)->get();
+        if ($promoCode->count() > 0)
+            return $this->sendResponse(PromoResource::collection($promoCode), 200);
+        else
+            return $this->sendError("sorry you haven't  any prom ", ['No Data'], 200);
     }
 
     /**
@@ -27,9 +31,14 @@ class PromoController extends BaseController
      */
     public function store(Request $request)
     {
-        $promoCode  = Promocode::where('user_id', null)->where('confirm', 1)->where('serial', $request->promo)->first();
-        if ($promoCode) {
-            return $this->sendResponse(new PromoResource($promoCode), 200);
+        $promoCode  = Promocode::where('confirm', 1)->where('serial', $request->promo)->first();
+        if ($promoCode  && $promoCode->user_id == auth()->user()->id) {
+            return $this->sendResponse(['alert' => 'you have this promo ', 'data' => new PromoResource($promoCode)], 200);
+        } elseif ($promoCode && $promoCode->user_id == null) {
+            $promoCode->update([
+                'user_id'   => auth()->user()->id,
+            ]);
+            return $this->sendResponse(['alert' => 'congreatulation you win gift from this promo ', 'data' => new PromoResource($promoCode)], 200);
         } else {
             return $this->sendError('promo not valid ', ['No Data'], 200);
         }

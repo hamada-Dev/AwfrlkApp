@@ -48,7 +48,6 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        // return (json_decode(file_get_contents("php://input"), true));
         // get all active delivery 
         $ActiveDelivery = User::deliveryActive()->get();
 
@@ -93,6 +92,8 @@ class OrderController extends BaseController
                     'description'  => $request->description,
                 ]);
 
+                $this->makeEvent($newOrder);
+
                 // this is update offer table or promocode 
                 $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
@@ -102,28 +103,46 @@ class OrderController extends BaseController
                 DB::rollback();
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
             }
+        } elseif ($request->image) {
+            try {
+                DB::beginTransaction();
+
+                $delivery_price =   auth()->user()->area->trans_price;
+                $newOrder = $this->insertOredr($request, $orderType, $delivery_price);
+                $this->uploadImage($request);
+                $newOrder->orderDetails()->create([
+                    'image'       => $request->image->hashName(),
+                    'description' => $request->description,
+                ]);
+
+                // this is update offer table or promocode 
+                $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
+
+                ////////////////////////////////////////////////
+                $this->makeEvent($newOrder);
+                ////////////////////////////////////////////////
+
+                DB::commit();
+                return $this->sendResponse(['data' => 'add product || pharmacy order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
+            } catch (\Exception $ex) {
+                DB::rollback();
+                return $ex;
+                return $this->sendError(['data' => 'cant add this order please try again'], 404);
+            }
         } else {
             try {
                 DB::beginTransaction();
-                $newOrder = $this->model->create([
-                    'client_id'      => auth()->user()->id,
-                    'delivery_price' => auth()->user()->area->trans_price,
-                    'area_id'        => $request->area_id ?? auth()->user()->area_id,
-                    'type'           => $orderType,
-                ]);
+
+                $newOrder = $this->insertOredr($request, $orderType);
 
                 $orderDetailsData = json_decode(file_get_contents("php://input"), true);
 
                 foreach ($orderDetailsData as $orderDetail) {
-                    if ($orderDetail['image'] != null) {
-                        $this->uploadImage($orderDetail);
-                    }
                     $newOrder->orderDetails()->create([
                         'amount'      => $orderDetail['amount'],
                         'price'       => $orderDetail['price'] * $orderDetail['amount'],
                         'product_id'  => $orderDetail['product_id'],
                         'description' => $orderDetail['description'],
-                        'image'       => $orderDetail['image'] == null ? null :  $orderDetail['pharmacyImage']->hashName(),
                     ]);
                 }
 
@@ -131,12 +150,7 @@ class OrderController extends BaseController
                 $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
-                $data = [
-                    'user_id'   =>  auth()->user()->id,
-                    'firstName' =>  auth()->user()->firstName,
-                    'order_id'  =>  $newOrder->id,
-                ];
-                event(new DeliveryNotifyEvent($data));
+                $this->makeEvent($newOrder);
                 ////////////////////////////////////////////////
 
                 DB::commit();
@@ -215,12 +229,32 @@ class OrderController extends BaseController
         }
     }
 
+    protected function insertOredr($request, $orderType)
+    {
+        $newOrder = $this->model->create([
+            'client_id'      => auth()->user()->id,
+            'delivery_price' => auth()->user()->area->trans_price,
+            'area_id'        => $request->area_id ?? auth()->user()->area_id,
+            'type'           => $orderType,
+        ]);
 
+        return $newOrder;
+    }
+
+    protected function makeEvent($newOrder)
+    { 
+        $data = [
+            'user_id'   =>  auth()->user()->id,
+            'firstName' =>  auth()->user()->firstName,
+            'order_id'  =>  $newOrder->id,
+        ];
+        event(new DeliveryNotifyEvent($data));
+    }
 
     protected function uploadImage($request)
     {
-        $img = \Intervention\Image\Facades\Image::make($request['pharmacyImage'])->resize(800, 500);
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(800, 500);
         // save file as jpg with medium quality
-        $img->save(public_path('uploads/orders_images/' . $request['pharmacyImage']->hashName()), 70);
+        $img->save(public_path('uploads/orders_images/' . $request->image->hashName()), 70);
     }
 }
