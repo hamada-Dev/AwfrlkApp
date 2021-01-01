@@ -2,10 +2,10 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.firstName')</label>
-            <input type="text" name="firstName" value="{{ isset($row) ? $row->firstName : old('firstName') }}"
-                class="form-control @error('firstName') is-invalid @enderror">
-            @error('firstName')
+            <label class="bmd-label-floating">@lang('site.name')</label>
+            <input type="text" name="name" value="{{ isset($row) ? $row->firstName : old('name') }}"
+                class="form-control @error('name') is-invalid @enderror">
+            @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -57,7 +57,7 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.salary')</label>
-            <input type="number" name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
+            <input type="number" step='0.01' name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
                 class="form-control @error('salary') is-invalid @enderror">
             @error('salary')
             <span class="invalid-feedback" role="alert">

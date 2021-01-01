@@ -28,7 +28,7 @@ return [
     'country'=>'Country',
     'destination' => 'Destination',
     'destinations' => 'Destinations',
-    'firstName'=>'FirstName',
+    'name'=>'First Name',
   'lastName'=>'LastName',
     'profile' => 'My Profile',
     'settings' => 'Settings',
@@ -78,6 +78,19 @@ return [
   'PROMOCODE'=>'Promocode',
 'discount'=>'Discount',
 'user_name'=>'Client Name',
+'end_date'=>'End Date ',
+
+//advnces
+'Advances'=>'Advance',
+'Advance'=>'Advance',
+'advance'=>'Advance',
+'advances'=>'Advance',
+'ADVNACES'=>'Advance',
+'user_delivey'=>'Delivey Name',
+'choose_user_delivery'=>'Choose Delivery',
+'getmoney'=>'What Take',
+'givemoney'=>'What Give',
+'Reset'=>'Remind',
       //offers
       "offer_name"=>"Offer Name",
       'offers'=>'Offers',
@@ -153,6 +166,9 @@ return [
     "finished"=>"Finished",
     "not_arrive"=>"Not Arrive",
     "not_buy"=>"Not Buy",
+    'totalPrice'=>'Bills Price ',
+    'created_at'=>'Created_at',
+
     // products
     'products'  =>  'Products',
     'product'  =>  'Product',

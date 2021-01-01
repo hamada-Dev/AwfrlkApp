@@ -5,9 +5,9 @@
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.user_name')</label>
                 <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
-                    <option value="0">@lang('site.choose-user')</option>
+                    <option value="">@lang('site.choose-user')</option>
                     @foreach($users as $user)
-                    <option value="{{$user->id}}" @if((isset($row) && $row->user_id == $user->id) || (request() != NULL && request()->user_id == $user->id ) || old('user_id') == $user->id) selected @endif>{{$user->firstName}} {{$user->lastName}}</option>
+                    <option value="{{$user->id}}" @if((isset($row) && $row->user_id == $user->id) || (request() != NULL && request()->user_id == $user->id ) || old('user_id') == $user->id) selected @endif>{{$user->name}} {{$user->lastName}}</option>
                     @endforeach
                 </select>
                 @error('user_id')
@@ -37,6 +37,19 @@
             <input type="text" name="discount" value="{{ isset($row) ? $row->discount : old('discount') }}"
                 class="form-control @error('discount') is-invalid @enderror">
             @error('discount')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.end_date')</label>
+            <input type="date" name="end_date" value="{{ isset($row) ?  date('Y-m-d', strtotime($row->end_date)) : old('end_date') }}"
+                class="form-control @error('end_date') is-invalid @enderror">
+            @error('end_date')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

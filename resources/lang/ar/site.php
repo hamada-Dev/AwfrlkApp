@@ -34,7 +34,7 @@ return [
   'repeat_password' => 'تكرار كلمة المرور',
   'password' => 'كلمة المرور',
   'country'=>'العنوان',
-  'firstName'=>'الاسم الاول',
+  'name'=>'الاسم ',
   'lastName'=>'الاسم الاخر',
   'image'=>"الصورة",
   'choose-group'=>'أختر الصلاحية',
@@ -72,7 +72,18 @@ return [
   'PROMOCODE'=>'البروموكود',
   'discount'=>'نسبة الخصم',
   'user_name'=>'أسم العميل',
-
+  'end_date'=>'تاريخ الانتهاء',
+//advances
+'Advances'=>'السلفة',
+'Advance'=>'السلفة',
+'advance'=>'السلفة',
+'advances'=>'السلفة',
+'ADVNACES'=>'السلفة',
+'user_delivey'=>' الطيار',
+'choose_user_delivery'=>'أختر الطيار',
+'getmoney'=>'ما أستلمت',
+'givemoney'=>'ما سلمت',
+'Reset'=>'الباقى',
     //products
     'products'=>"المنتجات",
     'Product'=>'منتج',
@@ -177,6 +188,8 @@ return [
   "finished"=>"إنتهاء",
   "not_arrive"=>"لم يصل ",
   "not_buy"=>"لم يشترى",
+  'totalPrice'=>'سعر الفاتورة',
+  'created_at'=>'تاريخ الانشاء',
   //orderDetails
   "orderdetails"=>"تفاصيل الطلب",
   "orderdetail"=>"تفاصيل الطلب",

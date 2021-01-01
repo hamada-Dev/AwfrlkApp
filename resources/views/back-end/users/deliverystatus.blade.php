@@ -31,22 +31,13 @@
                 </td>
                 <td>
                     @if($row->status==0)
-                    <a href="" class='btn btn-success btn-sm'>
                         @lang('site.busy')
-                    </a>
                     @elseif($row->status==1)
-                    <a href="" class='btn btn-danger btn-sm' rel="tooltip"
-                        data-original-title='click to show all status'>
                         @lang('site.active')
-                    </a>
                     @elseif($row->status==2)
-                    <a href="" class='btn btn-primary btn-sm'>
                         @lang('site.notActive')
-                    </a>
                     @elseif($row->status==3)
-                    <a href="" class='btn btn-alert btn-sm'>
                         @lang('site.black_list')
-                    </a>
                     @else
                     @endif
                 </td>

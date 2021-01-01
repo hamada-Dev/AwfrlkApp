@@ -34,6 +34,7 @@
                 <th>
                     @lang('site.id')
                 </th>
+                
                 <th>
                     @lang('site.status')
                 </th>
@@ -47,13 +48,13 @@
                     @lang('site.client_id')
                 </th>
                 <th>
-                    @lang('site.feedback')
-                </th>
-                <th>
                     @lang('site.end_shoping_date')
                 </th>
                 <th>
                     @lang('site.arrival_date')
+                </th>
+                <th>
+                    @lang("site.price")
                 </th>
                 
                 <th class="text-right">
@@ -71,7 +72,7 @@
                      {{$row->orderDetails->count()}}   @lang("site.products") 
                     </a>  
                 </td>
-
+               
                 <td>
                     @if ($row->status==0)
                         <a href="" class="btn btn-primary btn-sm">@lang("site.waiting")</a>
@@ -85,20 +86,18 @@
                 <td>
                     @foreach ($users as $user)
                         @if($row->delivery_id==$user->id)
-                            {{$user->firstName}} {{$user->lastName}}
+                            {{$user->name}} {{$user->lastName}}
                         @endif   
                     @endforeach
                 </td>
                 <td>
                     @foreach ($users as $user)
                         @if($row->client_id==$user->id)
-                            {{$user->firstName}} {{$user->lastName}}
+                            {{$user->name}} {{$user->lastName}}
                         @endif   
                     @endforeach
                 </td>
-                <td>
-                    {{$row->feedback}}
-                </td>
+                
                 <td>
                      @if ($row->end_shoping_date==null)
                         <a href="" class="btn btn-primary btn-sm">@lang("site.not_buy")</a>
@@ -113,7 +112,10 @@
                         {{$row->arrival_date}}
                     @endif
                 </td>
-
+                <td>
+                  {{ $row->delivery_price }}  
+                </td>
+               
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')

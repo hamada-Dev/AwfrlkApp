@@ -29,42 +29,29 @@
 
 <div class="table-responsive">
     <table class="table">
-        <thead class=" text-primary">
+        <thead class=" text-primary text-center">
             <tr>
-      
                 <th>
                     @lang('site.id')
                 </th>
                 <th>
-                    @lang('site.user_license')
+                    @lang('site.user_delivey')
                 </th>
                 <th>
-                    @lang('site.moto_license')
-                </th>
-                {{-- <th>
-                    @lang('site.moto_number')
-                </th> --}}
-                <th>
-                    @lang('site.license_renew_date')
+                    @lang('site.getmoney')
                 </th>
                 <th>
-                    @lang('site.license_expire_date')
-                </th>
-                {{-- <th>
-                    @lang('site.type')
+                    @lang('site.givemoney')
                 </th>
                 <th>
-                    @lang('site.color')
-                </th> --}}
-                <th>
-                    @lang('site.user_id')
+                    @lang('site.Reset')
                 </th>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class='text-center'>
 
             @foreach($rows as $row)
 
@@ -72,37 +59,23 @@
                 <td>
                     {{$row->id}}
                 </td>
-
                 <td>
-                    {{$row->user_license}}
+                    {{$row->user->name}} {{$row->user->lastName}}
                 </td>
                 <td>
-                    {{$row->moto_license}}
-                </td>
-
-
-                {{-- <td>
-                    {{$row->moto_number}}
-                </td> --}}
-
-                <td>
-                    {{$row->license_renew_date}}
+                    {{$row->getmoney}}
                 </td>
                 <td>
-                    {{$row->license_expire_date}}
+                    {{$row->givemoney}}
                 </td>
-
-
-                {{-- <td>
-                    {{$row->type}}
-                </td>
-
                 <td>
-                    {{$row->color}}
-                </td> --}}
-                <td>
-                    {{$row->user->name}}
+                 @if($row->givemoney != null)
+                    <a class="btn btn-danger btn-sm" href="{{ route('orders.index', ['delivery_id' => $row->user_id]) }}">
+                        @php echo $row->getmoney-$row->givemoney; @endphp 
+                    </a>
+                @endif                   
                 </td>
+                
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')

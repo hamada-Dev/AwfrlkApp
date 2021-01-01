@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('firstName');
+            $table->string('name');
             $table->string('lastName')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -30,7 +30,9 @@ class CreateUsersTable extends Migration
             $table->string('area_id')->nullable();
             $table->string('user_code')->nullable();
             $table->string('api_token');
-            
+            $table->bigInteger('deleted_by')->nullable()->unsigned()->comment('who deleted if nullable this mean this item is visable');
+            $table->dateTime('delete_date')->nullable()->comment(' date when this item is deleted');
+           $table->integer("added_by")->nullable();
             $table->rememberToken();
             $table->timestamps();
             // $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');

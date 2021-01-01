@@ -66,7 +66,7 @@
                         </td>
 
                         <td>
-                            {{$row->firstName}} {{$row->lastName}}
+                            {{$row->name}} {{$row->lastName}}
                         </td>
 
                         <td>

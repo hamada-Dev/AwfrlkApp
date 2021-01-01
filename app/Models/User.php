@@ -23,6 +23,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $appends = ['image_path'];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new NonDeleteIScope);
+    }
     public function getImagePathAttribute()
     {
         return asset('uploads/users_images/' . $this->image);
@@ -120,5 +125,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function promocodes()
     {
         return $this->hasMany(Promocode::class);
+    }
+    
+    public function Advances()
+    {
+        return $this->hasMany(Advance::class);
     }
 }

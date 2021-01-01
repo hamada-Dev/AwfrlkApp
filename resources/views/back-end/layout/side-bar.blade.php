@@ -98,6 +98,12 @@
                     <p>@lang('site.promocodes')</p>
                 </a>
             </li>
+            <li class="nav-item {{is_active('advances')}}">
+                <a class="nav-link" href="{{route('advances.index')}}">
+                    <i class="material-icons">money</i>
+                    <p>@lang('site.advances')</p>
+                </a>
+            </li>
             <!-- your sidebar here -->
         </ul>
     </div>
