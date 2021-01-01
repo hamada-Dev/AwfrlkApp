@@ -16,7 +16,7 @@ class OrderDeliveryRecourse extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'user_name'       => $this->user->firstName,
+            'user_name'       => $this->user->name,
             'created_at'      => $this->created_at->diffForHumans(),
             'end_shoping_date'=> $this->end_shoping_date,
             'arrival_date'    => $this->arrival_date,

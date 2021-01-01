@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DeliveryStatusRecourse;
-use App\Models\User;
+use App\Http\Resources\PromoResource;
+use App\Models\Promocode;
 use Illuminate\Http\Request;
 
-class DeliveryStatusController extends BaseController
+class PromoController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,7 @@ class DeliveryStatusController extends BaseController
      */
     public function index()
     {
-        // return User::where('delivery_id', auth()->user()->id)->get();
-        $deliveryStatus = User::where('id', auth()->user()->id)->get();
-
-        if ($deliveryStatus->count() > 0)
-            return $this->sendResponse(DeliveryStatusRecourse::collection($deliveryStatus), 200);
-        else
-            return $this->sendError('There is no order for this delivery', ['No Data'], 200);
+        //
     }
 
     /**
@@ -33,7 +27,12 @@ class DeliveryStatusController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $promoCode  = Promocode::where('user_id', null)->where('confirm', 1)->where('serial', $request->promo)->first();
+        if ($promoCode) {
+            return $this->sendResponse(new PromoResource($promoCode), 200);
+        } else {
+            return $this->sendError('promo not valid ', ['No Data'], 200);
+        }
     }
 
     /**

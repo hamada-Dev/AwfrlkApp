@@ -49,7 +49,7 @@ class RegisterController extends BaseController
         }
 
         $user = User::create([
-            'firstName' => $request['firstName'],
+            'name' => $request['firstName'],
             // 'lastName' => $request['lastName'],
             // 'email' => $request['email'],
             'password' => bcrypt($request['password']),
@@ -66,7 +66,7 @@ class RegisterController extends BaseController
         // $user->sendApiEmailVerificationNotification();
         $success['message'] = 'Please confirm email by clicking on verify user button sent to you on your email';
         $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->firstName . ' ' . $user->lastName;
+        $success['name'] = $user->name . ' ' . $user->lastName;
 
         return $this->sendResponse($success, 'User Created Successfully');
     } // end of register function

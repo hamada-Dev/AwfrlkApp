@@ -43,6 +43,10 @@ Route::group(['namespace' => 'Api'], function () {
 
             //  user route 
             Route::resource('user', 'UserController'); 
+            
+            
+            //  promo route 
+            Route::resource('promocode', 'PromoController'); 
 
 
         });

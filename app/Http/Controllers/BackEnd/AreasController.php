@@ -18,8 +18,9 @@ class AreasController extends BackEndController
     {
         //get all data of Model
         $rows = $this->model;
-        $rows = $this->filter($rows);
+        $rows = $this->filter($rows); 
         $rows = $rows->where("parent_id","0")->paginate(5);
+       
 
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();
@@ -41,7 +42,8 @@ class AreasController extends BackEndController
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
-        $areas=Area::where("parent_id","0")->get();
+        $areas=Area::get();
+        // $areas=Area::where("parent_id","0")->get();
         return view('back-end.'.$this->getClassNameFromModel().'.create', compact('areas','module_name_singular', 'module_name_plural'))->with($append);
     } //end of create
 

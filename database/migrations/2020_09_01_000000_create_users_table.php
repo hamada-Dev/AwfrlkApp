@@ -25,8 +25,6 @@ class CreateUsersTable extends Migration
             $table->float("salary")->nullable();
             $table->double("commission")->nullable();
             $table->string('phone')->unique()->nullable();
-            $table->float("salary")->nullable();
-            $table->double("commission")->nullable();
             $table->string('adress')->nullable();
             $table->string('image')->default('user.png');
             $table->string('area_id')->nullable();

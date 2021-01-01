@@ -26,6 +26,7 @@ class OrderUserRecourse extends JsonResource
             'area_id_from'   => $this->area_id_from == null ? null : $this->area->name,
             'adress_from'    => $this->adress_from,
             'products'       => OrderDetailsRecourse::collection( $this->orderDetails),
+            'type'           => $this->type == 0 ? 'order' : ($this->type == 1 ? 'offer' : 'promo'),
         ];
     }
 }
