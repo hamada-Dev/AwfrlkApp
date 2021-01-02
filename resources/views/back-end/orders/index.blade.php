@@ -34,7 +34,7 @@
                 <th>
                     @lang('site.id')
                 </th>
-                
+           
                 <th>
                     @lang('site.status')
                 </th>
