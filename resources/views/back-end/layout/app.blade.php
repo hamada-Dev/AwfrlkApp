@@ -475,8 +475,8 @@
       cluster: 'eu'
     });
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
+    var channel = pusher.subscribe('my-channel-order');
+    channel.bind('my-event-order', function(data) {
         document.getElementById('audioNotify').play();
         var name = data.first_name,
             url = "{{route('home.index')}}";

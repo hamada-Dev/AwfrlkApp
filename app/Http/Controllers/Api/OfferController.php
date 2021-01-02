@@ -18,11 +18,7 @@ class OfferController extends BaseController
      */
     public function index()
     {
-        $offers = Offer::latest()->get();
-        if ($offers->count() > 0)
-            return $this->sendResponse(OfferResource::collection($offers), 200);
-        else
-            return $this->sendError('theres No Offer Yet');
+        //
     }
 
     /**
@@ -64,6 +60,13 @@ class OfferController extends BaseController
      */
     public function show($id)
     {
+
+        $offers = Offer::where('area_id', $id)->where('avilable', 1)->latest()->get();
+        if ($offers->count() > 0)
+            return $this->sendResponse(OfferResource::collection($offers), 200);
+        else
+            return $this->sendError('theres No Offer Yet');
+
         // return OfferResource::collection(Offer::whereHas(['user', function ($q) {
         //     return $q->select('offer_id', 'user_id', 'decrement_trip');
         // }])->get());

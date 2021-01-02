@@ -27,11 +27,11 @@ class DeliveryNotifyEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['my-channel'];
+        return ['my-channel-order'];
     }
 
     public function broadcastAs()
     {
-        return 'my-event';
+        return 'my-event-order';
     }
 }

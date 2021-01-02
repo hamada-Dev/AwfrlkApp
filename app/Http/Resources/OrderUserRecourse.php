@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use phpDocumentor\Reflection\Types\Null_;
 
 class OrderUserRecourse extends JsonResource
 {
@@ -26,6 +27,10 @@ class OrderUserRecourse extends JsonResource
             'area_id_from'   => $this->area_id_from == null ? null : $this->area->name,
             'adress_from'    => $this->adress_from,
             'products'       => OrderDetailsRecourse::collection( $this->orderDetails),
+            'delivery'       => [
+                'delivery_name'  => $this->delivery_id == Null ? 'Not confirmed from any delivery' : $this->delivery->name . ' ' . $this->delivery->last_name ,
+                'delivery_phone' => $this->delivery_id == Null ? 'Not confirmed from any delivery' : $this->delivery->phone  ,
+            ],
             'type'           => $this->type == 0 ? 'order' : ($this->type == 1 ? 'offer' : 'promo'),
         ];
     }

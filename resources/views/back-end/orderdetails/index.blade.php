@@ -46,6 +46,9 @@
                 <th>
                     @lang('site.price')
                 </th>
+                <th>
+                    @lang('site.image')
+                </th>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -60,7 +63,7 @@
                     {{$row->id}}
                 </td>
                 <td>
-                   {{$row->product->name}} @lang("site.price"){{($row->product->price)}}/{{($row->product->unit)}}
+                   {{ ($row->product_id == null) ? 'image' : $row->product->name}}
                 </td>
                 <td>
                     {{$row->order->client_id}}
@@ -69,7 +72,10 @@
                 {{$row->amount}} 
                 </td>
                 <td>
-                    {{$row->price}}
+                    {{($row->price == null) ? 'after buy' :$row->price }}
+                </td>
+                <td>
+                    <img src="{{($row->image == null )  ? '': $row->imagePath}}" alt="">
                 </td>
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

@@ -16,10 +16,9 @@ class DeliveryStatusRecourse extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            $this->deliveryStatus,
-            // 'status0' => date('i:s', strtotime($this->deliveryStatus[1]->created_at) - strtotime($this->deliveryStatus[0]->created_at)),
-            // 'status1' => $this->deliveryStatus[1]->created_at,
-            // 'status2' => $this->deliveryStatus[2]->created_at,
+            'satus'         => ($this->status ==  0  ?  'Busy' : ($this->status ==  1  ?  'Active' : 'Not Active')),
+            'created_at'    => $this->created_at,
+            'updated_at'    => $this->updated_at,
         ];
     }
 }
