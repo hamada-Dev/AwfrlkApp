@@ -20,10 +20,12 @@ class DeliveryStatusController extends BaseController
     public function index()
     {
         // return User::where('delivery_id', auth()->user()->id)->get();
-        $deliveryStatus = DeliveryStatus::where('user_id', auth()->user()->id)->get()->last();
+        $deliveryStatus = User::where('id', auth()->user()->id)->first();
+
+        $deliverySTa = $deliveryStatus->delivery_status == 1 ? 'active' : 'Not Active';
 
         if ($deliveryStatus->count() > 0)
-            return $this->sendResponse(new DeliveryStatusRecourse($deliveryStatus), 200);
+            return $this->sendResponse(['type' => $deliverySTa, 'from' => $deliveryStatus->updated_at->diffForHumans()], 200);
         else
             return $this->sendError('There is no order for this delivery', ['No Data'], 200);
     }

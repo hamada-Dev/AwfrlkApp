@@ -16,8 +16,8 @@ class CreateAdvancesTable extends Migration
         Schema::create('advances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("user_id")->unsigned();
-            $table->integer("getmoney");
-            $table->integer("givemoney")->nullable();
+            $table->float("getmoney");
+            $table->float("givemoney")->nullable();
             $table->bigInteger("added_by")->unsigned()->comment('who added');
             $table->bigInteger('deleted_by')->nullable()->unsigned();
             $table->dateTime("delete_date")->nullable();

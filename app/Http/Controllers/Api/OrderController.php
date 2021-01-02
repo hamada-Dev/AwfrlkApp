@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\DeliveryNotifyEvent;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\DeliveryRecourse;
 use App\Http\Resources\OrderUserRecourse;
-use App\Http\Resources\UserOfferResource;
 use App\Models\Area;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Promocode;
 use App\Models\User;
 use App\Models\UserOffer;
@@ -92,7 +89,7 @@ class OrderController extends BaseController
                     'description'  => $request->description,
                 ]);
 
-                $this->makeEvent($newOrder);
+                $this->makeEvent($newOrder, $ActiveDelivery);
 
                 // this is update offer table or promocode 
                 $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
@@ -119,7 +116,7 @@ class OrderController extends BaseController
                 $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
-                $this->makeEvent($newOrder);
+                $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();
@@ -150,7 +147,7 @@ class OrderController extends BaseController
                 $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
-                $this->makeEvent($newOrder);
+                $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();
@@ -199,6 +196,7 @@ class OrderController extends BaseController
 
 
 
+
     protected function checkUserPromo($id)
     {
         $avilablePromo = Promocode::where('user_id', $id)
@@ -241,12 +239,13 @@ class OrderController extends BaseController
         return $newOrder;
     }
 
-    protected function makeEvent($newOrder)
-    { 
+    protected function makeEvent($newOrder, $ActiveDelivery)
+    {
         $data = [
-            'user_id'   =>  auth()->user()->id,
-            'firstName' =>  auth()->user()->firstName,
-            'order_id'  =>  $newOrder->id,
+            'user_id'           =>  auth()->user()->id,
+            'firstName'         =>  auth()->user()->firstName,
+            'order_id'          =>  $newOrder->id,
+            'active_delivery'   => $ActiveDelivery,
         ];
         event(new DeliveryNotifyEvent($data));
     }
