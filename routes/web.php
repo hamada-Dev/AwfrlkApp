@@ -80,7 +80,9 @@ Route::group(
             //advances
             Route::resource('advances', 'advancesController')->except('show');
             Route::get('advances/{delivery_id}/{created_at}/{id}','advancesController@countResetMoney')->name('advances.countreset');
-
+            Route::get('advances/{advance_id}','advancesController@countMoney')->name('advances.countmoney');
+            Route::get('showReport','advancesController@showReport')->name('advances.counts');
+            Route::post('showmoney','advancesController@countAllMoney')->name('advances.totalmoney');
         });
         
        

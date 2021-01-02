@@ -4,9 +4,11 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Advance;
+
+use App\Models\User;
 use App\Models\Order;
+use App\Models\Offer;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +31,7 @@ class advancesController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->paginate(5);
+        $rows = $rows->where('flag', 0)->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -57,7 +59,6 @@ class advancesController extends BackEndController
         $request->validate([
             'user_id' =>['required', 'numeric','exists:users,id'],
             'getmoney' => ['required', 'numeric'],
-            'givemoney'   =>  [],
 
         ]);
             $request['added_by'] = auth()->user()->id;
@@ -92,7 +93,6 @@ class advancesController extends BackEndController
         $request->validate([
             'user_id' =>['required', 'numeric','exists:users,id'],
             'getmoney' => ['required', 'numeric'],
-            'givemoney'   =>  [],
 
         ]);
             $request['added_by']=auth()->user()->id;
@@ -123,7 +123,7 @@ class advancesController extends BackEndController
     }
     public function countResetMoney($delivery_id ,$created_at,$id)
     {
-        $orders=Order::where('delivery_id',$delivery_id)->where("created_at",'>',$created_at)->get();
+        $orders=Order::with('orderDetails')->where('delivery_id',$delivery_id)->where("created_at",'>=',$created_at)->get();
         $advance=$this->model->find($id);
         $sum=0;
         foreach($orders as $order)
@@ -132,8 +132,55 @@ class advancesController extends BackEndController
         }
          $advance->givemoney=$advance->getmoney+$sum;
          $advance->save();
-         return redirect()->route('advances.index');
+         return view('back-end.advances.advance',compact('advance','orders'));
 
     }
-  
+    public function countMoney($advance_id)
+    {
+        $advance=$this->model->find($advance_id);
+        $advance->update([
+            'flag'=>1
+        ]);
+        $rows = $this->model;
+        $rows = $rows->where('flag', 0)->paginate(5);
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
+      }
+
+   public function showReport()
+   {
+        return view('back-end.advances.counts');
+
+   }
+   public function countAllMoney(Request $request)
+   {
+    
+    if ($request->start_date > $request->end_date) {
+        $swap = $request->end_date;
+        $request->end_date = $request->start_date;
+        $request->start_date = $swap;
+    }
+
+    if (isset($request->start_date)) {
+        $start_date   = date('Y-m-d h:i:s ', strtotime($request->start_date));
+    } else {
+        $last2year = time() - (2 * 12 * 30 * 24 * 60 * 60);
+        $start_date   = date('Y-m-d h:i:s G', $last2year);
+    }
+
+    if (isset($request->end_date)) {
+        // $end_date   = date('Y-m-d h:i:s ', (strtotime($request->end_date) + 24 * 60 * 60));
+        $end_date   = date('Y-m-d', strtotime($request->end_date)) . ' 23:59:59';
+    } else {
+        // $end_date = date('Y-m-d h:i:s ', time() + 10*60*60 );
+        $end_date = date('Y-m-d', time()) . ' 23:59:59';
+    }
+
+    $orders=Order::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('status',1)->get();
+    $users=User::all();
+    $offers=Offer::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('avilable',1)->get();
+    $salaries=User::where('salary','!=',null)->get();
+    return view('back-end.advances.counts',compact('orders','users','offers','salaries'));                
+}
 }

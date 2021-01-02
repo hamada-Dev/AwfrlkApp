@@ -104,6 +104,12 @@
                     <p>@lang('site.advances')</p>
                 </a>
             </li>
+            <li class="nav-item {{is_active('counts')}}">
+                <a class="nav-link" href="{{route('advances.counts')}}">
+                    <i class="material-icons">gift</i>
+                    <p>@lang('site.counts')</p>
+                </a>
+            </li>
             <!-- your sidebar here -->
         </ul>
     </div>

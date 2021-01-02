@@ -56,7 +56,7 @@
                     @lang('site.arrival_date')
                 </th>
                 <th>
-                    @lang("site.price")
+                    @lang("site.delivery_price")
                 </th>
                 
                 <th class="text-right">
