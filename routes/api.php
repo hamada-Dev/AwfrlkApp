@@ -48,6 +48,7 @@ Route::group(['namespace' => 'Api'], function () {
             //  promo route 
             Route::resource('promocode', 'PromoController'); 
 
+            Route::post('userFeedbackOrder', 'UserOrderFeedbackController@userFeedbackOrder');
 
         });
 
@@ -62,6 +63,14 @@ Route::group(['namespace' => 'Api'], function () {
 
             // delivery statua route 
             Route::resource('deliveryStatus', 'DeliveryStatusController');
+            
+            // all operation for delivery take order   //////////////////////////// new 
+            Route::post('deliveryTakeOrder', 'DeliveryTakeOrderController@store');
+            Route::post('deliveryEndShopOrder', 'DeliveryTakeOrderController@endShoping');
+
+            // this is for arival date 
+            Route::post('deliveryArrival', 'DeliveryArrivalOrderController@arrivalDateDelivery');
+           
         });
 
 

@@ -475,14 +475,17 @@
       cluster: 'eu'
     });
 
+    
+
+    
+    // ------------#############  [1] this notifcation for admin to know there is an order maked and android take api from it to send a noty for active delivery ##################-------------
     var channel = pusher.subscribe('my-channel-order');
     channel.bind('my-event-order', function(data) {
         document.getElementById('audioNotify').play();
-        var name = data.first_name,
-            url = "{{route('home.index')}}";
-        // alert(JSON.stringify(data));
+        var name = data.name,
+            delivery = data.activeDelivery;
+        alert(JSON.stringify(data));
 
-        console.log(name);
         var order = new Noty({
                 text: "هناك طلب ما من العميل " + name ,
                 type: "warning",
@@ -505,6 +508,24 @@
             order.show()
 
     });
+
+
+    // ------------ ############# [2] this notifcation for client to know his order has been accepted ##################-------------    
+    var channel = pusher.subscribe('channel-orderClient-acc');
+    channel.bind('event-orderClient-acc', function(data) {
+        console.log('delivery has take this order');
+
+    });
+
+
+    // ------------ ############# [3] this notifcation for client to know his order has been finished and delivery is comming soon ##################-------------    
+    var channel = pusher.subscribe('channel-delEndShop');
+    channel.bind('event-delEndShop', function(data) {
+        console.log('delivery has end shopping ');
+        console.log('delivery has end shopping ///////////' . data.order_total_price);
+        // alert(JSON.stringify(data));
+    });
+
     </script>
 
 </body>

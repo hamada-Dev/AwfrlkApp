@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->string('adress')->nullable();
             $table->bigInteger('area_id_from')->nullable()->unsigned();
             $table->integer('type')->comment(" 0 is usual 1 is offer 2 is promo")->nullable();
+            $table->integer('offer_or_promo_id')->comment("this contains offer_id(table many to many) or promo_id that about type val")->nullable();
             $table->string('adress_from')->nullable();
             
             $table->timestamps();
