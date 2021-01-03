@@ -38,7 +38,7 @@
         <select name="client_id" class="form-control @error('client_id') is-invalid @enderror">
             <option value="0">@lang('site.choose-client')</option>
             @foreach($users as $user)
-            <option value="{{$user->id}}" @if((isset($row) && $user->id== $row->client_id) || (request() != NULL && request()->client_id == $user->id ) || old('client_id') == $user->id) selected @endif>{{$user->firstName}} {{$user->lastName  }} </option>
+            <option value="{{$user->id}}" @if((isset($row) && $user->id== $row->client_id) || (request() != NULL && request()->client_id == $user->id ) || old('client_id') == $user->id) selected @endif>{{$user->name}} {{$user->lastName  }} </option>
             @endforeach
         </select>
         @error('client_id')

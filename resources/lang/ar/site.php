@@ -182,6 +182,14 @@ return [
   'to'=>'إلى',
   'search'=>'بحث',
   'offer_count_money'=>'إجمالى سعر العروض',
+  //usersalaries
+  'usersalaries'=>'مرتبات الموظفين',
+  'usersalary'=>'مرتبات الموظفين',
+  'USERSALARY'=>'مرتبات الموظفين',
+  'USERSALARIES'=>'مرتبات الموظفين',
+  'user_id_emp'=>'أسم الموظف',
+  'moneyDay'=>'تاريخ الصرف',
+  'choose-employee'=>'أختر الموظف',
   //orders
   "orders"=>'طلبات',
   "order"=>'طلب',

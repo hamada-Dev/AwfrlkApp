@@ -51,8 +51,6 @@ class UsersController extends BackEndController
             'phone' => ['required', 'unique:users'],
             'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
             'ssn' => ['required', 'integer', 'unique:users'],
-            'salary' => ['required'],
-            'commission' =>  ['required'],
             'adress' => ['required', 'string', 'max:255'],
             'area_id' => ['required', 'exists:areas,id'],
             'image'     => ['image'],
@@ -89,8 +87,6 @@ class UsersController extends BackEndController
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'salary' => ['required'],
-            'commission' =>  ['required'],
             'delivery_status' => ['required', Rule::in([0, 1,2,3,4])],
 
             ]);

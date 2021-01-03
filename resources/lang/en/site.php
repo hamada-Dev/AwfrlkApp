@@ -114,6 +114,15 @@ return [
       'parent_id'=>"Markaze Serial",
       'number_place'=>'Number Of Place',
       'view_places'=>'Areas',
+        //usersalaries
+      'usersalaries'=>'User Salary',
+      'usersalaries'=>'User Salary ',
+      'usersalary'=>' User Salary',
+      'USERSALARY'=>'User Salary ',
+      'USERSALARIES'=>'User Salary ',
+      'user_id_emp'=>' Employee Name',
+      'moneyDay'=>'Salary Day',
+      'choose-employee'=>'Choose Employee ',
       //user_offer
       'ssn' => 'SSN',
       'user_id'=>'User Name',

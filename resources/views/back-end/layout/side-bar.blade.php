@@ -24,7 +24,12 @@
                     <p>@lang('site.users')</p>
                 </a>
             </li>
-
+            <li class="nav-item {{is_active('usersalaries')}}">
+                <a class="nav-link" href="{{route('usersalaries.index')}}">
+                    <i class="material-icons">shop</i>
+                    <p>@lang('site.usersalaries')</p>
+                </a>
+            </li>
             
             <li class="nav-item {{is_active('delivery')}}">
                 <a class="nav-link" href="{{route('users.delivery')}}">
@@ -104,6 +109,7 @@
                     <p>@lang('site.advances')</p>
                 </a>
             </li>
+            
             <li class="nav-item {{is_active('counts')}}">
                 <a class="nav-link" href="{{route('advances.counts')}}">
                     <i class="material-icons">gift</i>

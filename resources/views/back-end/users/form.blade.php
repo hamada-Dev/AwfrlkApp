@@ -54,31 +54,7 @@
         </div>
     </div>
     
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.salary')</label>
-            <input type="number" step='0.01' name="salary"  value="{{ isset($row) ? $row->salary : old('salary') }}"
-                class="form-control @error('salary') is-invalid @enderror">
-            @error('salary')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.commission')</label>
-            <input type="text" name="commission"  value="{{ isset($row) ? $row->commission : old('commission') }}"
-                class="form-control @error('commission') is-invalid @enderror">
-            @error('commission')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
+    
     
     <div class="col-md-6">
         <div class="form-group bmd-form-group">

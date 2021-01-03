@@ -117,10 +117,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class, 'delivery_id');
     }
  
-    public function userSalaryUpdate()
-    {
-        return $this->hasMany(Usersalary::class);
-    }
 
     public function promocodes()
     {
@@ -130,5 +126,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function Advances()
     {
         return $this->hasMany(Advance::class);
+    }
+    public function usersalaries()
+    {
+        return $this->hasMany(Usersalary::class);
     }
 }

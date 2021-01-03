@@ -15,13 +15,20 @@ class CreateUsersalariesTable extends Migration
     {
         Schema::create('usersalaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float("salary");
+            $table->float("salary")->nullable();
+            $table->double("commission")->nullable();
             $table->BigInteger("user_id")->unsigned();
-            $table->BigInteger('updated_by')->unsigned();
-            $table->timestamps();
+            $table->dateTime('moneyDay')->nullable()->comment('day for take salary');
 
+            $table->bigInteger("added_by")->unsigned()->comment('who added');
+            $table->bigInteger('deleted_by')->nullable()->unsigned();
+            $table->dateTime("delete_date")->nullable();
+           
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+
 
         });
     }
