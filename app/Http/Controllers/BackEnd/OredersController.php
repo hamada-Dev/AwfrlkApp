@@ -31,7 +31,7 @@ class OredersController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
         $rows = $rows-> when($request->delivery_id, function ($query) use ($request) {
-            $query->where('delivery_id', $request->delivery_id);
+            $query->where('delivery_id', $request->delivery_id)->where('created_at','>', $request->created_at);
         })->paginate(4);
        
         $module_name_plural = $this->getClassNameFromModel();

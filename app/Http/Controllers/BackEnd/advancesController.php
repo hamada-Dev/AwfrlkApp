@@ -6,6 +6,8 @@ use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Advance;
+use App\Models\Order;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -119,6 +121,19 @@ class advancesController extends BackEndController
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
     }
+    public function countResetMoney($delivery_id ,$created_at,$id)
+    {
+        $orders=Order::where('delivery_id',$delivery_id)->where("created_at",'>',$created_at)->get();
+        $advance=$this->model->find($id);
+        $sum=0;
+        foreach($orders as $order)
+        {
+            $sum+=$order->delivery_price;
+        }
+         $advance->givemoney=$advance->getmoney+$sum;
+         $advance->save();
+         return redirect()->route('advances.index');
 
+    }
   
 }

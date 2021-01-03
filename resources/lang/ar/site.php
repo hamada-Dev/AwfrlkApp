@@ -190,6 +190,8 @@ return [
   "not_buy"=>"لم يشترى",
   'totalPrice'=>'سعر الفاتورة',
   'created_at'=>'تاريخ الانشاء',
+  'details_Orders'=>' تفاصيل الطلبات',
+  'count'=>'تصفية',
   //orderDetails
   "orderdetails"=>"تفاصيل الطلب",
   "orderdetail"=>"تفاصيل الطلب",
