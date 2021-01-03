@@ -21,7 +21,8 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}"
+        class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
@@ -44,7 +45,7 @@
                     @lang('site.givemoney')
                 </th>
                 <th>
-                @lang('site.details_Orders')
+                    @lang('site.from')
                 </th>
                 <th class="text-right">
                     @lang('site.actions')
@@ -66,15 +67,31 @@
                     {{$row->getmoney}}
                 </td>
                 <td>
+                    @if($row->givemoney == null)
+                    <a class="btn btn-primary btn-sm"
+                        href="{{ route('advances.countreset', ['delivery_id' => $row->user_id, 'created_at'=>$row->created_at, 'id'=>$row->id]) }}">
+                        @lang('site.count')
+                    </a>
+                    @else
                     {{$row->givemoney}}
+                    @endif
+
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="{{ route('advances.countreset', ['delivery_id' => $row->user_id,'created_at'=>$row->created_at,'id'=>$row->id]) }}">
-                        @lang('site.count_orders')
-                    </a>
+                    {{$row->created_at}}
+
                 </td>
-                
+
                 <td class="td-actions text-right">
+                    <form action="{{ route('orders.index')}}" method="get">
+                        <input type="hidden" value="{{$row->user_id}}" name="delivery_id">
+                        <input type="hidden" value="{{$row->created_at}}" name="created_at">
+                        <button rel="tooltip" title="" class="btn btn-white btn-link btn-sm"
+                            data-original-title=" @lang('site.details_Orders')">
+                            <i class="material-icons">calendar_today</i>
+                        </button>
+                    </form>
+
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')
                 </td>

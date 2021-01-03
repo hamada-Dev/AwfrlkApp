@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->dateTime('feedback_date')->nullable()->comment('from client');
             $table->bigInteger('delivery_id')->nullable()->unsigned();
             $table->bigInteger('client_id')->unsigned();
+            $table->bigInteger('admin_id')->nullable()->unsigned()->comment('this is if admin give this order to delivery');
             $table->bigInteger('area_id')->unsigned();
             $table->string('adress')->nullable();
             $table->bigInteger('area_id_from')->nullable()->unsigned();

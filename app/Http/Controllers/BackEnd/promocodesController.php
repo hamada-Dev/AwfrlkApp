@@ -59,7 +59,8 @@ class promocodesController extends BackEndController
 
         ]);
             $request['added_by'] = auth()->user()->id;
-            $request['serial'] = uniqid("Awfrlk_");
+            // $request['serial'] = uniqid("Awfrlk_");
+            $request['serial'] = 'Awfrlk_'. (time() * random_int(100,1000));
 
 
         $this->model->create($request->all());

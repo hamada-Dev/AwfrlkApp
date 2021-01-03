@@ -33,7 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return asset('uploads/users_images/' . $this->image);
     } //end of path
 
-    
+
     public function video()
     {
         return $this->hasMany(Video::class);
@@ -79,8 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ScopeDelivery($query)
     {
         return $query->where('group', 'delivery');
-    } 
-    
+    }
+
     public function ScopeDeliveryActive($query)
     {
         return $query->where('group', 'delivery')->where('delivery_status', 1);
@@ -116,13 +116,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class, 'delivery_id');
     }
- 
+
+
 
     public function promocodes()
     {
         return $this->hasMany(Promocode::class);
     }
-    
+
     public function Advances()
     {
         return $this->hasMany(Advance::class);

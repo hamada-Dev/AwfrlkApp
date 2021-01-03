@@ -27,12 +27,13 @@ class OredersController extends BackEndController
 
     public function index(Request $request)
     {
+        // return $request;
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
         $rows = $rows-> when($request->delivery_id, function ($query) use ($request) {
             $query->where('delivery_id', $request->delivery_id)->where('created_at','>', $request->created_at);
-        })->paginate(4);
+        })->latest()->paginate(4);
        
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

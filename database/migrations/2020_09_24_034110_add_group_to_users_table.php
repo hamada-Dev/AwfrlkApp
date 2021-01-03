@@ -15,7 +15,7 @@ class AddGroupToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('group')->default('user');
-            $table->string('delivery_status')->nullable()->comment(' Delivery ? 0=>busy 1=>active 2=>notactive : not D');
+            $table->tinyInteger('delivery_status')->nullable()->comment(' Delivery ? 0=>busy 1=>active 2=>notactive : not D');
         });
     }
 
