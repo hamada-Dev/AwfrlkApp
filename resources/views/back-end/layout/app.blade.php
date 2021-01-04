@@ -482,10 +482,10 @@
     var channel = pusher.subscribe('my-channel-order');
     channel.bind('my-event-order', function(data) {
         document.getElementById('audioNotify').play();
-        var name = data.name,
-            delivery = data.activeDelivery;
-        alert(JSON.stringify(data));
-
+        var name     = data.first_name;
+        // global.valueId = data.order_id;
+         var   delivery = data.activeDelivery;
+           
         var order = new Noty({
                 text: "هناك طلب ما من العميل " + name ,
                 type: "warning",
@@ -493,13 +493,15 @@
                 killer: true,
                 timeout: 60000,
                 buttons: [
-                    Noty.button("<a href='{{route("home.index")}}'> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
-                        // that.window.location = "";
+                    Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
+                        // that.window.location = "";  
+                        console.log("id is -----" + id);
                         that.closest('form').submit();
                         document.getElementById('audioNotify').pause();
                     }),
 
                     Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
+                        console.log("id is -----" + id);
                         order.close();
                         document.getElementById('audioNotify').pause();
                     })
@@ -522,7 +524,6 @@
     var channel = pusher.subscribe('channel-delEndShop');
     channel.bind('event-delEndShop', function(data) {
         console.log('delivery has end shopping ');
-        console.log('delivery has end shopping ///////////' . data.order_total_price);
         // alert(JSON.stringify(data));
     });
 

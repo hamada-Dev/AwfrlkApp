@@ -79,7 +79,9 @@ Route::group(
             Route::resource('promocodes', 'promocodesController')->except('show');
             //advances
             Route::resource('advances', 'advancesController')->except('show');
-            Route::get('advances/{delivery_id}/{created_at}/{id}','advancesController@countResetMoney')->name('advances.countreset');
+            Route::get('advancesdelivery/{delivery_id}/{created_at}/{id}','advancesController@countResetMoney')->name('advances.countreset');
+
+            Route::resource('order/pending', 'PendingOrderController');
 
         });
         

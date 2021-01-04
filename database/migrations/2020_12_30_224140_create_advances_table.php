@@ -21,6 +21,7 @@ class CreateAdvancesTable extends Migration
             $table->bigInteger("added_by")->unsigned()->comment('who added');
             $table->bigInteger('deleted_by')->nullable()->unsigned();
             $table->dateTime("delete_date")->nullable();
+            $table->tinyInteger("flag")->default(0)->comment('0=> show 1=> hide');
 
             $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');

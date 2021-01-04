@@ -9,10 +9,6 @@ use App\Models\Advance;
 use App\Models\Order;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use phpDocumentor\Reflection\Types\Null_;
 
 class advancesController extends BackEndController
 {
@@ -121,8 +117,9 @@ class advancesController extends BackEndController
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
     }
-    public function countResetMoney($delivery_id ,$created_at,$id)
+    public function countResetMoney($delivery_id ,$created_at, $id)
     {
+        // return $delivery_id;
         $orders=Order::where('delivery_id',$delivery_id)->where("created_at",'>',$created_at)->get();
         $advance=$this->model->find($id);
         $sum=0;

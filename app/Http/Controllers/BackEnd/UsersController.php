@@ -22,15 +22,14 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->where('delivery_status', '<>', '3')->paginate(5);
+        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->where('delivery_status', null)->paginate(5);
 
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        return view('back-end.'.$this->getClassNameFromModel().'.index', compact('rows', 'module_name_singular', 'module_name_plural'));
-
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
     }
 
-  /*  protected function filter($rows){
+    /*  protected function filter($rows){
 
         if(request()->has('name') && request()->get('name') != ''){
 
@@ -56,28 +55,27 @@ class UsersController extends BackEndController
             'adress' => ['required', 'string', 'max:255'],
             'area_id' => ['required', 'exists:areas,id'],
             'image'     => ['image'],
-            'delivery_status' => ['required', Rule::in([0, 1,2,3,4])],
+            'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
 
         ]);
 
-        $request_data=$request->except(['image', 'password', 'c_password', 'api_token']);
+        $request_data = $request->except(['image', 'password', 'c_password', 'api_token']);
 
         // store image
-        if ($request->image){
+        if ($request->image) {
 
             $this->uploadImage($request);
 
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-        $request_data['password']= Hash::make($request->password);
-        $request_data['api_token']=hash('md5','user');
-        $request['added_by']=auth()->user()->id;
+        $request_data['password'] = Hash::make($request->password);
+        $request_data['api_token'] = hash('md5', 'user');
+        $request['added_by'] = auth()->user()->id;
 
         User::create($request_data);
-        if($request->group=='delivery')
-        {
-            return redirect()->route('deliverymotocycles.create')->with("del_id",$request->id);
+        if ($request->group == 'delivery') {
+            return redirect()->route('deliverymotocycles.create')->with("del_id", $request->id);
         }
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('users.index');
@@ -91,17 +89,17 @@ class UsersController extends BackEndController
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'salary' => ['required'],
             'commission' =>  ['required'],
-            'delivery_status' => ['required', Rule::in([0, 1,2,3,4])],
+            'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
 
-            ]);
+        ]);
 
-        $request_data=$request->except(['password', 'image','c_password']);
+        $request_data = $request->except(['password', 'image', 'c_password']);
 
         // store image
-        if ($request->image){
+        if ($request->image) {
 
-            if($user->image != 'default.png'){
-                Storage::disk('public_uploads')->delete('/user_images/'. $user->image);
+            if ($user->image != 'default.png') {
+                Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
             }
 
             $this->uploadImage($request);
@@ -109,55 +107,54 @@ class UsersController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-        if($request->has('password') && $request->get('password') != ''){
+        if ($request->has('password') && $request->get('password') != '') {
 
             $request_data += ['password' => Hash::make($request->password)];
         }
-         // check for update price to add it in productUpdate
-  
+        // check for update price to add it in productUpdate
 
-        
+
+
         $user->update($request_data);
 
         session()->flash('success', __('site.updated_successfully'));
-        if($request->group=='delivery')
+        if ($request->group == 'delivery')
             return redirect()->route('users.delivery');
         else
             return redirect()->route('users.index');
-        
-
-    }//end of update
+    } //end of update
 
     public function destroy($id)
     {
         $promo = User::findOrFail($id);
-            $promo->update([
-                'deleted_by'    => auth()->user()->id,
-                'delete_date'   => now(),
-            ]);
-            // $product->delete();
+        $promo->update([
+            'deleted_by'    => auth()->user()->id,
+            'delete_date'   => now(),
+        ]);
+        // $product->delete();
 
-            session()->flash('success', __('site.deleted_successfully'));
-            return redirect()->route($this->getClassNameFromModel() . '.index');
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route($this->getClassNameFromModel() . '.index');
     }
 
-    protected function uploadImage($request){
+    protected function uploadImage($request)
+    {
 
         \Intervention\Image\Facades\Image::make($request->image)->resize(300, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->save(public_path('uploads/users_images/'. $request->image->hashName()));
+        })->save(public_path('uploads/users_images/' . $request->image->hashName()));
     }
-    
+
     public function showDelivery()
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('group', '=', 'delivery')->where('delivery_status', '<>', '3')->paginate(5);
 
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        return view('back-end.'.$this->getClassNameFromModel().'.showdelivery', compact('rows', 'module_name_singular', 'module_name_plural'));
+        $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->paginate(5);
 
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('rows', 'module_name_singular', 'module_name_plural'));
     }
 
 
@@ -166,31 +163,28 @@ class UsersController extends BackEndController
         $rows = $this->model->find($delivery_id);
         $rows = $rows->deliveryStatus;
         // return $rows;
-        return view('back-end.'.$this->getClassNameFromModel().'.deliverystatus', compact('rows'));
+        return view('back-end.' . $this->getClassNameFromModel() . '.deliverystatus', compact('rows'));
     }
-   
+
 
     public function addBlacklist($id)
     {
-        $row=$this->model->find($id);
-        if($row->delivery_status != 3)
-            {
-                $row->delivery_status=3;
-            }elseif($row->group=="user"||$row->group=="emp"||$row->group=="admin")
-            {
-                $row->delivery_status=4;
-            }else{
-                $row->delivery_status=1;
+        $row = $this->model->find($id);
+        if ($row->delivery_status != 3) {
+            $row->delivery_status = 3;
+        } elseif ($row->group == "user" || $row->group == "emp" || $row->group == "admin") {
+            $row->delivery_status = 4;
+        } else {
+            $row->delivery_status = 1;
         }
-            $row->save();
-        
-        session()->flash('success', __('site.updated_successfully'));
-        if($row->group =="delivery")
-              return redirect()->route('users.delivery');
-        else
-              return redirect()->route('users.index');
+        $row->save();
 
-        }
+        session()->flash('success', __('site.updated_successfully'));
+        if ($row->group == "delivery")
+            return redirect()->route('users.delivery');
+        else
+            return redirect()->route('users.index');
+    }
 
 
 
@@ -198,11 +192,10 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('delivery_status','3')->paginate(5);
+        $rows = $rows->where('delivery_status', '3')->paginate(5);
 
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        return view('back-end.'.$this->getClassNameFromModel().'.blacklist', compact('rows', 'module_name_singular', 'module_name_plural'));
-   
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        return view('back-end.' . $this->getClassNameFromModel() . '.blacklist', compact('rows', 'module_name_singular', 'module_name_plural'));
     }
 }

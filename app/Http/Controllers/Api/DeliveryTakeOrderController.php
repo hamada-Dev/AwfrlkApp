@@ -65,15 +65,15 @@ class DeliveryTakeOrderController extends BaseController
                         $request->validate([
                             'price'     =>  ['required', 'numeric',],
                         ]);
-                        $newOrder->update([
+                        $newOrder->orderDetails[0]->update([
                             "price"             => $request->price,
-                            "end_shoping_date"  => now(),
-                        ]);
-                    } else { // this is a product order or from home to home 
-                        $newOrder->update([
-                            "end_shoping_date"  => now(),
                         ]);
                     }
+
+                    $newOrder->update([
+                        "end_shoping_date"  => now(),
+                    ]);
+
                     $order_details   =  OrderDetailsRecourse::collection($newOrder->orderDetails);
                     $order_delivery  =  new UserResource(User::find($newOrder->delivery_id));
                     $order_details_total_price   = $newOrder->OrderPrice;

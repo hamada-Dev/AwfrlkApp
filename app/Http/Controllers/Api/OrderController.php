@@ -243,7 +243,7 @@ class OrderController extends BaseController
     {
         $data = [
             'user_id'           =>  auth()->user()->id,
-            'firstName'         =>  auth()->user()->firstName,
+            'firstName'         =>  auth()->user()->name,
             'order_id'          =>  $newOrder->id,
             'active_delivery'   => $ActiveDelivery,
         ];

@@ -21,7 +21,8 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}"
+        class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
@@ -58,7 +59,7 @@
                 <th>
                     @lang("site.price")
                 </th>
-                
+
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -66,28 +67,28 @@
         </thead>
         <tbody>
             @php
-                $sumtotal=0;
-                $sumdel=0;
+            $sumtotal=0;
+            $sumdel=0;
             @endphp
             @foreach($rows as $row)
 
             <tr>
                 <td>
-                <a class="btn btn-danger btn-sm" href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}">
-                     {{$row->orderDetails->count()}}   @lang("site.products") 
-                    </a>  
+                    <a class="btn btn-danger btn-sm" href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}">
+                        {{$row->orderDetails->count()}} @lang("site.products")
+                    </a>
                 </td>
                 <td>
                     {{$row->orderDetails->sum('price')}}
-                    @php 
+                    @php
                     $sumtotal+=$row->orderDetails->sum('price');
                     @endphp
                 </td>
                 <td>
                     @if ($row->status==0)
-                        <a href="" class="btn btn-primary btn-sm">@lang("site.waiting")</a>
-                    @else    
-                        <a href="" class="btn btn-success btn-sm">@lang("site.finished")</a>
+                    <a href="" class="btn btn-primary btn-sm">@lang("site.waiting")</a>
+                    @else
+                    <a href="" class="btn btn-success btn-sm">@lang("site.finished")</a>
                     @endif
                 </td>
                 <td>
@@ -95,57 +96,57 @@
                 </td>
                 <td>
                     @foreach ($users as $user)
-                        @if($row->delivery_id==$user->id)
-                            {{$user->name}} {{$user->lastName}}
-                        @endif   
+                    @if($row->delivery_id==$user->id)
+                    {{$user->name}} {{$user->lastName}}
+                    @endif
                     @endforeach
                 </td>
                 <td>
                     @foreach ($users as $user)
-                        @if($row->client_id==$user->id)
-                            {{$user->name}} {{$user->lastName}}
-                        @endif   
+                    @if($row->client_id==$user->id)
+                    {{$user->name}} {{$user->lastName}}
+                    @endif
                     @endforeach
                 </td>
-                
+
                 <td>
-                     @if ($row->end_shoping_date==null)
-                        <a href="" class="btn btn-primary btn-sm">@lang("site.not_buy")</a>
-                     @else    
-                        {{$row->end_shoping_date}}
+                    @if ($row->end_shoping_date==null)
+                    <a href="" class="btn btn-primary btn-sm">@lang("site.not_buy")</a>
+                    @else
+                    {{$row->end_shoping_date}}
                     @endif
                 </td>
                 <td>
                     @if ($row->arrival_date==null)
-                        <a href="" class="btn btn-primary btn-sm">@lang("site.not_arrive")</a>
-                    @else    
-                        {{$row->arrival_date}}
+                    <a href="" class="btn btn-primary btn-sm">@lang("site.not_arrive")</a>
+                    @else
+                    {{$row->arrival_date}}
                     @endif
                 </td>
                 <td>
-                  {{ $row->delivery_price }}  
-                  @php 
+                    {{ $row->delivery_price }}
+                    @php
                     $sumdel+=$row->delivery_price;
-                  @endphp
+                    @endphp
                 </td>
-               
+
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')
                 </td>
             </tr>
             @endforeach
-            </tbody>
-            <tfoot>
+        </tbody>
+        <tfoot>
             <tr>
                 <th>
                     -
                 </th>
 
                 <th>
-                   @php echo $sumtotal; @endphp
+                    @php echo $sumtotal; @endphp
                 </th>
-                    
+
                 <th>
                     -
                 </th>
@@ -167,10 +168,10 @@
                 <th>
                     @php echo $sumdel; @endphp
                 </th>
-                
+
                 <th>
                     -
-                </th>     
+                </th>
             </tr>
         </tfoot>
     </table>
