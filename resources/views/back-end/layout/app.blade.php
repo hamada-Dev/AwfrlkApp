@@ -187,7 +187,7 @@
     <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
 
     {{-- this is for scrollbar that destroy design if local = ar --}}
-    <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script> -->
     {{-- <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script> --}}
     {{-- <script>
         $("#selector").niceScroll({

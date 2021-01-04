@@ -79,10 +79,15 @@ Route::group(
             Route::resource('promocodes', 'promocodesController')->except('show');
             //advances
             Route::resource('advances', 'advancesController')->except('show');
+
             Route::get('advancesdelivery/{delivery_id}/{created_at}/{id}','advancesController@countResetMoney')->name('advances.countreset');
 
             Route::resource('order/pending', 'PendingOrderController');
 
+
+            Route::get('advances/{advance_id}','advancesController@countMoney')->name('advances.countmoney');
+            Route::get('showReport','advancesController@showReport')->name('advances.counts');
+            Route::post('showmoney','advancesController@countAllMoney')->name('advances.totalmoney');
         });
         
        

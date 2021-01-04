@@ -168,17 +168,31 @@ return [
     "not_buy"=>"Not Buy",
     'totalPrice'=>'Bills Price ',
     'created_at'=>'Created_at',
+  'details_Orders'=>'Orders Details',
+  'order_count_money'=>'Total MOney for Orders',
+  'count'=>'Count',
+  'delivery_price'=>'Delivery Price',
+  'salaryAfterCommission'=>'Salary After Commission',
+  'salary_count_money'=>'Total Salary',
+  'safeAlmaserofat'=>' Money Out ',
+  'safeofferandorder'=>'Money In',
+  'safearbah'=>'Earn Money',
 
     // products
     'products'  =>  'Products',
     'product'  =>  'Product',
-
+    'offer_count_money'=>'Total offer Money',
     'choose-category'  =>  'Choose Category',
     'choose-unit'  =>  'Choose Unit',
     'unit'  =>  'Unit',
     'kilo'  =>  'kilo',
     'liter' =>  'liter',
     'number'    =>  'Number',
+    'count_orders'=>'Count Order money',
+    'counts'=>'Money',
+    'from'=>'From',
+    'to'=>'To',
+    'search'=>'Search',
 
     //Trips
     'person_price' => 'Price Of Single Person',

@@ -157,7 +157,13 @@ return [
   'USEROFFER' => 'عرض للعميل',
   'cl_name' => 'اسم العميل',
   'offer_data' => "بيانات العرض",
-
+  'delivery_price'=>'سعر الخدمة',
+  'order_count_money'=>'إجمالى سعر خدمة التوصيل',
+  'salaryAfterCommission'=>'المرتب بعد العلاوة',
+  'salary_count_money'=>'إجمالى مرتبات الموظفين',
+  'safeAlmaserofat'=>'صافى مصروفات',
+  'safeofferandorder'=>'صافى عروض وطلبات',
+  'safearbah'=>'صافى أرباح',
   //deliverymotocycles
   'deliverymotocycles' => 'موتوسكل الطيار',
   'deliverymotocycle' => 'موتوسكل الطيار',
@@ -170,6 +176,12 @@ return [
   'color' => 'اللون',
   'user_id' => 'أسم الطيار',
   'choose-user' => 'أختر المستخدم',
+  'count_orders'=>'تصفية الطلبات',
+  'counts'=>'الحسابات',
+  'from'=>'من',
+  'to'=>'إلى',
+  'search'=>'بحث',
+  'offer_count_money'=>'إجمالى سعر العروض',
   //orders
   "orders"=>'طلبات',
   "order"=>'طلب',

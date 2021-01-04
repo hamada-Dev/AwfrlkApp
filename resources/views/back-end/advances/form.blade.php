@@ -31,18 +31,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.givemoney')</label>
-            <input type="number" step='0.01' name="givemoney" value="{{ isset($row) ? $row->givemoney : old('givemoney') }}"
-                class="form-control @error('givemoney') is-invalid @enderror">
-            @error('givemoney')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
+    
 
     
 </div>

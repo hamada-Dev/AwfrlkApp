@@ -79,6 +79,7 @@
                 </td>
                 <td>
                     {{$row->created_at}}
+
                 </td>
 
                 <td class="td-actions text-right">
