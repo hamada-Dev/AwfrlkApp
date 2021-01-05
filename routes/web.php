@@ -89,7 +89,7 @@ Route::group(
             Route::get('showReport','advancesController@showReport')->name('advances.counts');
             Route::post('showmoney','advancesController@countAllMoney')->name('advances.totalmoney');
             //usersalaries
-            Route::resource('usersalaries', 'usersalaryController')->except('show');
+            Route::resource('usersalaries', 'usersalaryController');
 
         });
         

@@ -190,6 +190,9 @@ return [
   'user_id_emp'=>'أسم الموظف',
   'moneyDay'=>'تاريخ الصرف',
   'choose-employee'=>'أختر الموظف',
+  'give_money'=>'صرف مرتب',
+  'takeHereMoney'=>'تم الصرف',
+  'all_salary'=>'مرتبات كل الاشهر',
   //orders
   "orders"=>'طلبات',
   "order"=>'طلب',

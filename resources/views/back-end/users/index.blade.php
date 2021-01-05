@@ -44,9 +44,7 @@
                     <th>
                         @lang('site.gender')
                     </th>
-                    <th>
-                        @lang('site.country')
-                    </th>
+                  
                     <th>
                          @lang('site.status')
                     </th>
@@ -74,8 +72,10 @@
                         </td>
 
                         <td>
+                        <a style='color:blue' href="{{route('usersalaries.index',['user_id'=>$row->id])}}" title="@lang('site.all_salary')">
                             {{$row->name}} {{$row->lastName}}
-                        </td>
+                            </a>    
+                        </td>                        
 
                         <td>
                             {{$row->email}}
@@ -89,9 +89,6 @@
                             {{$row->gender}}
                         </td>
 
-                        <td>
-                            {{$row->adress}}
-                        </td>
                         <th>
                             @if($row->delivery_status==0)
                             <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-success btn-sm'>
@@ -120,6 +117,14 @@
                         <td class="td-actions text-right">
                             @include('back-end.buttons.edit')
                             @include('back-end.buttons.delete')
+                            @if($row->group !='user')
+                                @if(in_array($row->id,$whotakemoney))
+                                    <a href="" class='btn btn-sm btn-warning'>@lang('site.takeHereMoney')</a>
+                                @else
+                                    <a href="" class='btn btn-sm btn-primary'>@lang('site.give_money')</a>
+                                
+                                @endif
+                            @endif    
                         </td>
                     </tr>
                 @endforeach

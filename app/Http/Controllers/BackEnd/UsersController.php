@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\BackEnd;
 
 use App\Models\User;
+use App\Models\Usersalary;
+
 use App\Models\DeliveryStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,11 +24,19 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->where('delivery_status', null)->paginate(5);
+        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
-        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
+        // start for who take money
+        $month_start = strtotime('first day of this month', time());
+        $month_end = strtotime('last day of this month', time());
+        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
+        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        // end for who take the money
+        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
     }
 
     /*  protected function filter($rows){
@@ -148,9 +158,17 @@ class UsersController extends BackEndController
 
         $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->paginate(5);
 
+        // start for who take money
+        $month_start = strtotime('first day of this month', time());
+        $month_end = strtotime('last day of this month', time());
+        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
+        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        // end for who take the money
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
-        return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('rows', 'module_name_singular', 'module_name_plural'));
+        return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
     }
 
 

@@ -25,11 +25,13 @@ class usersalaryController extends BackEndController
 
     public function index(Request $request)
     {
-        //get all data of Model
+        //get all data of   
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->paginate(5);
+        $rows = $rows->when($request->user_id,function($query) use ($request){
+            $query->where('user_id',$request->user_id)->orderBy('moneyDay','desc');
+        })->orderBy('moneyDay','desc')->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -45,7 +47,18 @@ class usersalaryController extends BackEndController
         $append =$this->append();
         $users=User::where('group','!=','user')->get();
         return view('back-end.'.$this->getClassNameFromModel().'.create', compact("users",'module_name_singular', 'module_name_plural'))->with($append);
-    } //en
+    } 
+    
+    public function show($id)
+    {
+        $module_name_plural=$this->getClassNameFromModel();
+        $module_name_singular=$this->getSingularModelName();
+        $append =$this->append();
+        $onlyuser=User::find($id);
+        $lastSalary=Usersalary::where('user_id',$id)->orderBy('moneyDay','desc')->first();
+        return view('back-end.'.$this->getClassNameFromModel().'.create', compact('lastSalary','onlyuser','module_name_singular', 'module_name_plural'))->with($append);
+    } 
+    //en
     /**
      * Store a newly created resource in storage.
      *

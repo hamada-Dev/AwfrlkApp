@@ -30,6 +30,11 @@
 
 </form>
 <!-- this is the order data to count moneyy -->
+@php 
+$sumdel=0;
+$sumofferprice=0;
+$sumsalary=0;
+@endphp
 
 @if(isset($orders))
 <hr>
@@ -66,9 +71,7 @@
             </tr>
         </thead>
         <tbody>
-            @php
-                $sumdel=0;
-            @endphp
+         
             @foreach($orders as $row)
 
             <tr class='text-center'>
@@ -130,7 +133,6 @@
 
 <!-- this is the offers data to count moneyy-->
 @if(isset($offers))
-@php $sumofferprice=0; @endphp
 <hr>
 <h3 class='pull-right' style='color:red'>@lang('site.offers')</h3>
 <div class="table-responsive">
@@ -200,8 +202,6 @@
 @endif
 <!-- this is the users data to count moneyy-->
 @if(isset($salaries))
-
-@php $sumsalary=0; @endphp
 <hr>
 <h3 class='pull-right' style='color:red'>@lang('site.users')</h3>
 <div class="table-responsive">
@@ -211,13 +211,11 @@
                     <th>
                         @lang('site.name')
                     </th>
+
                     <th>
-                        @lang('site.group')
+                        @lang('site.moneyDay')
                     </th>
-                    <th>
-                        @lang('site.phone')
-                    </th>
-               
+
                     <th>
                         @lang('site.commission')
                     </th>
@@ -236,19 +234,13 @@
 
                     <tr class='text-center'>
 
-                        
-
                         <td>
-                            {{$row->name}} {{$row->lastName}}
-                        </td>
-                        <td>
-                            {{$row->group}}
-                        </td>
-                     
-                        <td>
-                            {{$row->phone}}
+                            {{$row->user->name}} {{$row->user->lastName}}
                         </td>
 
+                        <td>
+                            {{$row->moneyDay}}
+                        </td>
                         <td>
                             {{$row->commission}}
                         </td>
@@ -268,8 +260,6 @@
                                     $sumsalary+=$all;
                             @endphp
                         </td>
-                        
-
                         
                     </tr>
                 @endforeach
