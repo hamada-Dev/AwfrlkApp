@@ -78,7 +78,6 @@ class UserOffersController extends BackEndController
     }
 
 
-
     /**
      * Update the specified resource in storage.
      *

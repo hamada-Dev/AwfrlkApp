@@ -60,7 +60,7 @@ Route::group(
             Route::resource('areas', 'AreasController')->except('show');
             Route::get('AreaChildern/{parent_id}',"AreasController@childern")->name("areas.childern");
             //deliveryMoto
-            Route::resource('deliverymotocycles', 'DeliveryMotocyclesController')->except('show');
+            Route::resource('deliverymotocycles', 'DeliveryMotocyclesController');
             //useroffers
             Route::resource('useroffers', 'UserOffersController')->except('show');
             //orders
@@ -69,6 +69,8 @@ Route::group(
             Route::resource('orderdetails', 'OrderDetailsController')->except("show");
             //to seperate the delivery
             Route::get('/showDelivey','UsersController@showDelivery')->name('users.delivery');
+            Route::get('/showUser','UsersController@showUser')->name('users.usersShow');
+
             //delivery history status
             Route::get("deliveystatus/{delivery_id}",'UsersController@statusDelivery')->name('users.deliverystatus');
             //add in black list

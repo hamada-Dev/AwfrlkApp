@@ -116,8 +116,8 @@
 
             <select name="gender" class="form-control @error('gender') is-invalid @enderror">
                 <option value="...">@lang('site.choose-gender')</option>
-                <option value="1" {{isset($row) && $row->gender == '1' ? 'selected' : ''}}>@lang('site.male')</option>
-                <option value="0" {{isset($row) && $row->gender == '0' ? 'selected' : ''}}>@lang('site.female')</option>
+                <option value="1" @if((isset($row) && $row->gender == '1') || (old('gender')=='1')) 'selected' @endif>@lang('site.male')</option>
+                <option value="0" @if((isset($row) && $row->gender == '0') || (old('gender')=='0')) 'selected' @endif>@lang('site.female')</option>
             </select>
             @error('gender')
             <span class="invalid-feedback" role="alert">

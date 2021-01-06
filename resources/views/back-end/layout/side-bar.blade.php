@@ -24,10 +24,11 @@
                     <p>@lang('site.users')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('usersalaries')}}">
-                <a class="nav-link" href="{{route('usersalaries.index')}}">
-                    <i class="material-icons">shop</i>
-                    <p>@lang('site.usersalaries')</p>
+
+            <li class="nav-item {{is_active('usersShow')}}">
+                <a class="nav-link" href="{{route('users.usersShow')}}">
+                    <i class="material-icons">person</i>
+                    <p>@lang('site.usersShow')</p>
                 </a>
             </li>
             
@@ -38,6 +39,12 @@
                 </a>
             </li>
 
+            <li class="nav-item {{is_active('usersalaries')}}">
+                <a class="nav-link" href="{{route('usersalaries.index')}}">
+                    <i class="material-icons">shop</i>
+                    <p>@lang('site.usersalaries')</p>
+                </a>
+            </li>
             <li class="nav-item {{is_active('blcklist')}}">
                 <a class="nav-link" href="{{route('users.showblacklist')}}">
                     <i class="material-icons">person</i>

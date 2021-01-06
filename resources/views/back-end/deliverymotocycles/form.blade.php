@@ -89,10 +89,14 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.user_id')</label>
             <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
+                @if(!isset($user))
                 <option value="0">@lang('site.choose-user')</option>
                 @foreach($users as $user)
                 <option value="{{$user->id}}" @if((isset($row) && $row->user_id == $user->id)|| (request() != NULL && request()->user_id == $user->id ) || old('user_id') == $user->id) selected @endif>{{$user->name}}</option>
                 @endforeach
+                @else
+                <option value="{{$user->id}}">{{$user->name}}{{$user->lastName}}</option>
+                @endif
             </select>
             @error('user_id')
             <span class="invalid-feedback" role="alert">

@@ -66,7 +66,6 @@ class OredersController extends BackEndController
             'end_shoping_date' => [],
             'arrival_date'   =>  [],
             'feedback'   =>  ['required','max:250','min:5'],
-            'delivery_id' =>[],
             'client_id' =>['required', 'numeric','exists:users,id'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
 
@@ -110,7 +109,6 @@ class OredersController extends BackEndController
             'end_shoping_date' => [],
             'arrival_date'   =>  [],
             'feedback'   =>  ['max:250','min:5'],
-            'delivery_id' =>[],
             'client_id' =>['required', 'numeric','exists:users,id'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
 

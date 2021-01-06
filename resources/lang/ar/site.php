@@ -193,6 +193,10 @@ return [
   'give_money'=>'صرف مرتب',
   'takeHereMoney'=>'تم الصرف',
   'all_salary'=>'مرتبات كل الاشهر',
+  'decrement_trip'=>'عدد الطلبات المتبقى',
+  'usersShow'=>'العملاء',
+  'noDelivery'=>'لايوجد طيار',
+
   //orders
   "orders"=>'طلبات',
   "order"=>'طلب',

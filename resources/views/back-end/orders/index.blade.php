@@ -95,11 +95,15 @@
                     {{$row->area->name}}
                 </td>
                 <td>
+                @if($row->delivery_id != null)
                     @foreach ($users as $user)
                     @if($row->delivery_id==$user->id)
                     {{$user->name}} {{$user->lastName}}
                     @endif
                     @endforeach
+                @else 
+                    <a href="" class="btn btn-success btn-sm">@lang("site.noDelivery")</a>
+                @endif   
                 </td>
                 <td>
                     @foreach ($users as $user)

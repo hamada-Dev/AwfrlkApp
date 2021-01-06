@@ -24,7 +24,8 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->paginate(5);
+        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')
+        ->where('delivery_status', '<>', 3)->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -83,10 +84,14 @@ class UsersController extends BackEndController
 
         User::create($request_data);
         if ($request->group == 'delivery') {
-            return redirect()->route('deliverymotocycles.create')->with("del_id", $request->id);
+            return redirect()->route('deliverymotocycles.show',$request->ssn);
+        } 
+        elseif($request->group == 'user'){
+        return redirect()->route('users.usersShow');
         }
-        session()->flash('success', __('site.added_successfully'));
+        else{
         return redirect()->route('users.index');
+        }
     } //end of store
 
     public function update(Request $request, User $user)
@@ -126,6 +131,8 @@ class UsersController extends BackEndController
         session()->flash('success', __('site.updated_successfully'));
         if ($request->group == 'delivery')
             return redirect()->route('users.delivery');
+        elseif($request->group == 'user')
+            return redirect()->route('users.usersShow');
         else
             return redirect()->route('users.index');
     } //end of update
@@ -170,7 +177,26 @@ class UsersController extends BackEndController
         $module_name_singular = $this->getSingularModelName();
         return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
     }
+    public function showUser()
+    {
+        $rows = $this->model;
+        $rows = $this->filter($rows);
 
+        $rows = $rows->where('group', 'user')->where('delivery_status', '<>', 3)->paginate(5);
+
+        // start for who take money
+        $month_start = strtotime('first day of this month', time());
+        $month_end = strtotime('last day of this month', time());
+        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
+        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        // end for who take the money
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        return view('back-end.' . $this->getClassNameFromModel() . '.showUsers', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
+    }
+    
 
     public function statusDelivery($delivery_id)
     {
