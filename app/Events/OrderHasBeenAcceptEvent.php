@@ -16,11 +16,13 @@ class OrderHasBeenAcceptEvent implements ShouldBroadcast
 
     public $order_details;
     public $order_delivery;
+    public $order_user;
 
     public function __construct($message)
     {
         $this->order_details  = $message['my_order_detail'];
         $this->order_delivery = $message['accepted_delivery'];
+        $this->order_user     = $message['user_order'];
     }
 
     public function broadcastOn()

@@ -93,10 +93,10 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group bmd-form-group">
-                            <select name="delivery_id" class="form-control @error('status') is-invalid @enderror">
+                            <select name="delivery_id" class="form-control @error('status') is-invalid @enderror" {{$row->delivery_id != null? 'disabled' : ''}}>
                                 <option value="0">@lang('site.choose-Delivery')</option>
                                 @foreach ($activeDelivery as $delivery)
-                                    <option value="{{$delivery->id}}">{{$delivery->name . ''. $delivery->lasstName}}</option>
+                                    <option value="{{$delivery->id}}" {{$row->delivery_id == $delivery->id ? 'selected' : ''}}>{{$delivery->name . ''. $delivery->lasstName}}</option>
                                 @endforeach
                             </select>
                             @error('status')
@@ -172,7 +172,7 @@
 <hr>
 @endforeach
 
-
+{{ $rows->links() }}
 
 
 @endcomponent

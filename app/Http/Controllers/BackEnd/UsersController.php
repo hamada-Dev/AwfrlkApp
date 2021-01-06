@@ -22,7 +22,7 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->where('delivery_status', null)->paginate(5);
+        $rows = $rows->where('group', '!=', 'admin')->where('group', '!=', 'delivery')->where('delivery_status',4 )->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DeliveryEndShopingOrderEvent  implements ShouldBroadcast
+class DeliveryArrivalOrderEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,19 +21,19 @@ class DeliveryEndShopingOrderEvent  implements ShouldBroadcast
 
     public function __construct($message)
     {
-        $this->order_details     = $message['my_order_detail'];
-        $this->order_delivery    = $message['accepted_delivery'];
-        $this->order_user        = $message['user_order'];
-        $this->order_total_price = $message['order_total_price'];
+        $this->order_details     = $message['order_detail'];
+        $this->order_delivery    = $message['delivery_data'];
+        $this->order_user        = $message['user_data'];
+        $this->order_total_price = $message['order_details_total_price'];
     }
 
     public function broadcastOn()
     {
-        return ['channel-delEndShop'];
+        return ['channel-delArrivalOrder'];
     }
 
     public function broadcastAs()
     {
-        return 'event-delEndShop';
+        return 'event-delArrivalOrder';
     }
 }

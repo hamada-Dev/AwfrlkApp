@@ -149,9 +149,14 @@
 
 <body class="dark-edition">
 
-    <audio id="audioNotify">
+    <audio id="audioNotifyNew">
         <source src="{{asset('audio/amr.mp3')}}" type="audio/ogg">
         <source src="{{asset('audio/amr.mp3')}}" type="audio/mpeg">
+    </audio>
+
+    <audio id="audioNotifyAlert">
+        <source src="{{asset('audio/elissa.mp3')}}" type="audio/ogg">
+        <source src="{{asset('audio/elissa.mp3')}}" type="audio/mpeg">
     </audio>
 
     <div class="wrapper ">
@@ -469,63 +474,115 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
         // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+Pusher.logToConsole = true;
 
-    var pusher = new Pusher('af2b4f6752717c614a6a', {
-      cluster: 'eu'
-    });
-
-    
-
-    
-    // ------------#############  [1] this notifcation for admin to know there is an order maked and android take api from it to send a noty for active delivery ##################-------------
-    var channel = pusher.subscribe('my-channel-order');
-    channel.bind('my-event-order', function(data) {
-        document.getElementById('audioNotify').play();
-        var name     = data.first_name;
-        // global.valueId = data.order_id;
-         var   delivery = data.activeDelivery;
-           
-        var order = new Noty({
-                text: "هناك طلب ما من العميل " + name ,
-                type: "warning",
-                layout: 'bottomRight',
-                killer: true,
-                timeout: 60000,
-                buttons: [
-                    Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
-                        // that.window.location = "";  
-                        console.log("id is -----" + id);
-                        that.closest('form').submit();
-                        document.getElementById('audioNotify').pause();
-                    }),
-
-                    Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
-                        console.log("id is -----" + id);
-                        order.close();
-                        document.getElementById('audioNotify').pause();
-                    })
-                ]
-            });
-            order.show()
-
-    });
+var pusher = new Pusher('af2b4f6752717c614a6a', {
+  cluster: 'eu'
+});
 
 
-    // ------------ ############# [2] this notifcation for client to know his order has been accepted ##################-------------    
-    var channel = pusher.subscribe('channel-orderClient-acc');
-    channel.bind('event-orderClient-acc', function(data) {
-        console.log('delivery has take this order');
-
-    });
 
 
-    // ------------ ############# [3] this notifcation for client to know his order has been finished and delivery is comming soon ##################-------------    
-    var channel = pusher.subscribe('channel-delEndShop');
-    channel.bind('event-delEndShop', function(data) {
-        console.log('delivery has end shopping ');
-        // alert(JSON.stringify(data));
-    });
+// ------------#############  [1] this notifcation for admin to know there is an order maked and android take api from it to send a noty for active delivery ##################-------------
+var channel = pusher.subscribe('my-channel-order');
+channel.bind('my-event-order', function(data) {
+    document.getElementById('audioNotifyNew').play();
+    var name     = data.first_name,
+        id = data.order_id;
+       
+    var order = new Noty({
+            text: "هناك طلب ما من العميل " + name ,
+            type: "warning",
+            layout: 'bottomRight',
+            killer: true,
+            timeout: 60000,
+            buttons: [
+                Noty.button( `<a href="http://awfrlkapp/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                    // that.window.location = "";  
+                    that.closest('form').submit();
+                    document.getElementById('audioNotifyNew').pause();
+                }),
+
+                Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
+                    console.log("id is -----" + id);
+                    order.close();
+                    document.getElementById('audioNotifyNew').pause();
+                })
+            ]
+        });
+        order.show()
+
+});
+
+
+// ------------ ############# [2] this notifcation for client to know his order has been accepted ##################-------------    
+var channel = pusher.subscribe('channel-orderClient-acc');
+channel.bind('event-orderClient-acc', function(data) {
+    console.log('delivery has take this order');
+
+});
+
+
+// ------------ ############# [3] this notifcation for client to know his order has been finished and delivery is comming soon ##################-------------    
+var channel = pusher.subscribe('channel-delEndShop');
+channel.bind('event-delEndShop', function(data) {
+    console.log('delivery has end shopping ');
+    // alert(JSON.stringify(data));
+}); 
+
+
+// ------------ ############# [4] this notifcation from client to delivery and admin to tell him his order is late ##################-------------    
+var channel = pusher.subscribe('channel-userUrgOrder');
+channel.bind('event-userUrgOrder', function(data) {
+    document.getElementById('audioNotifyAlert').play();
+    console.log('user urgancy this order ' + data);
+    var id = data.order_id;
+    var order = new Noty({
+            text: "هناك تأخير في الطلب برجاءء المتابعه " ,
+            type: "alert",
+            layout: 'topRight',
+            killer: true,
+            timeout: 60000,
+            buttons: [
+                Noty.button( `<a href="http://awfrlkapp/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                // Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
+                    // that.window.location = "";  
+                    that.closest('form').submit();
+                    document.getElementById('audioNotifyAlert').pause();
+                }),
+
+                Noty.button("@lang('site.hide')", 'btn btn-primary mr-2', function () {
+                    order.close();
+                    document.getElementById('audioNotifyAlert').pause();
+                })
+            ]
+        });
+        order.show()
+
+});
+
+
+// ------------ ############# [5] this notifcation from delivery to tell me he arrival to client home  ##################-------------    
+var channel = pusher.subscribe('channel-delArrivalOrder');
+channel.bind('event-delArrivalOrder', function(data) {
+    console.log('delivery has arrival to home');
+    // alert(JSON.stringify(data));
+});
+
+
+ // ------------ ############# [6] this notifcation from  user tell delivery that he take order   ##################-------------    
+var channel = pusher.subscribe('channel-userFeedOrder');
+channel.bind('event-userFeedOrder', function(data) {
+    console.log('user receving order suecc');
+    // alert(JSON.stringify(data));
+});  
+
+ // ------------ ############# [7] this notifcation from  admin to fprce delivery take this order  ##################-------------    
+var channel = pusher.subscribe('channel-adminForceDelivey');
+channel.bind('event-adminForceDelivey', function(data) {
+    console.log('admin forcing delivery to take this order ');
+    // alert(JSON.stringify(data));
+});  
 
     </script>
 

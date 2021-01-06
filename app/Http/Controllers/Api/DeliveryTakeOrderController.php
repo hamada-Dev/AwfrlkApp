@@ -36,13 +36,11 @@ class DeliveryTakeOrderController extends BaseController
                     DB::rollback();
                     return $ex;
                 }
-
-
                 $order_details   =  OrderDetailsRecourse::collection($newOrder->orderDetails);
                 $order_client    =  new UserResource(User::find($newOrder->client_id));
                 $order_delivery  =  new UserResource(User::find($newOrder->delivery_id));
 
-                $this->makeEvent($order_details, $order_delivery);
+                $this->makeEvent($order_details, $order_delivery, $order_client);
 
                 return $this->sendResponse(['user_date' => $order_client, 'order_details' => $order_details], 200);
             } else {
@@ -60,15 +58,15 @@ class DeliveryTakeOrderController extends BaseController
         if ($newOrder) {
             if ($newOrder->delivery_id == auth()->user()->id) {
                 if ($newOrder->end_shoping_date == null) {
-                    if ($newOrder->orderDetails[0]->product_home == null && $newOrder->orderDetails[0]->product_id == null) { // this pharmacy drive have to enter price 
+                    // if ($newOrder->orderDetails[0]->product_home == null && $newOrder->orderDetails[0]->product_id == null) { // this pharmacy drive have to enter price 
 
-                        $request->validate([
-                            'price'     =>  ['required', 'numeric',],
-                        ]);
-                        $newOrder->orderDetails[0]->update([
-                            "price"             => $request->price,
-                        ]);
-                    }
+                    //     $request->validate([
+                    //         'price'     =>  ['required', 'numeric',],
+                    //     ]);
+                    //     $newOrder->orderDetails[0]->update([
+                    //         "price"             => $request->price,
+                    //     ]);
+                    // }
 
                     $newOrder->update([
                         "end_shoping_date"  => now(),
@@ -76,9 +74,10 @@ class DeliveryTakeOrderController extends BaseController
 
                     $order_details   =  OrderDetailsRecourse::collection($newOrder->orderDetails);
                     $order_delivery  =  new UserResource(User::find($newOrder->delivery_id));
+                    $order_client    =  new UserResource(User::find($newOrder->client_id));
                     $order_details_total_price   = $newOrder->OrderPrice;
 
-                    $this->makeEventEnd($order_details, $order_delivery, $order_details_total_price);
+                    $this->makeEventEnd($order_details, $order_delivery, $order_client, $order_details_total_price);
 
                     return $this->sendResponse(['user_date' => $order_delivery, 'order_details' => $order_details], 200);
                 } else {
@@ -93,21 +92,23 @@ class DeliveryTakeOrderController extends BaseController
     }
 
     // event for take order 
-    protected function makeEvent($myOrder, $deliveryData)
+    protected function makeEvent($myOrder, $deliveryData, $userData)
     {
         $data = [
             'my_order_detail'     => $myOrder,
             'accepted_delivery'   => $deliveryData,
+            'user_order'          => $userData,
         ];
         event(new OrderHasBeenAcceptEvent($data));
     }
 
     // event for end shoping 
-    protected function makeEventEnd($myOrder, $deliveryData, $order_total_price)
+    protected function makeEventEnd($myOrder, $deliveryData, $order_client, $order_total_price)
     {
         $data = [
             'my_order_detail'     => $myOrder,
             'accepted_delivery'   => $deliveryData,
+            'user_order'          => $order_client,
             'order_total_price'   => $order_total_price,
         ];
         event(new DeliveryEndShopingOrderEvent($data));

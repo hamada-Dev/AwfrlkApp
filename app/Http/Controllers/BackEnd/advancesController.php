@@ -148,6 +148,7 @@ class advancesController extends BackEndController
 
    public function showReport()
    {
+       
         return view('back-end.advances.counts');
 
    }

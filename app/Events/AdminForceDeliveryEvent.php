@@ -10,30 +10,30 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DeliveryEndShopingOrderEvent  implements ShouldBroadcast
+class AdminForceDeliveryEvent  implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $order_details;
     public $order_delivery;
     public $order_user;
-    public $order_total_price;
+    public $alert;
 
     public function __construct($message)
     {
-        $this->order_details     = $message['my_order_detail'];
-        $this->order_delivery    = $message['accepted_delivery'];
-        $this->order_user        = $message['user_order'];
-        $this->order_total_price = $message['order_total_price'];
+        $this->order_details     = $message['order_detail'];
+        $this->order_delivery    = $message['delivery_data'];
+        $this->order_user        = $message['user_data'];
+        $this->alert             = $message['alert'];
     }
 
     public function broadcastOn()
     {
-        return ['channel-delEndShop'];
+        return ['channel-adminForceDelivey'];
     }
 
     public function broadcastAs()
     {
-        return 'event-delEndShop';
+        return 'event-adminForceDelivey';
     }
 }

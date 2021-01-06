@@ -10,4 +10,16 @@
         }).show();
     </script>
 
+@elseif (session('error'))
+
+    <script>
+        new Noty({
+            type: 'error',
+            layout: 'topRight',
+            text: "{{ session('error') }}",
+            timeout: 3500,
+            killer: true
+        }).show();
+    </script>
+
 @endif

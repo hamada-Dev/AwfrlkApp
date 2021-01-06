@@ -48,6 +48,10 @@ Route::group(['namespace' => 'Api'], function () {
             //  promo route 
             Route::resource('promocode', 'PromoController'); 
 
+            // user urgency order when delivery delay on it 
+            Route::resource('userUrgencyOrder', 'UserUrgencyOrderController');
+
+            // user end order when accept it 
             Route::post('userFeedbackOrder', 'UserOrderFeedbackController@userFeedbackOrder');
 
         });

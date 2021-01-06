@@ -83,7 +83,7 @@
                 </td>
 
                 <td class="td-actions text-right">
-                    <form action="{{ route('orders.index')}}" method="get">
+                    <form action="{{ route('orders.index')}}" method="get"  style="display: inline-block;">
                         <input type="hidden" value="{{$row->user_id}}" name="delivery_id">
                         <input type="hidden" value="{{$row->created_at}}" name="created_at">
                         <button rel="tooltip" title="" class="btn btn-white btn-link btn-sm"
