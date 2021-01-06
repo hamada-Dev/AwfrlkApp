@@ -123,6 +123,10 @@ return [
       'user_id_emp'=>' Employee Name',
       'moneyDay'=>'Salary Day',
       'choose-employee'=>'Choose Employee ',
+      'give_money'=>'give Salary',
+      'takeHereMoney'=>'get his salary ',
+      'all_salary'=>'salaries for all months',
+
       //user_offer
       'ssn' => 'SSN',
       'user_id'=>'User Name',

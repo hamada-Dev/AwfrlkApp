@@ -9,6 +9,7 @@ use App\Models\Advance;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Offer;
+use App\Models\Usersalary;
 
 use Illuminate\Http\Request;
 
@@ -175,11 +176,12 @@ class advancesController extends BackEndController
         // $end_date = date('Y-m-d h:i:s ', time() + 10*60*60 );
         $end_date = date('Y-m-d', time()) . ' 23:59:59';
     }
+    
 
-    $orders=Order::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('status',1)->get();
-    $users=User::all();
-    $offers=Offer::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('avilable',1)->get();
-    $salaries=User::where('salary','!=',null)->get();
-    return view('back-end.advances.counts',compact('orders','users','offers','salaries'));                
+        $orders=Order::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('status',1)->get();
+        $users=User::all();
+        $offers=Offer::where('created_at', '>=', $start_date)->where('created_at', '<', $end_date)->where('avilable',1)->get();
+        $salaries=Usersalary::where('moneyDay', '>=', $start_date)->where('moneyDay', '<', $end_date)->get();
+        return view('back-end.advances.counts',compact('orders','users','offers','salaries'));                
 }
 }
