@@ -30,6 +30,14 @@ class DeliveryMotocyclesController extends BackEndController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function show($ssn)
+    {
+        $module_name_plural=$this->getClassNameFromModel();
+        $module_name_singular=$this->getSingularModelName();
+        $append =$this->append();
+        $user=User::where('ssn',$ssn)->first();
+        return view('back-end.'.$this->getClassNameFromModel().'.create', compact('user','module_name_singular', 'module_name_plural'))->with($append);
+    } 
     public function store(Request $request)
     {
         $request->validate([
@@ -70,9 +78,9 @@ class DeliveryMotocyclesController extends BackEndController
     public function update(Request $request, DeliveryMotocycle $deliverymotocycle)
     {
         $request->validate([
-            'user_license' => ['required', 'max:10000','min:2'],
-            'moto_license'   =>  ['required', 'max:10000','min:1'],
-            'moto_number'   =>  ['required'],
+            'user_license' => ['required', 'max:10000','min:2','unique:delivery_motocycles'],
+            'moto_license'   =>  ['required', 'max:10000','min:1','unique:delivery_motocycles'],
+            'moto_number'   =>  ['required','unique:delivery_motocycles'],
             'license_renew_date' =>[],
             'license_expire_date' =>[],
             'type' =>['required'],

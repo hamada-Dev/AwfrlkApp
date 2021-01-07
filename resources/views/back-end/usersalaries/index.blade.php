@@ -19,11 +19,11 @@
 
     @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural , 'module_name_singular'=>$module_name_singular])
         @slot('add_button')
-            <div class="col-md-4 text-right">
+            <!-- <div class="col-md-4 text-right">
                 <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">
                     @lang('site.add') @lang('site.'.$module_name_singular)
                 </a>
-            </div>
+            </div> -->
         @endslot
         <div class="table-responsive">
             <table class="table">

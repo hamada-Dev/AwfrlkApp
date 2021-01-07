@@ -143,21 +143,13 @@ $sumsalary=0;
                     @lang('site.offer_name')
                 </th>
                 <th>
-                    @lang('site.price')
+                    @lang('site.user_id')
                 </th>
+                    
                 <th>
-                    @lang('site.trips_count')
+                     @lang('site.price')        
                 </th>
-                <th>
-                    @lang('site.offer_days')
-                </th>
-                <th>
-                    @lang('site.avilable')
-                </th>
-                <th>
-                    @lang('site.area_id')
-                </th>
-            
+                
             </tr>
         </thead>
         <tbody>
@@ -167,32 +159,15 @@ $sumsalary=0;
             <tr class='text-center'>
 
                 <td>
-                    {{$row->name}}
+                    {{$row->Offer->name}}
+                </td>
+                <td>
+                    {{$row->user->name}}
                 </td>
                 <td>
                     {{$row->price}}
                     @php $sumofferprice+=$row->price; @endphp
-                </td>
-                <td>
-                    {{$row->trips_count}}
-                </td>
-
-
-                <td>
-                    {{$row->offer_days}}
-                </td>
-
-                <td>
-                    @if($row->avilable==1)
-                         @lang('site.Active')
-                    @else
-                        @lang('site.NotActive')
-                    @endif
-                </td>
-                <td>
-                    {{ $row->area->name}}
-                </td>
-                
+                </td>         
             </tr>
             @endforeach
             

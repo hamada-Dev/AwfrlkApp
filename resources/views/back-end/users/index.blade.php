@@ -44,10 +44,6 @@
                     <th>
                         @lang('site.gender')
                     </th>
-                  
-                    <th>
-                         @lang('site.status')
-                    </th>
 
                     <th>
                         @lang('site.group')
@@ -89,27 +85,6 @@
                             {{$row->gender}}
                         </td>
 
-                        <th>
-                            @if($row->delivery_status==0)
-                            <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-success btn-sm'>
-                                @lang('site.busy')
-                            </a>
-                            @elseif($row->delivery_status==1)
-                            <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-danger btn-sm'>
-                                @lang('site.active')
-                            </a>
-                            @elseif($row->delivery_status==2)
-                            <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-primary btn-sm'>
-                                @lang('site.notActive')
-                            </a>
-                             @elseif($row->delivery_status==3)
-                            <a href="{{route('users.deliverystatus',$row->id)}}" class='btn btn-alert btn-sm'>
-                                @lang('site.black_list')
-                            </a>
-                            @else
-                            @endif
-                        </th>
-
                         <td>
                             {{$row->group}}
                         </td>
@@ -121,10 +96,9 @@
                                 @if(in_array($row->id,$whotakemoney))
                                     <a href="" class='btn btn-sm btn-warning'>@lang('site.takeHereMoney')</a>
                                 @else
-                                    <a href="" class='btn btn-sm btn-primary'>@lang('site.give_money')</a>
-                                
-                                @endif
-                            @endif    
+                                    <a href="{{route('usersalaries.show',$row->id)}}" class='btn btn-sm btn-primary'>@lang('site.give_money')</a>
+                                @endif 
+                            @endif 
                         </td>
                     </tr>
                 @endforeach

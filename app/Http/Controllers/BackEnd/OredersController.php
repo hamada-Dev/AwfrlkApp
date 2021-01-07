@@ -48,7 +48,7 @@ class OredersController extends BackEndController
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $users=User::where("group","user")->get();
-        $delivers=User::where("group","delivery")->get();
+        $delivers=User::where("group","delivery")->where("delivery_status",1)->get();
         $areas=Area::all();       
          return view('back-end.'.$this->getClassNameFromModel().'.create', compact('users','delivers','areas','module_name_singular', 'module_name_plural'))->with($append);
     } //en
@@ -66,7 +66,6 @@ class OredersController extends BackEndController
             'end_shoping_date' => [],
             'arrival_date'   =>  [],
             'feedback'   =>  ['required','max:250','min:5'],
-            'delivery_id' =>[],
             'client_id' =>['required', 'numeric','exists:users,id'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
 
@@ -98,7 +97,7 @@ class OredersController extends BackEndController
         $append =$this->append();
         $row=$this->model->findOrFail($id);
         $users=User::where("group","user")->get();
-        $delivers=User::where("group","delivery")->get();
+        $delivers=User::where("group","delivery")->where("delivery_status",1)->get();
         $areas=Area::all();  
                 return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('users','delivers','areas','row', 'module_name_singular', 'module_name_plural'))->with($append);
     }
@@ -110,7 +109,6 @@ class OredersController extends BackEndController
             'end_shoping_date' => [],
             'arrival_date'   =>  [],
             'feedback'   =>  ['max:250','min:5'],
-            'delivery_id' =>[],
             'client_id' =>['required', 'numeric','exists:users,id'],
             'area_id' =>['required', 'numeric','exists:areas,id'],
 

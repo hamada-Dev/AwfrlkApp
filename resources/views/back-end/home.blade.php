@@ -18,23 +18,57 @@
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">-person-</i>
-                    </div>
-                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.users')</h2>
+                    <a href="{{route('users.delivery')}}">
+                        <div class="card-icon">
+                            <i class="material-icons">-person-</i>
+                        </div>
+                    </a>
+                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.delivery')</h2>
                     <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\User::all()->count()}}
+                        {{App\Models\User::where('group','delivery')->count()}}
                     </h3>
                 </div>
-               
             </div>
         </div>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
+                <a href="{{route('users.delivery')}}">
+                <a href="{{route('users.index')}}">
+                    <div class="card-icon">
+                        <i class="material-icons">-person-</i>
+                    </div>
+                </a>    
+                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.users')</h2>
+                    <h3 class="card-title text-center" style='color:black'>
+                        {{App\Models\User::where('group',' emp')->count()}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                <a href="{{route('users.usersShow')}}">
+                    <div class="card-icon">
+                        <i class="material-icons">-person-</i>
+                    </div>
+                </a>    
+                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.usersShow')</h2>
+                    <h3 class="card-title text-center" style='color:black'>
+                        {{App\Models\User::where('group','user')->count()}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                <a href="{{route('categories.index')}}">
                     <div class="card-icon">
                         <i class="material-icons">-category-</i>
                     </div>
+                </a>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.categories')</h2>
                     <h3 class="card-title text-center" style='color:black'>
                         {{App\Models\Category::all()->count()}}
@@ -46,9 +80,11 @@
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
+                <a href="{{route('products.index')}}">
                     <div class="card-icon">
                         <i class="material-icons">-cake-</i>
                     </div>
+                </a>   
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.products')</h2>
                     <h3 class="card-title text-center" style='color:black'>
                         {{App\Models\Product::all()->count()}}
@@ -60,12 +96,15 @@
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
+                <a href="{{route('offers.index')}}">
+
                     <div class="card-icon">
                         <i class="material-icons">-local_offer-</i>
                     </div>
+                    </a>
                     <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.offers')</h2>
                     <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\Offer::all()->count()}}
+                        {{App\Models\Offer::where('avilable',1)->count()}}
                     </h3>
                 </div>
                
@@ -74,61 +113,22 @@
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">-location_on-</i>
-                    </div>
-                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.areas')</h2>
-                    <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\Area::all()->count()}}
-                    </h3>
-                </div>
-               
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">-two_wheeler-</i>
-                    </div>
-                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.deliverymotocycles')</h2>
-                    <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\DeliveryMotocycle::all()->count()}}
-                    </h3>
-                </div>
-               
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">-shop-</i>
-                    </div>
-                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.orders')</h2>
-                    <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\Order::all()->count()}}
-                    </h3>
-                </div>
-               
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">-shopping_cart-</i>
-                    </div>
-                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.orderdetails')</h2>
-                    <h3 class="card-title text-center" style='color:black'>
-                        {{App\Models\OrderDetail::all()->count()}}
-                    </h3>
-                </div>
-               
-            </div>
-        </div>
-    </div>
+                <a href="{{route('promocodes.index')}}">
 
+                    <div class="card-icon">
+                        <i class="material-icons">-local_offer-</i>
+                    </div>
+                    </a>
+                    <h2 class="card-category" style='color:black;text-align:center;'>@lang('site.promocodes')</h2>
+                    <h3 class="card-title text-center" style='color:black'>
+                        {{App\Models\Promocode::where('confirm',1)->count()}}
+                    </h3>
+                </div>
+               
+            </div>
+        </div>
+
+       
     <!-- <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">

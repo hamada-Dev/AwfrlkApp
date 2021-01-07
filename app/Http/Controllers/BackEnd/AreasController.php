@@ -20,15 +20,13 @@ class AreasController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows); 
         $rows = $rows->where("parent_id","0")->paginate(5);
-       
-
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();
         $obj=new Area();
         return view('back-end.'.$this->getClassNameFromModel().'.index', compact('obj','rows', 'module_name_singular', 'module_name_plural'));
 
     } //end of index
-
+   
    //en
     /**
      * Store a newly created resource in storage.

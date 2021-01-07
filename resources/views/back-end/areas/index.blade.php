@@ -69,7 +69,9 @@
                         {{$row->trans_price}}
                 </td>
                 <td>                    
-                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">@lang('site.view_places')</a>
+                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">
+                        @lang('site.view_places') - {{$row->getCount($row->id)}}
+                    </a>
                 </td>
                 {{-- <td>
                     @foreach ($rows as $area)           

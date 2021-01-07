@@ -39,4 +39,9 @@ class Area extends Model
             // }
             return count($counter);
     }
+    public static function getCount($id)
+    {
+        $counts=Area::where('parent_id',$id)->count();
+        return $counts;
+    }
 }

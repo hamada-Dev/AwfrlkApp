@@ -126,7 +126,9 @@ return [
       'give_money'=>'give Salary',
       'takeHereMoney'=>'get his salary ',
       'all_salary'=>'salaries for all months',
-
+      'decrement_trip'=>'Remind Order Number',
+      'usersShow'=>'Clients',
+      'noDelivery'=>'not Assigne to Delivery',
       //user_offer
       'ssn' => 'SSN',
       'user_id'=>'User Name',
