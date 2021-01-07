@@ -19,6 +19,8 @@ Route::group(['namespace' => 'Api'], function () {
     // all area route becouse we need this in register 
     Route::resource('area', 'AreasController'); 
 
+    Route::get('slider', 'SliderController@slider'); 
+
     Route::group(['middleware' => 'auth:api'], function () {
 
         Route::post('logout', 'RegisterController@logoutApi');
@@ -42,7 +44,10 @@ Route::group(['namespace' => 'Api'], function () {
             Route::resource('userOffer', 'UserOfferController'); 
 
             //  user route 
-            Route::resource('user', 'UserController'); 
+            Route::resource('user', 'UserController');
+            
+            //  search route 
+            Route::post('search', 'SearchCatProController@search'); 
             
             
             //  promo route 

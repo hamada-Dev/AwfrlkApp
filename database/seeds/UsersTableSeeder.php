@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
             'ssn' => 3040506060,
             'adress' => '15 street minia',
             'password' => bcrypt('12345'),
+            'area_id' =>  1,
             'api_token' => hash('md5', 'user'),
             'user_code' => str_random(5),
         ]);
@@ -34,6 +35,7 @@ class UsersTableSeeder extends Seeder
             'ssn' => 3040506070,
             'adress' => '15 street minia',
             'password' => bcrypt('12345'),
+            'area_id' =>  1,
             'api_token' => hash('md5', 'user'),
             'user_code' => str_random(5),
         ]);
@@ -47,6 +49,7 @@ class UsersTableSeeder extends Seeder
             'ssn' => 30405080,
             'adress' => '15 street minia',
             'password' => bcrypt('12345'),
+            'area_id' =>  1,
             'api_token' => hash('md5', 'user'),
             'user_code' => str_random(5),
         ]); 
@@ -61,6 +64,7 @@ class UsersTableSeeder extends Seeder
             'ssn' => 304050220,
             'adress' => '15 street minia',
             'password' => bcrypt('12345'),
+            'area_id' =>  1,
             'api_token' => hash('md5', 'user'),
             'user_code' => str_random(5),
         ]);

@@ -49,5 +49,10 @@ class Order extends Model
     public function delivery()
     {
         return $this->belongsTo(User::class, 'delivery_id');
+    } 
+    
+    public function userOffer()
+    {
+        return $this->belongsTo(UserOffer::class, 'offer_or_promo_id');
     }
 }

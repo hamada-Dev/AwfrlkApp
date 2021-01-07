@@ -16,6 +16,7 @@ class CreatePromocodesTable extends Migration
         Schema::create('promocodes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("user_id")->nullable()->unsigned();
+            $table->bigInteger("area_id")->nullable()->unsigned();
             $table->string("name")->comment("name of promocode");
             $table->string('serial')->unique()->nullable();
             $table->tinyInteger("confirm")->comment(" 1 is valide 0 is not valide");

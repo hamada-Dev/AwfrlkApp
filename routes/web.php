@@ -52,13 +52,13 @@ Route::group(
 
             //products
             Route::resource('productupdates', 'ProductUpdatesController')->only(['index']);
-            
+
             //offers
             Route::resource('offers', 'OffersController')->except('show');
 
             //areas
             Route::resource('areas', 'AreasController')->except('show');
-            Route::get('AreaChildern/{parent_id}',"AreasController@childern")->name("areas.childern");
+            Route::get('AreaChildern/{parent_id}', "AreasController@childern")->name("areas.childern");
             //deliveryMoto
             Route::resource('deliverymotocycles', 'DeliveryMotocyclesController')->except('show');
             //useroffers
@@ -68,32 +68,33 @@ Route::group(
             //orderDetails
             Route::resource('orderdetails', 'OrderDetailsController')->except("show");
             //to seperate the delivery
-            Route::get('/showDelivey','UsersController@showDelivery')->name('users.delivery');
+            Route::get('/showDelivey', 'UsersController@showDelivery')->name('users.delivery');
             //delivery history status
-            Route::get("deliveystatus/{delivery_id}",'UsersController@statusDelivery')->name('users.deliverystatus');
+            Route::get("deliveystatus/{delivery_id}", 'UsersController@statusDelivery')->name('users.deliverystatus');
             //add in black list
-            Route::get("blacklist/{id}",'UsersController@addBlacklist')->name('users.blacklist');
-           //show black list
-            Route::get("blacklist",'UsersController@showBlacklist')->name('users.showblacklist');
+            Route::get("blacklist/{id}", 'UsersController@addBlacklist')->name('users.blacklist');
+            //show black list
+            Route::get("blacklist", 'UsersController@showBlacklist')->name('users.showblacklist');
             //promocodes
             Route::resource('promocodes', 'promocodesController')->except('show');
             //advances
             Route::resource('advances', 'advancesController')->except('show');
 
-            Route::get('advancesdelivery/{delivery_id}/{created_at}/{id}','advancesController@countResetMoney')->name('advances.countreset');
+            Route::get('advancesdelivery/{delivery_id}/{created_at}/{id}', 'advancesController@countResetMoney')->name('advances.countreset');
 
             Route::resource('order/pending', 'PendingOrderController');
 
 
-            Route::get('advances/{advance_id}','advancesController@countMoney')->name('advances.countmoney');
-            Route::get('showReport','advancesController@showReport')->name('advances.counts');
-            Route::post('showmoney','advancesController@countAllMoney')->name('advances.totalmoney');
+            Route::get('advances/{advance_id}', 'advancesController@countMoney')->name('advances.countmoney');
+            Route::get('showReport', 'advancesController@showReport')->name('advances.counts');
+            Route::post('showmoney', 'advancesController@countAllMoney')->name('advances.totalmoney');
             //usersalaries
             Route::resource('usersalaries', 'usersalaryController');
 
+            //slider fo android
+            Route::resource('sliders', 'sliderController');
         });
-        
-       
+
         Auth::routes();
 
         Auth::routes(['verify' => true]);

@@ -31,12 +31,12 @@ class UsersController extends BackEndController
         // start for who take money
         $month_start = strtotime('first day of this month', time());
         $month_end = strtotime('last day of this month', time());
-        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
-        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
-        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
-        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        $firstDayMonth = date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth = date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney = Usersalary::where('moneyDay', '>=', $firstDayMonth)
+            ->where('moneyDay', '<=', $lastDayMonth)->pluck('user_id')->toArray();
         // end for who take the money
-        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
+        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('whotakemoney', 'rows', 'module_name_singular', 'module_name_plural'));
     }
 
     /*  protected function filter($rows){
@@ -48,8 +48,10 @@ class UsersController extends BackEndController
         return $rows;
     }*/
 
+
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
@@ -81,8 +83,11 @@ class UsersController extends BackEndController
         $request_data['api_token'] = hash('md5', 'user');
         $request['added_by'] = auth()->user()->id;
 
-        User::create($request_data);
+        $newUser = User::create($request_data);
         if ($request->group == 'delivery') {
+            $newUser->deliveryStatus()->create([
+                'status'   => 1,
+            ]);
             return redirect()->route('deliverymotocycles.create')->with("del_id", $request->id);
         }
         session()->flash('success', __('site.added_successfully'));
@@ -161,14 +166,14 @@ class UsersController extends BackEndController
         // start for who take money
         $month_start = strtotime('first day of this month', time());
         $month_end = strtotime('last day of this month', time());
-        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
-        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
-        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
-        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        $firstDayMonth = date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth = date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney = Usersalary::where('moneyDay', '>=', $firstDayMonth)
+            ->where('moneyDay', '<=', $lastDayMonth)->pluck('user_id')->toArray();
         // end for who take the money
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
-        return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
+        return view('back-end.' . $this->getClassNameFromModel() . '.showdelivery', compact('whotakemoney', 'rows', 'module_name_singular', 'module_name_plural'));
     }
 
 

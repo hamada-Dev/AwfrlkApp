@@ -72,16 +72,16 @@ class OrderController extends BaseController
 
             try {
                 DB::beginTransaction();
-                $areaTransFrom = Area::select('trans_price')->where('id', $request->area_id_from)->first();
-
+                $deliveyPrice = $this->deliveryPriceHOHO($request, $orderType, $checkOffer, $checkPromo);
                 $newOrder = $this->model->create([
                     'client_id'      =>  auth()->user()->id,
                     'area_id'        =>  $request->area_id ?? auth()->user()->area_id,
                     'adress'         =>  $request->adress ?? auth()->user()->adress,
                     'area_id_from'   =>  $request->area_id_from,
                     'adress_from'    =>  $request->adress_from,
-                    'delivery_price' =>  auth()->user()->area_id == $request->area_id_from ? auth()->user()->area->trans_price : auth()->user()->area->trans_price + $areaTransFrom->trans_price,
-                    'type'           => $orderType,
+                    'delivery_price' =>  $deliveyPrice['deliveryPrice'],
+                    'offer_or_promo_id' =>  $deliveyPrice['offerOrPromoId'],
+                    'type'           => $deliveyPrice['orderTyoe'],
                 ]);
 
                 $newOrder->orderDetails()->create([
@@ -92,7 +92,9 @@ class OrderController extends BaseController
                 $this->makeEvent($newOrder, $ActiveDelivery);
 
                 // this is update offer table or promocode 
-                $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
+                if ($deliveyPrice['offerOrPromoId'] != null) {
+                    $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
+                }
 
                 DB::commit();
                 return $this->sendResponse(['data' => 'add home order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
@@ -104,8 +106,7 @@ class OrderController extends BaseController
             try {
                 DB::beginTransaction();
 
-                $delivery_price =   auth()->user()->area->trans_price;
-                $newOrder = $this->insertOredr($request, $orderType, $delivery_price);
+                $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
                 $this->uploadImage($request);
                 $newOrder->orderDetails()->create([
                     'image'       => $request->image->hashName(),
@@ -113,10 +114,11 @@ class OrderController extends BaseController
                 ]);
 
                 // this is update offer table or promocode 
-                $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
+                if ($newOrder->offer_or_promo_id != null)
+                    $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
-                $this->makeEvent($newOrder, $ActiveDelivery);
+                // $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();
@@ -130,7 +132,7 @@ class OrderController extends BaseController
             try {
                 DB::beginTransaction();
 
-                $newOrder = $this->insertOredr($request, $orderType);
+                $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
 
                 $orderDetailsData = json_decode(file_get_contents("php://input"), true);
 
@@ -144,7 +146,8 @@ class OrderController extends BaseController
                 }
 
                 // this is update offer table or promocode 
-                $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
+                if ($newOrder->offer_or_promo_id != null)
+                    $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
                 $this->makeEvent($newOrder, $ActiveDelivery);
@@ -200,7 +203,8 @@ class OrderController extends BaseController
     protected function checkUserPromo($id)
     {
         $avilablePromo = Promocode::where('user_id', $id)
-            ->where('confirm', 1)->first();
+            ->where('confirm', 1)
+            ->where('area_id', auth()->user()->area_id)->first();
         return $avilablePromo;
     }
 
@@ -227,17 +231,90 @@ class OrderController extends BaseController
         }
     }
 
-    protected function insertOredr($request, $orderType)
+    protected function deliveryPriceHOHO($request, $orderType, $checkOffer = null, $checkPromo = null)
     {
+        $areaTransFrom = Area::select('trans_price')->where('id', $request->area_id_from)->first();
+
+
+        if ($orderType == 1) { // if user have an offer 
+            if ($checkOffer->Offer->area_id  == auth()->user()->area_id && $checkOffer->Offer->area_id == $request->area_id_from) {
+                $deliveryPrice = 0;
+                $offerOrPromoId = $checkOffer->id;
+                $orderTyoe  = 1;
+            } else {
+                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            }
+        } elseif ($orderType == 2) { // if user have promo 
+            if ($checkPromo->area_id  == auth()->user()->area_id && $checkPromo->area_id  == $request->area_id_from) {
+                $deliveryPrice = auth()->user()->area->trans_price * $checkPromo->discount / 100;
+                $offerOrPromoId = $checkPromo->id;
+                $orderTyoe  = 2;
+            } else {
+                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            }
+        } else { // if user not have promo or offer 
+
+            if (auth()->user()->area_id == $request->area_id_from) {
+                $deliveryPrice = auth()->user()->area->trans_price;
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            } else {
+                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe = 0;
+            }
+        }
+
+        $deliveryPriceData = ['deliveryPrice' => $deliveryPrice, 'offerOrPromoId' => $offerOrPromoId, 'orderTyoe' => $orderTyoe];
+
+        return $deliveryPriceData;
+    }
+
+
+
+
+    protected function insertOredr($request, $orderType, $checkOffer = null, $checkPromo = null)
+    {
+        if ($orderType == 1) { // if user have an offer 
+            if ($checkOffer->Offer->area_id  == auth()->user()->area_id || $checkOffer->Offer->area_id == $request->area_id) {
+                $deliveryPrice = 0;
+                $offerOrPromoId = $checkOffer->id;
+                $checkOrderType = 1;
+            } else {
+                $deliveryPrice = auth()->user()->area->trans_price;
+                $offerOrPromoId = null;
+                $checkOrderType = 0;
+            }
+        } elseif ($orderType == 2) { // if user have promo 
+            if ($checkPromo->area_id  == auth()->user()->area_id || $checkPromo->area_id  == $request->area_id) {
+                $deliveryPrice = auth()->user()->area->trans_price * $checkPromo->discount / 100;
+                $offerOrPromoId = $checkPromo->id;
+                $checkOrderType = 2;
+            } else {
+                $deliveryPrice = auth()->user()->area->trans_price;
+                $offerOrPromoId = null;
+                $checkOrderType = 0;
+            }
+        } else { // if user not have promo or offer 
+            $deliveryPrice = auth()->user()->area->trans_price;
+            $offerOrPromoId = null;
+            $checkOrderType = 0;
+        }
         $newOrder = $this->model->create([
             'client_id'      => auth()->user()->id,
-            'delivery_price' => auth()->user()->area->trans_price,
+            'delivery_price' => $deliveryPrice,
             'area_id'        => $request->area_id ?? auth()->user()->area_id,
-            'type'           => $orderType,
+            'type'           => $checkOrderType,
+            'offer_or_promo_id' => $offerOrPromoId,
         ]);
 
         return $newOrder;
     }
+
 
     protected function makeEvent($newOrder, $ActiveDelivery)
     {

@@ -15,12 +15,20 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->guest()){
+        if (auth()->guest()) {
+            return redirect('/login');
+        } else if (auth()->user()->group == 'admin' && auth()->user()->delivery_status != 3 ) {
+            return $next($request);
+        } else {
             return redirect('/login');
         }
-        else if(auth()->user()->group == 'user'){
-            return redirect()->back();
-        }
-        return $next($request);
+
+        // if(auth()->guest()){
+        //     return redirect('/login');
+        // }
+        // else if(auth()->user()->group == 'user'){
+        //     return redirect()->back();
+        // }
+        // return $next($request);
     }
 }

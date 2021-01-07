@@ -19,7 +19,6 @@ class LoginController extends Controller
         logout as performLogout;
     }
 
-
     public function logout(Request $request)
     {
         $this->performLogout($request);
@@ -30,10 +29,9 @@ class LoginController extends Controller
     {
         if (auth()->user()->group == 'admin') { // do your margic here
             return redirect()->route('home.index');
-        }elseif(auth()->user()->group == 'user'){
+        } elseif (auth()->user()->group == 'user') {
             return redirect('api/category');
         }
-
         return redirect()->back();
     }
     /**

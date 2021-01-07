@@ -38,7 +38,6 @@ class BackEndController extends Controller
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $row=$this->model->findOrFail($id);
-
         return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('row', 'module_name_singular', 'module_name_plural'))->with($append);
     } //end of edit
 

@@ -33,6 +33,12 @@ class CreateUsersTable extends Migration
             $table->integer("added_by")->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            /// edit for chatfy
+            $table->integer('active_status')->nullable();
+            $table->integer('dark_mode')->nullable();
+            $table->string('messenger_color')->nullable();
+            $table->string('avatar')->nullable();
             // $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
         });
     }

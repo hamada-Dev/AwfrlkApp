@@ -16,6 +16,11 @@ class UserOffer extends Model
     {
         return $this->belongsTo(Offer::class);
     }
+    
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'offer_or_promo_id');
+    }
     protected static function boot()
     {
         parent::boot();

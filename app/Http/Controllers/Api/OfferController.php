@@ -18,7 +18,12 @@ class OfferController extends BaseController
      */
     public function index()
     {
-        //
+        $offers = Offer::where('avilable', 1)->latest()->get();
+        if ($offers->count() > 0)
+            return $this->sendResponse(OfferResource::collection($offers), 200);
+        else
+            return $this->sendError('theres No Offer Yet');
+
     }
 
     /**
