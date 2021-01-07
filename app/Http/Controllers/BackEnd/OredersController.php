@@ -48,7 +48,7 @@ class OredersController extends BackEndController
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $users=User::where("group","user")->get();
-        $delivers=User::where("group","delivery")->get();
+        $delivers=User::where("group","delivery")->where("delivery_status",1)->get();
         $areas=Area::all();       
          return view('back-end.'.$this->getClassNameFromModel().'.create', compact('users','delivers','areas','module_name_singular', 'module_name_plural'))->with($append);
     } //en
@@ -97,7 +97,7 @@ class OredersController extends BackEndController
         $append =$this->append();
         $row=$this->model->findOrFail($id);
         $users=User::where("group","user")->get();
-        $delivers=User::where("group","delivery")->get();
+        $delivers=User::where("group","delivery")->where("delivery_status",1)->get();
         $areas=Area::all();  
                 return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('users','delivers','areas','row', 'module_name_singular', 'module_name_plural'))->with($append);
     }
