@@ -192,7 +192,7 @@
     <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
 
     {{-- this is for scrollbar that destroy design if local = ar --}}
-    <!-- <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script> -->
+    <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
     {{-- <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script> --}}
     {{-- <script>
         $("#selector").niceScroll({
@@ -457,7 +457,7 @@
     });
 
     $('label').each(function(){
-        $(this).css('display', 'flex');
+        $(this).css('display', 'block');
     }) 
     
     $('.card-header .col-md-8').each(function(){
@@ -471,10 +471,12 @@
     $('table tbody').each(function(){
         $(this).css('text-align','right')
     })
+    // $('input').each(function(){
+    //     $(this).focus(function(){
+    //         $(this).prev().css('margin-top', '20px');
+    //     })
+    // })
     
-    $('input').each(function(){
-        $(this).focus().prev('label').html('');
-    })
     </script>
     @endif
     {{-- -------------------------   pusher plugin -------------------------- --}}
