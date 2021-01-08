@@ -4,7 +4,7 @@
 
 @endphp
 @section('title')
-    @lang('site.delivery')
+    @lang('site.black_list')
 @endsection
 
 @section('content')
@@ -12,12 +12,12 @@
     @component('back-end.layout.nav-bar')
 
         @slot('nav_title')
-            @lang('site.delivery')
+            @lang('site.black_list')
         @endslot
 
     @endcomponent
 
-    @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural , 'module_name_singular'=>$module_name_singular])
+    @component('back-end.partial.table', ['module_name_plural'=>'black_list' , 'module_name_singular'=>'black_list'])
         @slot('add_button')
             <div class="col-md-4 text-right">
                 <!-- <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">

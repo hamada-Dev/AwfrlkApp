@@ -17,7 +17,7 @@
 
     @endcomponent
 
-    @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural , 'module_name_singular'=>$module_name_singular])
+    @component('back-end.partial.table', ['module_name_plural'=>'delivery' , 'module_name_singular'=>'delivery'])
         @slot('add_button')
             <div class="col-md-4 text-right">
                 <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">

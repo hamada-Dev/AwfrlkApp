@@ -196,7 +196,11 @@ return [
   'decrement_trip'=>'عدد الطلبات المتبقى',
   'usersShow'=>'العملاء',
   'noDelivery'=>'لايوجد طيار',
-
+  //sliders
+  'slider'=>'عارض صور',
+  'sliders'=>'عارض صور',
+  'SLIDER'=>'عارض صور',
+  'SLIDERS'=>'عارض صور',
   //orders
   "orders"=>'طلبات',
   "order"=>'طلب',

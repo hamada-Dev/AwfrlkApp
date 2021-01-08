@@ -129,6 +129,11 @@ return [
       'decrement_trip'=>'Remind Order Number',
       'usersShow'=>'Clients',
       'noDelivery'=>'not Assigne to Delivery',
+      //SLIDERS
+      'slider'=>' slider',
+      'sliders'=>'sliders ',
+      'SLIDER'=>'SLIDER ',
+      'SLIDERS'=>'SLIDERS ',
       //user_offer
       'ssn' => 'SSN',
       'user_id'=>'User Name',

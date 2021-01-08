@@ -4,7 +4,7 @@
 
 @endphp
 @section('title')
-@lang('site.'.$module_name_plural)
+@lang('site.usersShow')
 @endsection
 
 @section('content')
@@ -12,16 +12,16 @@
     @component('back-end.layout.nav-bar')
 
         @slot('nav_title')
-            @lang('site.'.$module_name_plural)
+            @lang('site.usersShow')
         @endslot
 
     @endcomponent
 
-    @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural , 'module_name_singular'=>$module_name_singular])
+    @component('back-end.partial.table', ['module_name_plural'=>'usersShow' , 'module_name_singular'=>'usersShow'])
         @slot('add_button')
             <div class="col-md-4 text-right">
                 <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">
-                    @lang('site.add') @lang('site.'.$module_name_singular)
+                    @lang('site.add')  @lang('site.usersShow')
                 </a>
             </div>
         @endslot
