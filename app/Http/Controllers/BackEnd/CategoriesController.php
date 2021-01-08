@@ -102,9 +102,8 @@ class CategoriesController extends BackEndController
 
     protected function uploadImage($request)
     {
-        \Intervention\Image\Facades\Image::make($request->image)->save(public_path('uploads/categories_images/' . $request->image->hashName()));
-        //            ->resize(300, null, function ($constraint) {
-        //            $constraint->aspectRatio();
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(912, 872);
 
+        $img->save(public_path('uploads/categories_images/' . $request->image->hashName()));
     }
 }

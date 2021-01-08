@@ -24,13 +24,25 @@ class PendingOrderController extends BackEndController
      */
     public function index(Request $request)
     {
+        // return $request->process;
 
         //get all data of Model
+
         $rows = $this->model->when($request->orderId, function ($que) use ($request) {
             return $que->where('id', $request->orderId);
         })->with(['orderDetails' => function ($query) {
             return $query->with('product');
-        }])->with('user')->latest()->paginate(6);
+        }])->when($request->process, function ($q) use ($request) {
+            return $q->whereNull('delivery_id')->where('status', $request->process);
+        })->with('user')->latest()->paginate(6);
+
+
+        // //get all data of Model
+        // $rows = $this->model->when($request->orderId, function ($que) use ($request) {
+        //     return $que->where('id', $request->orderId);
+        // })->with(['orderDetails' => function ($query) {
+        //     return $query->with('product');
+        // }])->where('delivery_id', null)->with('user')->latest()->paginate(6);
 
         // return $rows;
 
@@ -93,8 +105,6 @@ class PendingOrderController extends BackEndController
 
                 session()->flash('success', "تم تكليف الطيار بنجاح ");
                 return redirect()->route('pending.index');
-                
-
             } else {
                 session()->flash('error', "هذا الطيار مشغول بتوصيل طلب اخر ");
                 return redirect()->route('pending.index');

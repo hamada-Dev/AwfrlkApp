@@ -94,7 +94,7 @@ Route::group(
             Route::resource('usersalaries', 'usersalaryController');
 
             //slider fo android
-            Route::resource('sliders', 'sliderController');
+            Route::resource('sliders', 'SliderController');
         });
 
         Auth::routes();

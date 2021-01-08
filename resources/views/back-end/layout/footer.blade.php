@@ -1,22 +1,12 @@
-<footer class="footer">
+<footer class="footer text-center">
     <div class="container-fluid">
-        <nav class="float-left">
-            <ul>
-                <li>
-                    <a href="https://www.creative-tim.com">
-                        Creative Tim
-                    </a>
-                </li>
-            </ul>
-        </nav>
         <div class="copyright float-right">
-            &copy;
+           
+             All rights reserved.&copy;
             <script>
                 document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
-{{--
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
---}}
+            </script><a href="https://vintagetechnology.info"><strong style="color: yellow">Vintage Technology</strong> </a>
+
         </div>
         <!-- your footer here -->
     </div>

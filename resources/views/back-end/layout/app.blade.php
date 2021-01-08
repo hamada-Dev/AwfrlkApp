@@ -464,10 +464,17 @@
         $(this).children().css('display', 'flex');
     })
     
-    $('.col-md-8 .card-header ').each(function(){
+    $('.col-md-8 .card-header').each(function(){
         $(this).children().css('display', 'flex');
     })
 
+    $('table tbody').each(function(){
+        $(this).css('text-align','right')
+    })
+    
+    $('input').each(function(){
+        $(this).focus().prev('label').html('');
+    })
     </script>
     @endif
     {{-- -------------------------   pusher plugin -------------------------- --}}

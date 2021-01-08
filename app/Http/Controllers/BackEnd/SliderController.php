@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\BackEnd\BackEndController;
-use App\models\Slider;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,7 +93,7 @@ class SliderController extends BackEndController
 
     protected function uploadImage($request)
     {
-        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(800, 500);
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(700, 400);
         // save file as jpg with medium quality
         $img->save(public_path('uploads/sliders_images/' . $request->image->hashName()), 70);
     }

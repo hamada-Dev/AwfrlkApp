@@ -27,7 +27,7 @@ class ProductsController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-        
+
         $rows = $rows->whereHas('category')->when($request->category_id, function ($query) use ($request) {
             $query->where('category_id', $request->category_id);
         })->paginate(5);
@@ -106,7 +106,7 @@ class ProductsController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-         // check for update price to add it in productUpdate
+        // check for update price to add it in productUpdate
         try {
             DB::beginTransaction();
             if ($product->price != $request->price)
@@ -138,7 +138,7 @@ class ProductsController extends BackEndController
         if ($product->image != 'default.png') {
             Storage::disk('public_uploads')->delete('/products_images/' . $product->image);
         }
-        
+
         $product->update([
             'deleted_by'    => auth()->user()->id,
             'delete_date'   => now(),
@@ -151,9 +151,10 @@ class ProductsController extends BackEndController
 
     protected function uploadImage($request)
     {
-        \Intervention\Image\Facades\Image::make($request->image)->save(public_path('uploads/products_images/' . $request->image->hashName()));
-        //            ->resize(300, null, function ($constraint) {
-        //            $constraint->aspectRatio();
+
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(912, 872);
+
+        $img->save(public_path('uploads/products_images/' . $request->image->hashName()));
 
     }
 }

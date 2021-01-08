@@ -15,7 +15,6 @@ class SearchCatProController extends BaseController
                       ->orwhere('price', 'like', '%' . $request->search . '%')
                       ->orwhere('description', 'like', '%' . $request->search . '%');
         })->get();
-        
         if ($searchProduct)
             return $this->sendResponse(ProductRecourse::collection($searchProduct), 200);
         else

@@ -16,11 +16,10 @@ class Slider extends Model
         return asset('uploads/sliders_images/' . $this->image);
     } //end of image path 
 
-        // fire global Scope where deleted_by == NULL
-        protected static function boot()
-        {
-            parent::boot();
-            static::addGlobalScope(new NonDeleteIScope);
-        }
-
+    // fire global Scope where deleted_by == NULL
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new NonDeleteIScope);
+    }
 }
