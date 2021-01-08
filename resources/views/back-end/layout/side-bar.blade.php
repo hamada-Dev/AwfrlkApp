@@ -116,7 +116,12 @@
                     <p>@lang('site.advances')</p>
                 </a>
             </li>
-            
+            <li class="nav-item {{is_active('sliders')}}">
+                <a class="nav-link" href="{{route('sliders.index')}}">
+                    <i class="material-icons">picture</i>
+                    <p>@lang('site.sliders')</p>
+                </a>
+            </li>
             <li class="nav-item {{is_active('counts')}}">
                 <a class="nav-link" href="{{route('advances.counts')}}">
                     <i class="material-icons">gift</i>

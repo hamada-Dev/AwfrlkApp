@@ -13,14 +13,14 @@
         <div class="col-md-3">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.from')</label>
-                <input type="date"  name="start_date">
+                <input type="date"  name="start_date" class='form-control'>
              </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.to')</label>
-                <input type="date"  name="end_date">
+                <input type="date"  name="end_date" class='form-control'>
             </div>
         </div>
         <div class="col-md-2">
@@ -248,15 +248,17 @@ $sumsalary=0;
 <table class="table table-bordered table-dark">
   <thead>
     <tr class='text-center'>
-      <th scope="col"  class='text-center'>@lang('site.safeAlmaserofat')</th>
       <th scope="col"  class='text-center'>@lang('site.safeofferandorder')</th>
+      <th scope="col"  class='text-center'>@lang('site.safeAlmaserofat')</th>
+
       <th scope="col"  class='text-center'> @lang('site.safearbah')</th>
     </tr>
   </thead>
   <tbody>
     <tr class='text-center'>
-      <td>@php echo "<span style='color:white'>" . $sumsalary . "</span>"; @endphp</td>
       <td>@php echo "<span style='color:white'>" . ($sumofferprice+$sumdel) . "</span>"; @endphp</td>
+      <td>@php echo "<span style='color:white'>" . $sumsalary . "</span>"; @endphp</td>
+
       <td> @php echo "<span style='color:red'>" . (($sumofferprice+$sumdel)-$sumsalary) . "</span>"; @endphp</td>
     </tr>
   </tbody>
