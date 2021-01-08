@@ -47,7 +47,7 @@ class UserOffersController extends BackEndController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();

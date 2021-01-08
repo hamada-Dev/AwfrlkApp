@@ -33,7 +33,7 @@ class ProductUpdatesController extends BackEndController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         return null;
     }

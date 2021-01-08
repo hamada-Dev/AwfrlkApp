@@ -9,106 +9,117 @@
 
 @section('content')
 
-    @component('back-end.layout.nav-bar')
+@component('back-end.layout.nav-bar')
 
-        @slot('nav_title')
-            @lang('site.'.$module_name_plural)
-        @endslot
+@slot('nav_title')
+@lang('site.'.$module_name_plural)
+@endslot
 
-    @endcomponent
+@endcomponent
 
-    @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural , 'module_name_singular'=>$module_name_singular])
-        @slot('add_button')
-            <div class="col-md-4 text-right">
-                <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">
-                    @lang('site.add') @lang('site.'.$module_name_singular)
-                </a>
-            </div>
-        @endslot
-        <div class="table-responsive">
-            <table class="table">
-                <thead class=" text-primary">
-                <tr><th>
-                        @lang('site.id')
-                        
-                    </th>
-                    <th>
-                        @lang('site.name')
-                    </th>
-                    <th>
-                        @lang('site.email')
-                    </th>
-                    <th>
-                        @lang('site.phone')
-                    </th>
-                    <th>
-                        @lang('site.gender')
-                    </th>
+@component('back-end.partial.table', ['module_name_plural'=>$module_name_plural ,
+'module_name_singular'=>$module_name_singular])
+@slot('add_button')
+<div class="col-md-4 text-right">
+    <a href="{{route($module_name_plural.'.create', ['group'=> 'emp'])}}" class="btn btn-white btn-round ">
+        @lang('site.add') @lang('site.'.$module_name_singular)
+    </a>
+</div>
+@endslot
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @lang('site.id')
+                </th>
+                <th>
+                    @lang('site.name')
+                </th>
+                <th>
+                    @lang('site.phone')
+                </th>
+                <th>
+                    @lang('site.adress')
+                </th>
+                <th>
+                    @lang('site.area')
+                </th>
+                <th>
+                    @lang('site.image')
+                </th>
 
-                    <th>
-                        @lang('site.group')
-                    </th>
-                    <th class="text-right">
-                        @lang('site.actions')
-                    </th>
-                </tr></thead>
-                <tbody>
+                <th>
+                    @lang('site.salary')
+                </th>
+                <th class="text-right">
+                    @lang('site.actions')
+                </th>
+            </tr>
+        </thead>
+        <tbody>
 
-                @foreach($rows as $row)
+            @foreach($rows as $row)
 
-                    <tr>
+            <tr>
+                <td> {{$row->id}}</td>
+                <td>
+                    <a href="{{route('usersalaries.index',['user_id'=>$row->id])}}" title="@lang('site.all_salary')">
+                        {{$row->name .' '. $row->lastName}}
+                    </a>
+                </td>
 
-                        <td>
-                            {{$row->id}}
-                            @if($row->delivery_status != 3)
-                                <a class="btn btn-dark btn-sm" href="{{route('users.blacklist',$row->id)}}">
-                                  @lang('site.add') @lang('site.black_list')
-                                </a>
-                            @endif
-                        </td>
+                <td>
+                    {{$row->phone}}
+                </td>
 
-                        <td>
-                        <a style='color:blue' href="{{route('usersalaries.index',['user_id'=>$row->id])}}" title="@lang('site.all_salary')">
-                            {{$row->name}} {{$row->lastName}}
-                            </a>    
-                        </td>                        
+                <td>
+                    {{$row->adress}}
+                </td>
 
-                        <td>
-                            {{$row->email}}
-                        </td>
+                <td>
+                    {{$row->area->name}}
+                </td>
 
-                        <td>
-                            {{$row->phone}}
-                        </td>
+                <td>
+                    <img class="img-thumbnail img-preview" src="{{$row->image_path}}" alt="" srcset="" height="100"
+                        width="100">
+                </td>
 
-                        <td>
-                            {{$row->gender}}
-                        </td>
+                <td>
+                    @if($row->group !='user')
+                    @if(in_array($row->id,$whotakemoney))
+                    <a href="" class='btn btn-sm btn-warning'>@lang('site.takeHereMoney')</a>
+                    @else
+                    <a href="{{route('usersalaries.show',$row->id)}}"
+                        class='btn btn-sm btn-primary'>@lang('site.give_money')</a>
+                    @endif
+                    @endif
 
-                        <td>
-                            {{$row->group}}
-                        </td>
+                </td>
 
-                        <td class="td-actions text-right">
-                            @include('back-end.buttons.edit')
-                            @include('back-end.buttons.delete')
-                            @if($row->group !='user')
-                                @if(in_array($row->id,$whotakemoney))
-                                    <a href="" class='btn btn-sm btn-warning'>@lang('site.takeHereMoney')</a>
-                                @else
-                                    <a href="{{route('usersalaries.show',$row->id)}}" class='btn btn-sm btn-primary'>@lang('site.give_money')</a>
-                                @endif 
-                            @endif 
-                        </td>
-                    </tr>
-                @endforeach
+                <td class="td-actions text-right">
+                    @include('back-end.buttons.edit')
+                    @include('back-end.buttons.delete')
+                    @if($row->delivery_status != 3)
 
-                </tbody>
-            </table>
-            {{$rows->links()}}
-        </div>
+                    <a href="{{route('users.blacklist',$row->id)}}" rel="tooltip"
+                        title="@lang('site.add') @lang('site.black_list')" class="btn btn-white btn-link btn-sm"
+                        data-original-title="@lang('site.black_list')">
+                        <i class="material-icons">pane_tool</i>
+                    </a>
 
-    @endcomponent
+                    @endif
+                </td>
+
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    {{$rows->links()}}
+</div>
+
+@endcomponent
 
 @endsection
-

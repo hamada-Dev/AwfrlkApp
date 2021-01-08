@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
     //        'firstName', 'email', 'password', 'group', 'image', 'provider_id','api_token'
     //    ];
 
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path', 'order_countU', 'order_countD'];
 
     protected static function boot()
     {
@@ -32,6 +32,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return asset('uploads/users_images/' . $this->image);
     } //end of path
+
+    public function getOrderCountUAttribute()
+    {
+        return $this->ordersUser->count();
+    } //end of count order for user 
+
+    public function getOrderCountDAttribute()
+    {
+        return $this->ordersDelivery->count();
+    } //end of count order for delivery
 
 
     public function video()

@@ -24,7 +24,6 @@ class ProductRecourse extends JsonResource
             'image'        =>  $this->image_path,
             'updated_at'   =>  $this->updated_at->diffForHumans(),
             'category'     =>  $this->category ?  $this->category->name : '',
-
         ];
     }
 

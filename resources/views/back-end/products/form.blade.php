@@ -31,7 +31,8 @@
 
     
     @php
-    $unitsArray = ['kilo', 'liter', 'number'];
+    $unitsArray = ['كيلو', 'لتر', 'عدد'];
+    // $unitsArray = ['kilo', 'liter', 'number'];
     @endphp
     <div class="col-md-6">
         <div class="form-group bmd-form-group">

@@ -118,7 +118,7 @@ class OrderController extends BaseController
                     $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
                 ////////////////////////////////////////////////
-                // $this->makeEvent($newOrder, $ActiveDelivery);
+                $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();

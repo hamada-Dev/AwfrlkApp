@@ -11,6 +11,7 @@ return [
   'register' => 'تسجبل',
   'description' => 'الوصف ',
  //register
+ 'admin'  => 'مسؤل',
  'enter' => 'دخول',
  'haveAccount' => 'هل لديك حساب ؟',
  'destination' => 'Destination',
@@ -24,7 +25,8 @@ return [
   'delete' => 'حذف',
   'edit' => 'تعديل',
   'edit_desc' => 'ادخل جميع البيانات المطلوبة',
-  'user' => 'مشرف',
+  'user' => 'عميل',
+  'emp' => 'مشرف',
   'group' => 'الصلاحية',
   'phone' => 'الهاتف',
   'gender' => 'الجنس',

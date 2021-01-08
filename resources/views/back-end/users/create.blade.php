@@ -22,7 +22,7 @@
         {{--card--}}
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">@lang('site.add') @lang('site.'.$module_name_singular)</h4>
+                <h4 class="card-title">@lang('site.add') @lang('site.'.request()->group)</h4>
                 <p class="card-category">@lang('site.edit_desc')</p>
             </div>
 

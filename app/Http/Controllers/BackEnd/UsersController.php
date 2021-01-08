@@ -55,7 +55,7 @@ class UsersController extends BackEndController
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:5'],
             'c_password' => ['required', 'same:password'],
             'gender' => ['required', Rule::in([0, 1])],

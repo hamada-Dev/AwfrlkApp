@@ -40,7 +40,7 @@ class usersalaryController extends BackEndController
         return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
     } //end of index
 
-    public function create()
+    public function create(Request $request)
     {
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();

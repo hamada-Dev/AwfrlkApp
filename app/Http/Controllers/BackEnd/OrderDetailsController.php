@@ -39,7 +39,7 @@ class OrderDetailsController extends BackEndController
 
     } //end of index
 
-    public function create()
+    public function create(Request $request)
     {
         $module_name_plural=$this->getClassNameFromModel();
         $module_name_singular=$this->getSingularModelName();
