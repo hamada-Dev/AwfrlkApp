@@ -207,7 +207,7 @@
 
 
     <a href="{{ route('chat') }}" title="chat" style="cursor: pointer">
-        <div style="position: fixed; left: 50px; bottom: 50px; ">
+        <div  @if (app()->getLocale() == 'ar') style="position: fixed; left: 50px; bottom: 50px;" @else  style="position: fixed; right: 50px;" @endif>
             <i style="font-size: 60px; color: yellow" class="material-icons">message</i>
         </div>
     </a>
