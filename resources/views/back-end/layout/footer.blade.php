@@ -1,4 +1,4 @@
-<footer class="footer text-center">
+<footer class="footer text-center" style="position: relative; bottom: 0;">
     <div class="container-fluid">
         <div class="copyright float-right">
            

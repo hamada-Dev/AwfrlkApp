@@ -56,8 +56,8 @@ class UsersController extends BackEndController
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:5'],
-            'c_password' => ['required', 'same:password'],
+            'password' => ['nullable', 'min:5'],
+            'c_password' => ['nullable', 'same:password'],
             'gender' => ['required', Rule::in([0, 1])],
             'phone' => ['required', 'unique:users'],
             'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
@@ -68,7 +68,7 @@ class UsersController extends BackEndController
             'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
 
         ]);
-
+        
         $request_data = $request->except(['image', 'password', 'c_password', 'api_token']);
 
         // store image
@@ -79,7 +79,7 @@ class UsersController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-        $request_data['password'] = Hash::make($request->password);
+        $request_data['password'] = $request->password == null ?  Hash::make(12345) :Hash::make($request->password);
         $request_data['api_token'] = hash('md5', 'user');
         $request['added_by'] = auth()->user()->id;
 
@@ -88,7 +88,7 @@ class UsersController extends BackEndController
             $newUser->deliveryStatus()->create([
                 'status'   => 1,
             ]);
-            return redirect()->route('deliverymotocycles.create')->with("del_id", $request->id);
+            return redirect()->route('deliverymotocycles.create', ['dID'=> $newUser->id]);
         }
         else{
         return redirect()->route('users.index');
@@ -222,9 +222,9 @@ class UsersController extends BackEndController
 
         session()->flash('success', __('site.updated_successfully'));
         if ($row->group == "delivery")
-            return redirect()->route('users.delivery');
+            return redirect()->back();
         else
-            return redirect()->route('users.index');
+            return redirect()->back();
     }
 
 

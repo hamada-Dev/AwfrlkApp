@@ -15,13 +15,13 @@
                 {{--language dropdown--}}
                 <li class="nav-item dropdown show">
                     <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="material-icons">notifications</i>
+                        <i class="material-icons" style="font-size: 16px">notifications</i>
                         <p class="d-lg-none d-md-block">
                             notifications
                         </p>
                         <div class="ripple-container"></div></a>
                     <div class="dropdown-menu  @if (app()->getLocale() == 'ar') dropdown-menu-left @else dropdown-menu-right @endif  " aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" rel="alternate" hreflang="" href="{{route('logout')}}"
+                            <a class="dropdown-item" style="font-size: 16px" rel="alternate" hreflang="" href="{{route('logout')}}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 @lang('site.logout')
@@ -37,14 +37,14 @@
                 {{--language dropdown--}}
                 <li class="nav-item dropdown show">
                     <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="material-icons">language</i>
+                        <i class="material-icons" style="font-size: 16px">language</i>
                         <p class="d-lg-none d-md-block">
                             @lang('language')
                         </p>
                         <div class="ripple-container"></div></a>
                     <div class="dropdown-menu @if (app()->getLocale() == 'ar') dropdown-menu-left @else dropdown-menu-right @endif " aria-labelledby="navbarDropdownMenuLink">
                         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <a class="dropdown-item" style="font-size: 16px" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ $properties['native'] }}
                                 </a>
                         @endforeach

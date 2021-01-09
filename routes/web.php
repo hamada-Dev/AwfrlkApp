@@ -94,7 +94,10 @@ Route::group(
             Route::resource('usersalaries', 'usersalaryController');
 
             //slider fo android
-            Route::resource('sliders', 'SliderController');
+            Route::resource('sliders', 'SliderController');  
+            
+            //chat 
+            Route::get('chat', 'ChatController@index')->name('chat'); 
         });
 
         Auth::routes();

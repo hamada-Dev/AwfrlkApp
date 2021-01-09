@@ -43,14 +43,14 @@
                             @lang('site.adress')
                         </th>
                         <th>
-                            @lang('site.type')
+                            @lang('site.order')
                         </th>
 
                         <th>
                             @lang('site.area_id')
                         </th>
                         <th>
-                            @lang('site.deliveryType')
+                            @lang('site.order_type')
                         </th>
 
                     </tr>
@@ -59,7 +59,8 @@
                     <tr>
 
                         <td>
-                            {{$row->user->name . ' ' . $row->user->lastName}}
+                            <a href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}"> {{$row->user->name . ' ' . $row->user->lastName}}</a>
+                           
                         </td>
                         <td>
                             {{$row->user->phone}}
@@ -78,7 +79,7 @@
 
 
                         <td>
-                            {{ $row->type == 0 ? 'cache': ($row->type == 1  ? 'offer' : 'promo') }}
+                            {{ $row->type == 0 ? 'نقدي': ($row->type == 1  ? 'عرض' : 'برومو') }}
                         </td>
                     </tr>
                 </tbody>
@@ -94,7 +95,7 @@
                     <div class="col-md-4">
                         <div class="form-group bmd-form-group">
                             <select name="delivery_id" class="form-control @error('status') is-invalid @enderror" {{$row->delivery_id != null? 'disabled' : ''}}>
-                                <option value="0">@lang('site.choose-Delivery')</option>
+                                <option value="0">@lang('site.choose_user_delivery')</option>
                                 @foreach ($activeDelivery as $delivery)
                                     <option value="{{$delivery->id}}" {{$row->delivery_id == $delivery->id ? 'selected' : ''}}>{{$delivery->name . ''. $delivery->lasstName}}</option>
                                 @endforeach
@@ -108,7 +109,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-sm btn-primary pull-right"> @lang('site.taklef')</button>
+                        <button type="submit" class="btn btn-lg btn-primary pull-right"> @lang('site.taklef')</button>
                     </div>
                 </div>
             </form>
@@ -157,7 +158,7 @@
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot style="background: #22477d">
+                <tfoot style="background: #22477d; text-align: center">
                     <td></td>
                     <td>{{$countPro}}</td>
                     <td>{{$row->orderPrice}}</td>
@@ -167,8 +168,6 @@
         </div>
     </div>
 </div>
-<hr>
-<hr>
 <hr>
 @endforeach
 

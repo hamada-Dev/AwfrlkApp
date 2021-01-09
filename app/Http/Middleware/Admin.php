@@ -17,7 +17,7 @@ class Admin
     {
         if (auth()->guest()) {
             return redirect('/login');
-        } else if (auth()->user()->group == 'admin' && auth()->user()->delivery_status != 3 ) {
+        } else if (auth()->user()->group == 'admin' && auth()->user()->delivery_status != 3) {
             return $next($request);
         } else {
             return redirect('/login');

@@ -89,7 +89,7 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.password')</label>
-            <input type="password" value="12345" name="password" class="form-control @error('password') is-invalid @enderror">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
             @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -100,7 +100,7 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.repeat_password')</label>
-            <input type="password" value="12345" name="c_password" class="form-control @error('password') is-invalid @enderror">
+            <input type="password"  name="c_password" class="form-control @error('password') is-invalid @enderror">
             @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

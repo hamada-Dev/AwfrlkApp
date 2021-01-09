@@ -484,11 +484,23 @@
             width: 100%;
             margin: 20px;
         }
+
+        .btn.btn-lg,
+        .btn-group-lg>.btn,
+        .btn-group-lg .btn {
+            font-size: 1.875rem;
+        }
+
+        .btn.btn-sm,
+        .btn-group-sm>.btn,
+        .btn-group-sm .btn {
+            font-size: 1.1rem;
+        }
     </style>
     <script>
         $('table, p, th').css('font-size', '18px');
     $('label').css('font-size', '15px');
-    $(".invalid-feedback").css('display', 'none');
+    $(".invalid-feedback").css({'display':'block', 'font-size': '13px'});
     $(".dataTables_paginate ").css('font-size', '11px');
     $("input, select, textarea").css({
         'font-size' : '20px',

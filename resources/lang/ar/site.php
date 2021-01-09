@@ -40,7 +40,7 @@ return [
   'password' => 'كلمة المرور',
   'country'=>'العنوان',
   'name'=>'الاسم ',
-  'lastName'=>'الاسم الاخر',
+  'lastName'=>'الاسم الأخير',
   'image'=>"الصورة",
   'choose-group'=>'أختر الصلاحية',
   'choose-gender'=>'أختر الجنس',
@@ -154,6 +154,7 @@ return [
   'view_places' => 'المناطق',
 
   //user_offer
+  ' ssn ' => 'الرقم القومي',
   'ssn' => 'الرقم القومي',
   'user_id' => 'أسم العميل',
   'offer_id' => 'بيانت العرض',
@@ -171,6 +172,11 @@ return [
   'safeAlmaserofat'=>'صافى مصروفات',
   'safeofferandorder'=>'صافى عروض وطلبات',
   'safearbah'=>'صافى أرباح',
+
+  'Pending_orderes' => 'طلبات قيد التنفيذ',
+  'order_type' => 'نوع الطلب',
+  'pharmacy' => 'صيدليه',
+  'taklef' => 'تكليف الطيار',
   //deliverymotocycles
   'deliverymotocycles' => 'موتوسكل الطيار',
   'deliverymotocycle' => 'موتوسكل الطيار',
