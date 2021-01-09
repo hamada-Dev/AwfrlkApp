@@ -26,7 +26,7 @@
 </div>
 @endslot
 <div class="table-responsive">
-    <table class="table">
+    <table  id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -134,7 +134,7 @@
                     <a href="{{route('users.blacklist',$row->id)}}" rel="tooltip"
                         title="@lang('site.add') @lang('site.black_list')" class="btn btn-white btn-link btn-sm"
                         data-original-title="@lang('site.black_list')">
-                        <i class="material-icons">pane_tool</i>
+                        <i class="material-icons">pan_tool</i>
                     </a>
 
                     @endif

@@ -179,6 +179,16 @@
     {{--Jquery--}}
     <script src="{{asset('assets/js/core/jquery.min.js')}}"></script>
 
+    {{-- start dataTable plugin --}}
+    <link href="{{asset('css/table_css/bootstrap.min.css')}}" rel="stylesheet" />
+
+    <script src="{{asset('js/table_js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/table_js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <link href="{{asset('css/table_css/dataTables.bootstrap.min.css')}}" rel="stylesheet" />
+
+    {{-- end dataTable plugin --}}
+
+
     <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="{{asset('assets/js/default-passive-events.js')}}"></script>
@@ -216,13 +226,12 @@
 
     <script src="{{asset('assets/frontend/js/paper-kit.js?v=2.2.0')}}" type="text/javascript"></script>
 
-
-
     <script>
         $(function () {
             $("[data-toggle=popover]").popover();
         });
         $(document).ready(function() {
+            $("#dataTable").DataTable();
             $().ready(function() {
                 $sidebar = $('.sidebar');
 
@@ -449,6 +458,46 @@
         });//end of delete
     </script>
 
+    <style>
+        .navbar-wrapper .navbar-brand {
+            font-size: 30px;
+        }
+
+        h4 {
+            padding-left: 100px;
+            font-size: 30px;
+        }
+
+        .form-inline {
+            display: block;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            display: none;
+        }
+
+        .dataTables_length {
+            display: none;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input {
+            width: 100%;
+            margin: 20px;
+        }
+    </style>
+    <script>
+        $('table, p, th').css('font-size', '18px');
+    $('label').css('font-size', '15px');
+    $(".invalid-feedback").css('display', 'none');
+    $(".dataTables_paginate ").css('font-size', '11px');
+    $("input, select, textarea").css({
+        'font-size' : '20px',
+        'padding' : '5px',
+        'height': '40px',
+        'background': 'center',
+    });
+    </script>
+
     {{-- more edit in ar local becouse package matrial have more than error  --}}
     @if (app()->getLocale() == 'ar')
     <script>
@@ -460,6 +509,10 @@
         $(this).css('display', 'block');
     }) 
     
+    $('.col-md-8').each(function(){
+        $(this).css('display', 'contents');
+    })
+    
     $('.card-header .col-md-8').each(function(){
         $(this).children().css('display', 'flex');
     })
@@ -469,13 +522,12 @@
     })
 
     $('table tbody').each(function(){
-        $(this).css('text-align','right')
+        $(this).css('text-align','center')
+    })  
+    
+    $('table thead th').each(function(){
+        $(this).css('text-align','center')
     })
-    // $('input').each(function(){
-    //     $(this).focus(function(){
-    //         $(this).prev().css('margin-top', '20px');
-    //     })
-    // })
     
     </script>
     @endif

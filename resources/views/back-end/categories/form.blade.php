@@ -37,7 +37,7 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.description')</label>
             <textarea name="description" class="form-control" cols="30"
-                rows="10">{{ isset($row) ? $row->description : old('description') }}</textarea>
+                rows="5">{{ isset($row) ? $row->description : old('description') }}</textarea>
             @error('description')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

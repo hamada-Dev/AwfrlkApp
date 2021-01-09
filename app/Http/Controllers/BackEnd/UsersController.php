@@ -24,7 +24,7 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->employee()->where('delivery_status', '<>', 3)->paginate(5);
+        $rows = $rows->employee()->where('delivery_status', '<>', 3)->latest()->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -153,10 +153,10 @@ class UsersController extends BackEndController
 
     protected function uploadImage($request)
     {
+        $img = \Intervention\Image\Facades\Image::make($request->image)->resize(912, 872);
 
-        \Intervention\Image\Facades\Image::make($request->image)->resize(300, null, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save(public_path('uploads/users_images/' . $request->image->hashName()));
+        $img->save(public_path('uploads/users_images/' . $request->image->hashName()));
+
     }
 
     public function showDelivery()
@@ -164,7 +164,7 @@ class UsersController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->paginate(5);
+        $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->latest()->paginate(5);
 
         // start for who take money
         $month_start = strtotime('first day of this month', time());
@@ -183,7 +183,7 @@ class UsersController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->where('group', 'user')->where('delivery_status', '<>', 3)->paginate(5);
+        $rows = $rows->where('group', 'user')->where('delivery_status', '<>', 3)->latest()->paginate(5);
 
         // start for who take money
         $month_start = strtotime('first day of this month', time());
@@ -233,7 +233,7 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('delivery_status', '3')->paginate(5);
+        $rows = $rows->where('delivery_status', '3')->latest()->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

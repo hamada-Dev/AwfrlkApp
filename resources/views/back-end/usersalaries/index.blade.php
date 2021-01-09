@@ -26,7 +26,7 @@
             </div> -->
         @endslot
         <div class="table-responsive">
-            <table class="table">
+            <table  id="dataTable" class="table">
                 <thead class=" text-primary">
                 <tr>
                     <th>

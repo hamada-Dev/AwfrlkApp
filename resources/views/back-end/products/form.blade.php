@@ -31,7 +31,7 @@
 
     
     @php
-    $unitsArray = ['كيلو', 'لتر', 'عدد'];
+    $unitsArray = ['kilo', 'liter', 'number'];
     // $unitsArray = ['kilo', 'liter', 'number'];
     @endphp
     <div class="col-md-6">
@@ -39,7 +39,7 @@
             <select name="unit" class="form-control @error('unit') is-invalid @enderror">
                 <option value="0">@lang('site.choose-unit')</option>
                 @foreach($unitsArray as $unit)
-                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected @endif >@lang('site.'.$unit)</option>
+                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected @endif >{{$unit}}</option>
                 @endforeach
             </select>
             @error('unit')
@@ -78,7 +78,7 @@
 
     <div class="col-md-3" width="100px" height="60px">
         <div class="">
-            <img src="{{isset($row) ?  $row->image_path : asset('uploads/trip_images/default.png')}}" width="100px"
+            <img src="{{isset($row) ?  $row->image_path : asset('uploads/products_images/default.png')}}" width="100px"
                 style="height: 100px" class="img-thumbnail img-preview">
         </div>
     </div>
@@ -89,7 +89,7 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.description')</label>
             <textarea name="description" class="form-control @error('description') is-invalid @enderror" cols="30"
-                rows="10">{{ isset($row) ? $row->description : old('description') }}</textarea>
+                rows="5">{{ isset($row) ? $row->description : old('description') }}</textarea>
             @error('description')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

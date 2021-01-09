@@ -30,7 +30,7 @@ class ProductsController extends BackEndController
 
         $rows = $rows->whereHas('category')->when($request->category_id, function ($query) use ($request) {
             $query->where('category_id', $request->category_id);
-        })->paginate(5);
+        })->latest()->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

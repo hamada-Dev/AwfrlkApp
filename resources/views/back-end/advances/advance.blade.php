@@ -52,7 +52,7 @@
 
 <!-- //orders -->
 <div class="table-responsive">
-    <table class="table">
+    <table  id="dataTable"  id="dataTable"  id="dataTable"  id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -136,7 +136,7 @@
                                 </button>
                             </div>
                         <div class="modal-body">
-                                <table class="table">
+                                <table  id="dataTable"  id="dataTable"  id="dataTable" class="table">
                                         <thead class=" text-primary">
                                             <tr>
                                                 <th>

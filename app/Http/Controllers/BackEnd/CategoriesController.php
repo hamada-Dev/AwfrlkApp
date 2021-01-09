@@ -22,7 +22,7 @@ class CategoriesController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->with('product')->paginate(5);
+        $rows = $rows->with('product')->latest()->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

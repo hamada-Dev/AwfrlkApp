@@ -30,11 +30,15 @@ class PendingOrderController extends BackEndController
 
         $rows = $this->model->when($request->orderId, function ($que) use ($request) {
             return $que->where('id', $request->orderId);
+        })->when($request->process, function($qu) use($request){
+            return $qu->whereNull('delivery_id')->where('status', 0);
+        })->when($request->delivery, function ($q) use ($request) {
+            return $q->whereNotNull('delivery_id')->where('status', 0)->whereNull('end_shoping_date');
+        })->when($request->road, function ($quer) use ($request) {
+            return $quer->whereNotNull('delivery_id')->where('status', 0)->whereNotNull('end_shoping_date');
         })->with(['orderDetails' => function ($query) {
             return $query->with('product');
-        }])->when($request->process, function ($q) use ($request) {
-            return $q->whereNull('delivery_id')->where('status', $request->process);
-        })->with('user')->latest()->paginate(6);
+        }])->with('user')->latest()->paginate(6);
 
 
         // //get all data of Model

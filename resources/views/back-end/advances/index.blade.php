@@ -29,7 +29,7 @@
 @endslot
 
 <div class="table-responsive">
-    <table class="table">
+    <table  id="dataTable" class="table">
         <thead class=" text-primary text-center">
             <tr>
                 <th>

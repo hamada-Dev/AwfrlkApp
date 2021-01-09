@@ -10,6 +10,9 @@ return [
   'logout' => 'خروج',
   'register' => 'تسجبل',
   'description' => 'الوصف ',
+  'orderWait' => 'الطلبات المعلقه  ',
+  'orderDelivery' => 'طلبات تحت التنفيذ ',
+  'orderRoad' => 'طلبات في الطريق  ',
  //register
  'admin'  => 'مسؤل',
  'enter' => 'دخول',
@@ -90,6 +93,8 @@ return [
     'products'=>"المنتجات",
     'Product'=>'منتج',
     'product'=>'منتج',
+    'productupdates'=>'خطه اسعار المنتجات',
+    'productupdate'=>'خطه اسعار المنتجات',
 
     //offers
     "offer_name"=>"أسم العرض",
