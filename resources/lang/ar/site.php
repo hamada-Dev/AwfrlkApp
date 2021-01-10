@@ -177,6 +177,7 @@ return [
   'order_type' => 'نوع الطلب',
   'pharmacy' => 'صيدليه',
   'taklef' => 'تكليف الطيار',
+  'cache' => 'غير معلوم',
   //deliverymotocycles
   'deliverymotocycles' => 'موتوسكل الطيار',
   'deliverymotocycle' => 'موتوسكل الطيار',

@@ -123,7 +123,7 @@ class OrderController extends BaseController
 
                     // return $data = ['order' => ($newOrder), 'deliveryActive' => $ActiveDelivery];
                 ////////////////////////////////////////////////
-                $this->makeEvent($newOrder, $ActiveDelivery);
+                // $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();
