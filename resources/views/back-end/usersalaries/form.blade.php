@@ -2,6 +2,8 @@
 <div class="row">
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
+        <label class="bmd-label-floating">@lang('site.name')</label>
+
         @if(!isset($onlyuser))
             <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-employee')</option>

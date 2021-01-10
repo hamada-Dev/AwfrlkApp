@@ -61,11 +61,28 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.confirm')</label>
             <select name="confirm" class="form-control @error('confirm') is-invalid @enderror">
-                <option value="">@lang("site.choose_confirm")</option>
-                <option value="1"  @if((isset($row) && $row->confirm==1)) selected @endif >@lang('site.valide')</option>
-                <option value="0" @if((isset($row) && $row->confirm==0)) selected @endif>@lang('site.notValide')</option>
+                <option value="3">@lang("site.choose_confirm")</option>
+                <option value="0" {{(isset($row) && $row->confirm == 0) || old('confirm') == 0 ? 'selected' : ''}} >@lang('site.notValide')</option>
+                <option value="1" {{(isset($row) && $row->confirm == 1) || old('confirm') == 1 ? 'selected' : ''}} >@lang('site.valide')   </option>
             </select>
             @error('confirm')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.area')</label>
+            <select name="area_id" class="form-control @error('area_id') is-invalid @enderror">
+                <option value="0">@lang("site.choose-area")</option>
+                @foreach ($areas as $area)
+                    <option value="{{$area->id}}" {{(isset($row) && $row->area_id == $area->id) || old('area_id') == $area->id ? 'selected' : ''}}>{{$area->name}}</option>
+                @endforeach
+            </select>
+            @error('area_id')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

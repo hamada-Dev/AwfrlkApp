@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+
+use App\Scopes\ConfirmedOffer;
 use App\Scopes\NonDeleteIScope;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +27,6 @@ class UserOffer extends Model
     {
         parent::boot();
         static::addGlobalScope(new NonDeleteIScope);
+        static::addGlobalScope(new ConfirmedOffer);//this global scope for get offer which confirmed from delivery
     }
 }

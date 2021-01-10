@@ -24,6 +24,11 @@ class Order extends Model
     public function getProductCountAttribute()
     {
         return $this->orderDetails->count();
+    } //end of order price 
+
+   public function getCreatedAtAttribute($val)
+    {
+        return date('Y-m-d h:i A', strtotime($val));
     } //end of order price  
 
     public function area()

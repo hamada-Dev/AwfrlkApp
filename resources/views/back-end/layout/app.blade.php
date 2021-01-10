@@ -515,10 +515,16 @@
     <script>
         $('.sidebar .nav-link').each( function () { 
          $(this).children().css('display', 'flex');
-    });
+    });   
+    
 
     $('label').each(function(){
-        $(this).css('display', 'block');
+        $(this).css({
+            'display': 'flex',
+            'position': 'relative',
+            'right': '14px',
+            'padding-bottom': '5px',
+        });
     }) 
     
     $('.col-md-8').each(function(){
@@ -654,6 +660,23 @@ channel.bind('event-userFeedOrder', function(data) {
 var channel = pusher.subscribe('channel-adminForceDelivey');
 channel.bind('event-adminForceDelivey', function(data) {
     console.log('admin forcing delivery to take this order ');
+    // alert(JSON.stringify(data));
+});  
+
+
+
+ // ------------ ############# [8] this notifcation from  user to all delivery to tell him an user subscribe offer so delivery have to earn money  ##################-------------    
+var channel = pusher.subscribe('my-channel-offer');
+channel.bind('my-event-offer', function(data) {
+    console.log('user subscribe for an offer delivery have to collect money ');
+    // alert(JSON.stringify(data));
+});  
+
+
+// ------------ ############# [8] this notifcation from delivery to user that this delivery take offer and have to collect money ##################-------------    
+var channel = pusher.subscribe('my-channel-DTakeOffer');
+channel.bind('my-event-DTakeOffer', function(data) {
+    console.log('delivery take this offer to collect money from it ');
     // alert(JSON.stringify(data));
 });  
 

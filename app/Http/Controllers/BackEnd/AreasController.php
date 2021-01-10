@@ -8,7 +8,7 @@ use App\Models\Area;
 
 class AreasController extends BackEndController
 {
-    
+
     public function __construct(Area $model)
     {
         parent::__construct($model);
@@ -17,40 +17,39 @@ class AreasController extends BackEndController
     public function index(Request $request)
     {
         //get all data of Model
-        $rows = $this->model;
-        $rows = $this->filter($rows); 
-        $rows = $rows->where("parent_id","0")->paginate(5);
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $obj=new Area();
-        return view('back-end.'.$this->getClassNameFromModel().'.index', compact('obj','rows', 'module_name_singular', 'module_name_plural'));
-
+        $request->parent = !$request->parent ? 0 : $request->parent;
+        
+        $rows = $this->model->where("parent_id", $request->parent)->paginate(5);
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        
+        return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
     } //end of index
-   
-   //en
+
+    //en
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function create(Request $request)
     {
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $append =$this->append();
-        $areas=Area::get();
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        $append = $this->append();
+        $areas = Area::get();
         // $areas=Area::where("parent_id","0")->get();
-        return view('back-end.'.$this->getClassNameFromModel().'.create', compact('areas','module_name_singular', 'module_name_plural'))->with($append);
+        return view('back-end.' . $this->getClassNameFromModel() . '.create', compact('areas', 'module_name_singular', 'module_name_plural'))->with($append);
     } //end of create
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:30','min:5'],
-            'trans_price'   =>  ['required', 'numeric','min:1'],
+            'name' => ['required', 'max:30', 'min:5'],
+            'trans_price'   =>  ['required', 'numeric', 'min:1'],
             'parent_id'   =>  ['numeric'],
         ]);
         $request['added_by'] = auth()->user()->id;
@@ -68,31 +67,30 @@ class AreasController extends BackEndController
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    
-   
+
+
     public function edit($id)
     {
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $append =$this->append();
-        $row=$this->model->findOrFail($id);
-        $areas=Area::where("parent_id","0")->get();
-        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('areas','row', 'module_name_singular', 'module_name_plural'))->with($append);
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        $append = $this->append();
+        $row = $this->model->findOrFail($id);
+        $areas = Area::where("parent_id", "0")->get();
+        return view('back-end.' . $this->getClassNameFromModel() . '.edit', compact('areas', 'row', 'module_name_singular', 'module_name_plural'))->with($append);
     } //end of edit
 
 
     public function update(Request $request, Area $area)
     {
         $request->validate([
-            'name' => ['required', 'max:30','min:5'],
-            'trans_price'   =>  ['required', 'numeric','min:1'],
-            'parent_id'   =>  ['numeric','exists:areas,id'],
+            'name' => ['required', 'max:30', 'min:5'],
+            'trans_price'   =>  ['required', 'numeric', 'min:1'],
+            'parent_id'   =>  ['numeric', 'exists:areas,id'],
         ]);
 
-            $area->update($request->all());
-            session()->flash('success', __('site.updated_successfully'));
-            return redirect()->route('areas.index');
-        
+        $area->update($request->all());
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('areas.index');
     }
 
     /**
@@ -104,24 +102,22 @@ class AreasController extends BackEndController
     public function destroy($id)
     {
         $area = Area::findOrFail($id);
-            $area->update([
-                'deleted_by'    => auth()->user()->id,
-                'delete_date'   => now(),
-            ]);
-            // $product->delete();
+        $area->update([
+            'deleted_by'    => auth()->user()->id,
+            'delete_date'   => now(),
+        ]);
+        // $product->delete();
 
-            session()->flash('success', __('site.deleted_successfully'));
-            return redirect()->route($this->getClassNameFromModel() . '.index');
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route($this->getClassNameFromModel() . '.index');
     }
     public function childern($parent_id)
     {
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $append =$this->append();
-        $areas = Area::where("parent_id","0")->paginate(5);
-        $rows=Area::where("parent_id",$parent_id)->paginate(5);
-        return view('back-end.'.$this->getClassNameFromModel().'.Childern', compact('areas','rows','module_name_singular', 'module_name_plural'))->with($append);
-
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        $append = $this->append();
+        $areas = Area::where("parent_id", "0")->paginate(5);
+        $rows = Area::where("parent_id", $parent_id)->paginate(5);
+        return view('back-end.' . $this->getClassNameFromModel() . '.Childern', compact('areas', 'rows', 'module_name_singular', 'module_name_plural'))->with($append);
     }
-    
 }

@@ -74,7 +74,7 @@
             </li>
 
             <li class="nav-item {{is_active('areas')}}">
-                <a class="nav-link" href="{{route('areas.index')}}">
+                <a class="nav-link" href="{{route('areas.index', ['parent' => 0])}}">
                     <i class="material-icons">location_on</i>
                     <p>@lang('site.areas')</p>
                 </a>

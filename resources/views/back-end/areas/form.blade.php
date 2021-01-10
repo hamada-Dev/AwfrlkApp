@@ -32,7 +32,7 @@
             <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-govern')</option>
                 @foreach($areas as $area)
-                <option value="{{$area->id}}" @if((isset($row) && $area->id== $row->parent_id) || (request() != NULL && request()->parent_id == $area->id ) || old('parent_id') == $area->id) selected @endif>{{$area->name}}</option>
+                <option value="{{$area->id}}" @if((isset($row) && $area->id== $row->parent_id) || ( request()->parent ==  $area->id) || old('parent_id') == $area->id) selected @endif>{{$area->name}}</option>
                 @endforeach
             </select>
             @error('parent_id')

@@ -21,14 +21,15 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}"
+        class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
 @endslot
 
 <div class="table-responsive">
-    <table  id="dataTable"  class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -46,12 +47,12 @@
                 <th>
                     @lang('site.confirm')
                 </th>
-                <td>
-                @lang('site.discount')
-                </td>
-                <td>
-                @lang('site.end_date')
-                </td>
+                <th>
+                    @lang('site.discount')
+                </th>
+                <th>
+                    @lang('site.end_date')
+                </th>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -66,9 +67,9 @@
                     {{$row->id}}
                 </td>
                 <td>
-                @if($row->user_id != null)
+                    @if($row->user_id != null)
                     {{$row->user->name}} {{$row->user->lastName}}
-                @endif    
+                    @endif
                 </td>
                 <td>
                     {{$row->name}}
@@ -78,16 +79,16 @@
                 </td>
                 <td>
                     @if($row->confirm==1)
-                         @lang('site.valide')
+                    @lang('site.valide')
                     @else
-                      <span style='color:red'>  @lang('site.notValide') </span>
+                    <span style='color:red'> @lang('site.notValide') </span>
                     @endif
                 </td>
                 <td>
-                     {{$row->discount}}%
+                    {{$row->discount}}%
                 </td>
                 <td>
-                    {{$row->end_date}}
+                    {{date('Y-m-d', strtotime($row->end_date))}}
                 </td>
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')
