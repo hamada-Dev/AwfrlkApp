@@ -1,10 +1,10 @@
 @extends('back-end.layout.app')
 
 @php
-
+    $group = (isset($row) && $row->group == 'delivery') ? __('site.delivery') : ((isset($row) && $row->group == 'emp') ? __('site.emp') : __('site.user') ) 
 @endphp
 @section('title')
-    @lang('site.'.$module_name_plural)
+    {{$group}}
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
     @component('back-end.layout.nav-bar')
 
         @slot('nav_title')
-            @lang('site.'.$module_name_plural)
+           {{ $group}}
         @endslot
 
     @endcomponent
@@ -22,7 +22,7 @@
         {{--card--}}
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">@lang('site.edit') @lang('site.'.$module_name_singular)</h4>
+                <h4 class="card-title">@lang('site.edit') {{$group}} </h4>
                 <p class="card-category">@lang('site.edit_desc')</p>
             </div>
 
