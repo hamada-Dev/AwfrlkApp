@@ -32,7 +32,7 @@
                 <form action="{{route($module_name_plural.'.update', $row->id)}}" method="post" enctype="multipart/form-data">
                     {{method_field('PUT')}}
                     @include('back-end.'.$module_name_plural.'.form')
-                    <button type="submit" class="btn btn-primary pull-right">@lang('site.edit') @lang('site.'.$module_name_singular)</button>
+                    <button type="submit" class="btn btn-primary pull-right">@lang('site.edit') {{$group}}</button>
                     <div class="clearfix"></div>
 
                 </form> {{--end of form--}}

@@ -19,6 +19,9 @@
                 <th>
                     @lang("site.created_at")
                 </th>
+                 <th>
+                    @lang("site.updated_at")
+                </th>
 
             </tr>
         </thead>
@@ -42,7 +45,10 @@
                     @endif
                 </td>
                 <td>
-                    {{$row->created_at}}
+                    {{date('Y-m-d H:m A',strtotime( $row->created_at))}}
+                </td>
+                <td>
+                    {{date('Y-m-d H:m A',strtotime($row->updated_at)) }}
                 </td>
             </tr>
             @empty

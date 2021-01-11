@@ -235,6 +235,7 @@ return [
   "not_buy"=>"لم يشترى",
   'totalPrice'=>'سعر الفاتورة',
   'created_at'=>'تاريخ الانشاء',
+  'updated_at'=>'تاريخ الإنتهاء',
   'details_Orders'=>' تفاصيل الطلبات',
   'count'=>'تصفية',
   //orderDetails

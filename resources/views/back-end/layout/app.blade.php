@@ -202,8 +202,8 @@
     <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
 
     {{-- this is for scrollbar that destroy design if local = ar --}}
-    <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script> --}}
+    <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script>
     {{-- <script>
         $("#selector").niceScroll({
             cursorcolor : 'red',
@@ -456,9 +456,22 @@
             n.show();
 
         });//end of delete
+
     </script>
 
     <style>
+        /* img{
+            transition: all 2.5s ease-in-out;
+        }
+        img:hover {
+            transform: scale(4.5);
+            z-index: 5;
+            position: fixed;
+            top: 150px;
+            left: 150px; */
+            border-radius: 20% 0;
+        }
+
         .navbar-wrapper .navbar-brand {
             font-size: 30px;
         }
@@ -545,6 +558,10 @@
     
     $('table thead th').each(function(){
         $(this).css('text-align','center')
+    }) 
+    
+    $('.navbar-brand').each(function(){
+        $(this).css({'font-size':'35px', 'padding':'20px'})
     })
     
     </script>
