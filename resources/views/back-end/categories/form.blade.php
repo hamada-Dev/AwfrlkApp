@@ -26,7 +26,7 @@
 
     <div class="col-md-3" width="100px" height="60px">
         <div class="">
-            <img src="{{isset($row) ?  $row->image_path : asset('uploads/trip_images/default.png')}}"
+            <img src="{{isset($row) ?  $row->image_path : asset('uploads/categories_images/default.png')}}"
              style="height:60px; width:60px" class="img img-thumbnail">
         </div>
     </div>

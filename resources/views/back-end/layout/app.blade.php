@@ -593,7 +593,7 @@ channel.bind('my-event-order', function(data) {
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlkapp/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();
                     document.getElementById('audioNotifyNew').pause();
@@ -640,7 +640,7 @@ channel.bind('event-userUrgOrder', function(data) {
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlkapp/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                 // Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();
