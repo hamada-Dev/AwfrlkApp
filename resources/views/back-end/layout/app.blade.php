@@ -231,6 +231,14 @@
             $("[data-toggle=popover]").popover();
         });
         $(document).ready(function() {
+            $('#addButton').click(function(){
+            var orderid=$('#order_id').val();
+            var productid=$('#product_id').val();
+            var amount=$('#amount').val();
+            var trContent="<tr><td>" +orderid+ "</td><td>" +productid+ "</td><td>"+amount+"</td></tr>";
+            $('#orderTable tbody').append(trContent);
+            });
+
             $("#dataTable").DataTable();
             $().ready(function() {
                 $sidebar = $('.sidebar');

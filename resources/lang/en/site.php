@@ -197,6 +197,10 @@ return [
   'safeAlmaserofat'=>' Money Out ',
   'safeofferandorder'=>'Money In',
   'safearbah'=>'Earn Money',
+  'choose-typeofordre'=>'Choose Order Type',
+  'usual'=>'Usualy',
+  'fromto'=>'From Place To Place',
+  'type_count'=>'Count Type',
 
     // products
     'products'  =>  'Products',

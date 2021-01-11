@@ -51,12 +51,28 @@
 <div class="col-md-6">
     <div class="form-group bmd-form-group">
         <select name="area_id" class="form-control @error('area_id') is-invalid @enderror">
-            <option value="0">@lang('site.choose-area')</option>
+            <option value="0">@lang('site.to-area')</option>
             @foreach($areas as $area)
             <option value="{{$area->id}}" @if((isset($row) && $area->id== $row->area_id) || (request() != NULL && request()->area_id == $area->id ) || old('area_id') == $area->id) selected @endif>{{$area->name}}</option>
             @endforeach
         </select>
         @error('area_id')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group bmd-form-group">
+        <select name="area_id_from" class="form-control @error('area_id_from') is-invalid @enderror">
+            <option value="0">@lang('site.from-area')</option>
+            @foreach($areas as $area)
+            <option value="{{$area->id}}" @if((isset($row) && $area->id== $row->area_id_from) || (request() != NULL && request()->area_id_from == $area->id ) || old('area_id_from') == $area->id) selected @endif>{{$area->name}}</option>
+            @endforeach
+        </select>
+        @error('area_id_from')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
@@ -103,4 +119,21 @@
                 @enderror
             </div>
         </div>
+
+        <div class="col-md-6">
+    <div class="form-group bmd-form-group">
+        <select name="order_type" class="form-control @error('order_type') is-invalid @enderror" require='true'>
+            <option value="">@lang('site.choose-typeofordre')</option>
+            <option value="0" >@lang('site.usual')</option>
+            <option value="1" >@lang('site.fromto')</option>
+            <option value="2" >@lang('site.pharmacy')</option>
+        </select>
+        @error('order_type')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+
     </div>

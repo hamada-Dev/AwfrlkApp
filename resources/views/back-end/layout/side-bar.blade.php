@@ -98,12 +98,12 @@
                     <p>@lang('site.orders')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('orderdetails')}}">
+            <!-- <li class="nav-item {{is_active('orderdetails')}}">
                 <a class="nav-link" href="{{route('orderdetails.index')}}">
                     <i class="material-icons">shopping_cart</i>
                     <p>@lang('site.orderdetails')</p>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item {{is_active('promocodes')}}">
                 <a class="nav-link" href="{{route('promocodes.index')}}">
                     <i class="material-icons">gift</i>

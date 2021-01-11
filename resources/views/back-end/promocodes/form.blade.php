@@ -19,6 +19,23 @@
     </div>
 
     <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">@lang('site.area')</label>
+                <select name="area_id" class="form-control @error('area_id') is-invalid @enderror">
+                    <option value="">@lang('site.choose-area')</option>
+                    @foreach(\App\Models\Area::all() as $area)
+                     <option value="{{$area->id}}" @if((isset($row) && $row->area_id == $area->id) || (request() != NULL && request()->area_id == $area->id ) || old('area_id') == $area->id) selected @endif>{{$area->name}}</option>
+                    @endforeach
+                </select>
+                @error('area_id')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+    </div>
+
+    <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.name')</label>
             <input type="text" name="name" value="{{ isset($row) ? $row->name : old('name') }}"
