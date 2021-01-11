@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\DeliveryNotifyEvent;
 use App\Http\Resources\DeliveryRecourse;
+use App\Http\Resources\OrderDetailsRecourse;
 use App\Http\Resources\OrderUserRecourse;
+use App\Http\Resources\UserResource;
 use App\Models\Area;
 use App\Models\Order;
 use App\Models\User;
@@ -46,8 +48,8 @@ class OrderController extends BaseController
     public function store(Request $request)
     {
         // get all active delivery 
-        $ActiveDelivery = User::deliveryActive()->get();
-
+        $ActiveDelivery = UserResource::collection(User::deliveryActive()->get());
+        
         // check if user has promocode or not 
         $checkPromo = $this->checkUserPromo(auth()->user()->id);
         //  check if user has offer or not 
@@ -89,7 +91,9 @@ class OrderController extends BaseController
                     'description'  => $request->description,
                 ]);
 
+                ////////////////////////////////////////////////
                 $this->makeEvent($newOrder, $ActiveDelivery);
+                ////////////////////////////////////////////////
 
                 // this is update offer table or promocode 
                 if ($deliveyPrice['offerOrPromoId'] != null) {
@@ -117,8 +121,9 @@ class OrderController extends BaseController
                 if ($newOrder->offer_or_promo_id != null)
                     $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
+                    // return $data = ['order' => ($newOrder), 'deliveryActive' => $ActiveDelivery];
                 ////////////////////////////////////////////////
-                $this->makeEvent($newOrder, $ActiveDelivery);
+                // $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();

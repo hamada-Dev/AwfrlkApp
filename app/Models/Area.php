@@ -44,4 +44,6 @@ class Area extends Model
         $counts=Area::where('parent_id',$id)->count();
         return $counts;
     }
+
+
 }

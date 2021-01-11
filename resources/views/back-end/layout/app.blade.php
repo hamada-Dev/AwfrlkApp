@@ -202,8 +202,8 @@
     <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
 
     {{-- this is for scrollbar that destroy design if local = ar --}}
-    <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script> --}}
+    <script src="{{asset('assets/js/plugins/jquery.nicescroll.js')}}"></script>
     {{-- <script>
         $("#selector").niceScroll({
             cursorcolor : 'red',
@@ -464,9 +464,22 @@
             n.show();
 
         });//end of delete
+
     </script>
 
     <style>
+        /* img{
+            transition: all 2.5s ease-in-out;
+        }
+        img:hover {
+            transform: scale(4.5);
+            z-index: 5;
+            position: fixed;
+            top: 150px;
+            left: 150px; */
+            border-radius: 20% 0;
+        }
+
         .navbar-wrapper .navbar-brand {
             font-size: 30px;
         }
@@ -523,10 +536,16 @@
     <script>
         $('.sidebar .nav-link').each( function () { 
          $(this).children().css('display', 'flex');
-    });
+    });   
+    
 
     $('label').each(function(){
-        $(this).css('display', 'block');
+        $(this).css({
+            'display': 'flex',
+            'position': 'relative',
+            'right': '14px',
+            'padding-bottom': '5px',
+        });
     }) 
     
     $('.col-md-8').each(function(){
@@ -547,6 +566,10 @@
     
     $('table thead th').each(function(){
         $(this).css('text-align','center')
+    }) 
+    
+    $('.navbar-brand').each(function(){
+        $(this).css({'font-size':'35px', 'padding':'20px'})
     })
     
     </script>
@@ -662,6 +685,23 @@ channel.bind('event-userFeedOrder', function(data) {
 var channel = pusher.subscribe('channel-adminForceDelivey');
 channel.bind('event-adminForceDelivey', function(data) {
     console.log('admin forcing delivery to take this order ');
+    // alert(JSON.stringify(data));
+});  
+
+
+
+ // ------------ ############# [8] this notifcation from  user to all delivery to tell him an user subscribe offer so delivery have to earn money  ##################-------------    
+var channel = pusher.subscribe('my-channel-offer');
+channel.bind('my-event-offer', function(data) {
+    console.log('user subscribe for an offer delivery have to collect money ');
+    // alert(JSON.stringify(data));
+});  
+
+
+// ------------ ############# [8] this notifcation from delivery to user that this delivery take offer and have to collect money ##################-------------    
+var channel = pusher.subscribe('my-channel-DTakeOffer');
+channel.bind('my-event-DTakeOffer', function(data) {
+    console.log('delivery take this offer to collect money from it ');
     // alert(JSON.stringify(data));
 });  
 

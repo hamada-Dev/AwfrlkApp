@@ -26,7 +26,7 @@
 </div>
 @endslot
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -126,6 +126,7 @@
                     @endif
                 </td>
                 <td class="td-actions text-right">
+
                     @include('back-end.buttons.edit')
                     @include('back-end.buttons.delete')
 
@@ -138,7 +139,7 @@
                     </a>
 
                     @endif
-                   
+
                 </td>
 
             </tr>

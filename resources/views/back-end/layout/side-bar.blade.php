@@ -18,7 +18,7 @@
                     <p>@lang('site.home')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('users')}}">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('users.index')}}">
                     <i class="material-icons">person</i>
                     <p>@lang('site.users')</p>
@@ -74,7 +74,7 @@
             </li>
 
             <li class="nav-item {{is_active('areas')}}">
-                <a class="nav-link" href="{{route('areas.index')}}">
+                <a class="nav-link" href="{{route('areas.index', ['parent' => 0])}}">
                     <i class="material-icons">location_on</i>
                     <p>@lang('site.areas')</p>
                 </a>

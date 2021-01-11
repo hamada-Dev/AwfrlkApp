@@ -80,6 +80,7 @@ Route::group(['namespace' => 'Api'], function () {
             // this is for arival date 
             Route::post('deliveryArrival', 'DeliveryArrivalOrderController@arrivalDateDelivery');
            
+            Route::resource('DeliveryTakeOffer', 'DeliveryTakeOfferController');
         });
 
 

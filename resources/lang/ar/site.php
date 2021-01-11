@@ -177,6 +177,7 @@ return [
   'order_type' => 'نوع الطلب',
   'pharmacy' => 'صيدليه',
   'taklef' => 'تكليف الطيار',
+  'cache' => 'غير معلوم',
   //deliverymotocycles
   'deliverymotocycles' => 'موتوسكل الطيار',
   'deliverymotocycle' => 'موتوسكل الطيار',
@@ -234,6 +235,7 @@ return [
   "not_buy"=>"لم يشترى",
   'totalPrice'=>'سعر الفاتورة',
   'created_at'=>'تاريخ الانشاء',
+  'updated_at'=>'تاريخ الإنتهاء',
   'details_Orders'=>' تفاصيل الطلبات',
   'count'=>'تصفية',
   'choose-typeofordre'=>'أختر نوع الطلب',

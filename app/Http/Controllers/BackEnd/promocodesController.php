@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\User;
 use App\Models\Promocode;
 use Illuminate\Http\Request;
@@ -42,7 +43,9 @@ class promocodesController extends BackEndController
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $users=User::where('group','user')->get();
-        return view('back-end.'.$this->getClassNameFromModel().'.create', compact("users",'module_name_singular', 'module_name_plural'))->with($append);
+        $areas = Area::select(['id', 'name'])->get();
+
+        return view('back-end.'.$this->getClassNameFromModel().'.create', compact('areas', "users",'module_name_singular', 'module_name_plural'))->with($append);
     } //en
     /**
      * Store a newly created resource in storage.
@@ -56,7 +59,8 @@ class promocodesController extends BackEndController
             'name' => ['required', 'max:100','min:5'],
             'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
             'discount' =>['required', 'numeric'],
-
+            'end_date' =>['required', 'date'],
+            'area_id'   => ['required', 'exists:areas,id'],
         ]);
             $request['added_by'] = auth()->user()->id;
             // $request['serial'] = uniqid("Awfrlk_");
@@ -85,15 +89,18 @@ class promocodesController extends BackEndController
         $append =$this->append();
         $row=$this->model->findOrFail($id);
         $users=User::where('group','user')->get();
-        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('users','row', 'module_name_singular', 'module_name_plural'))->with($append);
+
+        $areas = Area::select(['id', 'name'])->get();
+        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('areas', 'users','row', 'module_name_singular', 'module_name_plural'))->with($append);
     }
     public function update(Request $request,$id)
     {
         $request->validate([
             'name' => ['required', 'max:100','min:5'],
             'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
+            'end_date' =>['required', 'date'],
             'discount' =>['required', 'numeric'],
-
+            'area_id'   => ['required', 'exists:areas,id'],
         ]);
             $request['added_by']=auth()->user()->id;
             $promo=$this->model->find($id);

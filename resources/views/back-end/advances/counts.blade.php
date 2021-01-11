@@ -227,7 +227,7 @@ $sumsalary=0;
                                 $all=0;
                                 if($row->commission > 0)
                                     {
-                                        $all=(($row->commission * $row->salary)+$row->salary);
+                                        $all=(($row->commission * $row->salary / 100)+$row->salary);
                                     }else{
                                         $all=$row->salary;
                                     }

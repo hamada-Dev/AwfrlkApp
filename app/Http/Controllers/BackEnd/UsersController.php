@@ -66,9 +66,8 @@ class UsersController extends BackEndController
             'area_id' => ['required', 'exists:areas,id'],
             'image'     => ['image'],
             'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
-
         ]);
-        
+
         $request_data = $request->except(['image', 'password', 'c_password', 'api_token']);
 
         // store image
@@ -79,7 +78,7 @@ class UsersController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-        $request_data['password'] = $request->password == null ?  Hash::make(12345) :Hash::make($request->password);
+        $request_data['password'] = $request->password == null ?  Hash::make(12345) : Hash::make($request->password);
         $request_data['api_token'] = hash('md5', 'user');
         $request['added_by'] = auth()->user()->id;
 
@@ -88,21 +87,29 @@ class UsersController extends BackEndController
             $newUser->deliveryStatus()->create([
                 'status'   => 1,
             ]);
-            return redirect()->route('deliverymotocycles.create', ['dID'=> $newUser->id]);
-        }
-        else{
-        return redirect()->route('users.index');
+            return redirect()->route('deliverymotocycles.create', ['dID' => $newUser->id]);
+        } else {
+            return redirect()->route('users.index');
         }
     } //end of store
 
     public function update(Request $request, User $user)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable', 'min:5'],
+            'c_password' => ['nullable', 'same:password'],
+            'gender' => ['required', Rule::in([0, 1])],
+            'phone' => ['required', 'numeric', Rule::unique('users')->ignore($user->id)],
+            'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
+            'ssn' => ['required', 'integer', Rule::unique('users')->ignore($user->id)],
+            'adress' => ['required', 'string', 'max:255'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'image'     => ['image'],
             'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
-
         ]);
 
         $request_data = $request->except(['password', 'image', 'c_password']);
@@ -119,20 +126,16 @@ class UsersController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
 
-        if ($request->has('password') && $request->get('password') != '') {
+        $request_data['password'] = $request->password == null ?  Hash::make(12345) : Hash::make($request->password);
 
-            $request_data += ['password' => Hash::make($request->password)];
-        }
         // check for update price to add it in productUpdate
-
-
 
         $user->update($request_data);
 
         session()->flash('success', __('site.updated_successfully'));
         if ($request->group == 'delivery')
             return redirect()->route('users.delivery');
-        elseif($request->group == 'user')
+        elseif ($request->group == 'user')
             return redirect()->route('users.usersShow');
         else
             return redirect()->route('users.index');
@@ -156,7 +159,6 @@ class UsersController extends BackEndController
         $img = \Intervention\Image\Facades\Image::make($request->image)->resize(912, 872);
 
         $img->save(public_path('uploads/users_images/' . $request->image->hashName()));
-
     }
 
     public function showDelivery()
@@ -188,16 +190,16 @@ class UsersController extends BackEndController
         // start for who take money
         $month_start = strtotime('first day of this month', time());
         $month_end = strtotime('last day of this month', time());
-        $firstDayMonth=date('Y-m-d', $month_start) . ' 00:00:00';
-        $lastDayMonth= date('Y-m-d', $month_end) . ' 23:59:59';
-        $whotakemoney=Usersalary::where('moneyDay','>=',$firstDayMonth)
-        ->where('moneyDay','<=',$lastDayMonth)->pluck('user_id')->toArray();
+        $firstDayMonth = date('Y-m-d', $month_start) . ' 00:00:00';
+        $lastDayMonth = date('Y-m-d', $month_end) . ' 23:59:59';
+        $whotakemoney = Usersalary::where('moneyDay', '>=', $firstDayMonth)
+            ->where('moneyDay', '<=', $lastDayMonth)->pluck('user_id')->toArray();
         // end for who take the money
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
-        return view('back-end.' . $this->getClassNameFromModel() . '.showUsers', compact('whotakemoney','rows', 'module_name_singular', 'module_name_plural'));
+        return view('back-end.' . $this->getClassNameFromModel() . '.showUsers', compact('whotakemoney', 'rows', 'module_name_singular', 'module_name_plural'));
     }
-    
+
 
     public function statusDelivery($delivery_id)
     {

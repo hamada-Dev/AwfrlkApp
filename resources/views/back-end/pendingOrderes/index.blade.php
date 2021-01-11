@@ -1,24 +1,27 @@
 @extends('back-end.layout.app')
 
 @php
+$type = request()->process ? __('site.Pending_orderes') : (request()->delivery ? __('site.orderDelivery') :
+__('site.orderRoad') ) ;
 
 @endphp
 @section('title')
-@lang('site.Pending_orderes')
+{{ $type }}
 @endsection
 
 @section('content')
 
 @component('back-end.layout.nav-bar')
 
+
 @slot('nav_title')
-@lang('site.Pending_orderes')
+{{ $type }}
 @endslot
 
 @endcomponent
 
-@component('back-end.partial.table', ['module_name_plural'=>'Pending_orderes' ,
-'module_name_singular'=> 'Pending_orderes'])
+@component('back-end.partial.table', ['module_name_plural'=>'orders' ,
+'module_name_singular'=> 'orders'])
 @slot('add_button')
 <div class="col-md-4 text-right">
 
@@ -59,8 +62,9 @@
                     <tr>
 
                         <td>
-                            <a href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}"> {{$row->user->name . ' ' . $row->user->lastName}}</a>
-                           
+                            <a href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}">
+                                {{$row->user->name . ' ' . $row->user->lastName}}</a>
+
                         </td>
                         <td>
                             {{$row->user->phone}}
@@ -86,7 +90,7 @@
             </table>
         </div>
         <div class="card-body">
-            <form action="{{ route('pending.store') }}" method="post">
+            <form action=" {{ request()->process ? route('pending.store') : '' }}" method="post">
                 <div class="row">
                     <div class="col-md-3">
                         @csrf
@@ -94,10 +98,13 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group bmd-form-group">
-                            <select name="delivery_id" class="form-control @error('status') is-invalid @enderror" {{$row->delivery_id != null? 'disabled' : ''}}>
+                            <select name="delivery_id" class="form-control @error('status') is-invalid @enderror"
+                                {{$row->delivery_id != null? 'disabled' : ''}}>
                                 <option value="0">@lang('site.choose_user_delivery')</option>
                                 @foreach ($activeDelivery as $delivery)
-                                    <option value="{{$delivery->id}}" {{$row->delivery_id == $delivery->id ? 'selected' : ''}}>{{$delivery->name . ''. $delivery->lasstName}}</option>
+                                <option value="{{$delivery->id}}" data-valu='{{ $row->delivery_id }}'
+                                    {{ (isset($row) && $row->delivery_id == $delivery->id) || old('delivery_id') ==  $delivery->id  ? 'selected' : ''}}>
+                                    {{$delivery->name . ''. $delivery->lasstName}}</option>
                                 @endforeach
                             </select>
                             @error('status')
@@ -109,7 +116,11 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
+                        @if (request()->process)
                         <button type="submit" class="btn btn-lg btn-primary pull-right"> @lang('site.taklef')</button>
+                        @else
+                        <span class="btn btn-lg btn-success pull-right"> @lang('site.orderDelivery')</span>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -152,7 +163,7 @@
                             @endphp
                         </td>
                         <td>
-                            {{ $detail->price != null ? $detail->price : 'cache' }}
+                            {{ $detail->price != null ? $detail->price : __('site.cache') }}
                         </td>
 
                     </tr>

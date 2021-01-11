@@ -17,18 +17,19 @@
 
 @endcomponent
 
-@component('back-end.partial.table', ['module_name_plural'=>$module_name_plural ,
-'module_name_singular'=>$module_name_singular])
+@component('back-end.partial.table', ['module_name_plural'=>$module_name_plural,
+'module_name_singular'=>$module_name_singular ])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', ['parent' => request()->parent]) }}"
+        class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
 @endslot
 
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -46,7 +47,7 @@
                 {{-- <th>
                     @lang('site.parent_id')
                 </th> --}}
-                
+
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -66,20 +67,31 @@
                     {{$row->name}}
                 </td>
                 <td>
-                        {{$row->trans_price}}
+                    {{$row->trans_price}}
                 </td>
-                <td>                    
-                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">
-                        @lang('site.view_places') - {{$row->getCount($row->id)}}
+                <td>
+                    @if ( $row->getCount($row->id) > 0 )
+                    <a href="{{route("areas.index",['parent' => $row->id])}}" class="btn btn-primary btn-sm">
+                       {{$row->getCount($row->id)}}
                     </a>
+                    @else
+                        <span class="st-icon-pandora"> {{$row->getCount($row->id)}} </span>
+                    @endif
+
                 </td>
+
+                {{-- <td>                    
+                    <a href="{{route("areas.childern",$row->id)}}" class="btn btn-primary btn-sm">
+                @lang('site.view_places') - {{$row->getCount($row->id)}}
+                </a>
+                </td> --}}
                 {{-- <td>
                     @foreach ($rows as $area)           
                         @if( $row->parent_id==$area->id)
                             {{$area->name}}
-                        @endif
-                    @endforeach
-                        
+                @endif
+                @endforeach
+
                 </td> --}}
 
                 <td class="td-actions text-right">
