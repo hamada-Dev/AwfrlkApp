@@ -29,7 +29,6 @@
         </div>
     </div>
 
-    
     @php
     $unitsArray = ['kilo', 'liter', 'number'];
     // $unitsArray = ['kilo', 'liter', 'number'];
@@ -52,6 +51,21 @@
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
+            <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
+                <option value="0">@lang('site.choose-product_cat')</option>
+                @foreach(App\Models\Product::where('parent_id',0)->get() as $product)
+                <option value="{{$product->id}}" @if((isset($row) && $product->id== $row->parent_id) || (request() != NULL && request()->product_id == $product->id ) || old('product_id') == $product->id) selected @endif>{{$product->name}} </option>
+                @endforeach
+            </select>
+            @error('parent_id')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.price')</label>
                 <input type="number" min="0" step="0.1" name="price" value="{{ isset($row) ? $row->price : old('price') }}"
@@ -64,7 +78,8 @@
             </div>
         </div>
     </div>
-<div class="col-md-3">
+
+    <div class="col-md-3">
         <div class="">
             <label>@lang('site.image')</label>
             <input type="file" name="image" class="form-control image @error('image') is-invalid @enderror">
@@ -82,8 +97,10 @@
                 style="height: 100px" class="img-thumbnail img-preview">
         </div>
     </div>
-    </div>
 
+
+
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="form-group bmd-form-group">

@@ -18,9 +18,10 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->enum('unit',['kilo', 'number', 'liter']);
-            $table->float('price');
+            $table->float('price')->nullable();
             $table->string('image')->default('default.png');
             $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('added_by')->unsigned()->comment('who added');
             $table->timestamps();
             

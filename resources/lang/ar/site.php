@@ -244,6 +244,7 @@ return [
   'from-area'=>'من منطقة',
   'to-area'=>'إلى منطقة',
   'type_count'=>'نوع الحساب',
+  'choose-product_cat'=>'أختر الفئة التابع لها ان وجدت',
   //orderDetails
   "orderdetails"=>"تفاصيل الطلب",
   "orderdetail"=>"تفاصيل الطلب",
