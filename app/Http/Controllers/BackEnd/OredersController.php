@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\Area;
+use App\Models\Promocode;
+use App\Models\UserOffer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -48,6 +50,7 @@ class OredersController extends BackEndController
         $module_name_singular=$this->getSingularModelName();
         $append =$this->append();
         $users=User::where("group","user")->get();
+        $ActiveDelivery = User::deliveryActive()->get();
         $delivers=User::where("group","delivery")->where("delivery_status",1)->get();
         $areas=Area::all();       
          return view('back-end.'.$this->getClassNameFromModel().'.create', compact('users','delivers','areas','module_name_singular', 'module_name_plural'))->with($append);
@@ -60,6 +63,23 @@ class OredersController extends BackEndController
      */
     public function store(Request $request)
     {
+        // check if user has promocode or not 
+        $checkPromo = $this->checkUserPromo($request);
+        //  check if user has offer or not 
+        $checkOffer = $this->checkUserOffer($request->client_id);
+        
+        // this is for col type in order 
+        $orderType = 0;
+
+        if (!empty($checkPromo)) {
+            $checkPromo->update(['confirm'=>0]);
+            $orderType = 2;
+        } elseif (!empty($checkOffer)) {
+            $newDeceremnt=$checkOffer->decrement_trip-1;
+            $checkOffer->update(['decrement_trip'=>$newDeceremnt]);
+            $orderType = 1;
+        }
+
         $request->validate([
 
             'status' => ['numeric', Rule::in([0, 1])],
@@ -71,13 +91,21 @@ class OredersController extends BackEndController
 
         ]);
         // delivery_price is limit from area id
-        $request["delivery_price"]=Area::select("trans_price")->where("id",$request->area_id)->first()->trans_price;
+        $order_type=$request->order_type;
+        // $request["delivery_price"]=Area::select("trans_price")->where("id",$request->area_id)->first()->trans_price;
+        $delivery_price = $this->deliveryPriceHOHO($request, $orderType, $checkOffer, $checkPromo);
+        $request['delivery_price'] =$delivery_price['deliveryPrice'];
+        $request['offer_or_promo_id'] =$delivery_price['offerOrPromoId'];
+        $request['type']= $delivery_price['orderTyoe'];
+
         if($request->feedback !=null){
             $request["feedback_date"]=now();
        }
-        $this->model->create($request->all());
+       $request=$request->except('order_type');
+
+        $this->model->create($request);
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('orders.index');
+        return redirect()->route('orderdetails.show',$order_type);
     }
 
 
@@ -118,7 +146,9 @@ class OredersController extends BackEndController
             if($request->feedback !=null){
                  $request["feedback_date"]=now();
             }
-            $order->update($request->all());
+            $request=$request->except('order_type');
+
+            $order->update($request);
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('orders.index');
         
@@ -142,6 +172,65 @@ class OredersController extends BackEndController
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
     }
-    
-   
+
+    protected function checkUserPromo($request)
+    {
+        $avilablePromo = Promocode::where('user_id', $request->client_id)
+            ->where('confirm', 1)
+            ->where('area_id', $request->area_id)->first();
+            
+        return $avilablePromo;
+    }
+
+    protected function checkUserOffer($id)
+    {
+        $avilableOffer = UserOffer::where('user_id', $id)
+            ->where('decrement_trip', '>', 0)
+            ->where('end_date', '>', now())->first();
+        return $avilableOffer;
+    }
+   protected function deliveryPriceHOHO($request, $orderType, $checkOffer = null, $checkPromo = null)
+    {
+        $areaTransFrom = Area::select('trans_price')->where('id', $request->area_id_from)->first();
+        $areaTransTo = Area::select('trans_price')->where('id', $request->area_id)->first();
+
+
+        if ($orderType == 1) { // if user have an offer 
+            if ($checkOffer->Offer->area_id  ==$request->area_id && $checkOffer->Offer->area_id == $request->area_id_from) {
+                $deliveryPrice = 0;
+                $offerOrPromoId = $checkOffer->id;
+                $orderTyoe  = 1;
+            } else {
+                $deliveryPrice =$areaTransTo['trans_price'] + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            }
+        } elseif ($orderType == 2) { // if user have promo 
+            if ($checkPromo->area_id  == $request->area_id && $checkPromo->area_id  == $request->area_id_from) {
+                $deliveryPrice = $areaTransTo['trans_price'] * $checkPromo->discount / 100;
+                $offerOrPromoId = $checkPromo->id;
+                $orderTyoe  = 2;
+            } else {
+                $deliveryPrice = $areaTransTo['trans_price'] + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            }
+        } else { // if user not have promo or offer 
+
+            if ($request->area_id == $request->area_id_from) {
+                $deliveryPrice = $areaTransTo['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe  = 0;
+            } else {
+                $deliveryPrice = $areaTransTo['trans_price'] + $areaTransFrom['trans_price'];
+                $offerOrPromoId = null;
+                $orderTyoe = 0;
+            }
+        }
+
+        $deliveryPriceData = ['deliveryPrice' => $deliveryPrice, 'offerOrPromoId' => $offerOrPromoId, 'orderTyoe' => $orderTyoe];
+
+        return $deliveryPriceData;
+    }
+
 }

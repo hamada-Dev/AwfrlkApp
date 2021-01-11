@@ -66,7 +66,7 @@ Route::group(
             //orders
             Route::resource('orders', 'OredersController')->except("show");
             //orderDetails
-            Route::resource('orderdetails', 'OrderDetailsController')->except("show");
+            Route::resource('orderdetails', 'OrderDetailsController');
             //to seperate the delivery
             Route::get('/showDelivey','UsersController@showDelivery')->name('users.delivery');
             Route::get('/showUser','UsersController@showUser')->name('users.usersShow');

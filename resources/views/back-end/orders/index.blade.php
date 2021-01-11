@@ -42,6 +42,9 @@
                     @lang('site.status')
                 </th>
                 <th>
+                    @lang('site.type_count')
+                </th>
+                <th>
                     @lang('site.area_id')
                 </th>
                 <th>
@@ -89,6 +92,15 @@
                     <a href="" class="btn btn-primary btn-sm">@lang("site.waiting")</a>
                     @else
                     <a href="" class="btn btn-success btn-sm">@lang("site.finished")</a>
+                    @endif
+                </td>
+                <td>
+                    @if($row->type==0)
+                        @lang('site.usual')
+                    @elseif($row->type==1)
+                        @lang('site.offer')
+                    @else
+                        @lang('site.promocode')
                     @endif
                 </td>
                 <td>

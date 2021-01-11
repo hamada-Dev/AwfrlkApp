@@ -1,4 +1,5 @@
 @extends('back-end.layout.app')
+@extends('back-end.layout.app')
 
 @php
 
@@ -19,76 +20,172 @@
 
 @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural ,
 'module_name_singular'=>$module_name_singular])
-@slot('add_button')
+<!-- @slot('add_button')
 <div class="col-md-4 text-right">
     <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
-@endslot
+@endslot -->
+<!-- order type is usauly -->
+@if(isset($orderType) && $orderType==0)
+    <div class="table-responsive">
+        <table  id="dataTable" class="table">
+            <thead class=" text-primary">
+                <tr>
+                    <th>
+                        @lang('site.id')
+                    </th>
+                    <th>
+                        @lang('site.product_id')
+                    </th>
+                    <th>
+                        @lang('site.order_id')
+                    </th>
+                    <th>
+                        @lang('site.amount')
+                    </th>
+                    <th>
+                        @lang('site.price')
+                    </th>
+            
+                    <th class="text-right">
+                        @lang('site.actions')
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
 
-<div class="table-responsive">
-    <table  id="dataTable" class="table">
-        <thead class=" text-primary">
-            <tr>
-                <th>
-                    @lang('site.id')
-                </th>
-                <th>
-                    @lang('site.product_id')
-                </th>
-                <th>
-                    @lang('site.order_id')
-                </th>
-                <th>
-                    @lang('site.amount')
-                </th>
-                <th>
-                    @lang('site.price')
-                </th>
-                <th>
-                    @lang('site.image')
-                </th>
-                <th class="text-right">
-                    @lang('site.actions')
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+                @foreach($rows as $row)
 
-            @foreach($rows as $row)
+                <tr>
+                    <td>
+                        {{$row->id}}
+                    </td>
+                    <td>
+                    {{ ($row->product_id == null) ? 'image' : $row->product->name}}
+                    </td>
+                    <td>
+                        {{$row->order->client_id}}
+                    </td>
+                    <td>
+                    {{$row->amount}} 
+                    </td>
+                    <td>
+                        {{($row->price == null) ? 'after buy' :$row->price }}
+                    </td>
+                
+                    <td class="td-actions text-right">
+                        <!-- @include('back-end.buttons.edit') -->
+                        @include('back-end.buttons.delete')
+                    </td>
+                </tr>
+                @endforeach
 
-            <tr>
-                <td>
-                    {{$row->id}}
-                </td>
-                <td>
-                   {{ ($row->product_id == null) ? 'image' : $row->product->name}}
-                </td>
-                <td>
-                    {{$row->order->client_id}}
-                </td>
-                <td>
-                {{$row->amount}} 
-                </td>
-                <td>
-                    {{($row->price == null) ? 'after buy' :$row->price }}
-                </td>
-                <td>
-                    <img src="{{($row->image == null )  ? '': $row->imagePath}}" alt="">
-                </td>
-                <td class="td-actions text-right">
-                    @include('back-end.buttons.edit')
-                    @include('back-end.buttons.delete')
-                </td>
-            </tr>
-            @endforeach
+            </tbody>
+        </table>
+        {{$rows->links()}}
+    </div>
+@elseif(isset($orderType) && $orderType==1)
+<!-- start place tp place -->
+    <div class="table-responsive">
+        <table  id="dataTable" class="table">
+            <thead class=" text-primary">
+                <tr>
+                    <th>
+                        @lang('site.id')
+                    </th>
+                    <th>
+                        @lang('site.order_id')
+                    </th>
+                    <th>
+                        @lang('site.description')
+                    </th>
+                    <th class="text-right">
+                        @lang('site.actions')
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
-    {{$rows->links()}}
-</div>
+                @foreach($rows as $row)
 
+                <tr>
+                    <td>
+                        {{$row->id}}
+                    </td>
+            
+                    <td>
+                        {{$row->order_id}}
+                    </td>
+                    <td>
+                    {{$row->description}} 
+                    </td>
+                    <td class="td-actions text-right">
+                        <!-- @include('back-end.buttons.edit') -->
+                        @include('back-end.buttons.delete')
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        {{$rows->links()}}
+    </div>
+@elseif(isset($orderType) && $orderType==2)
+<!-- order type is pharmacy -->
+    <div class="table-responsive">
+        <table  id="dataTable" class="table">
+            <thead class=" text-primary">
+                <tr>
+                    <th>
+                        @lang('site.id')
+                    </th>
+                
+                    <th>
+                        @lang('site.order_id')
+                    </th>
+                    <th>
+                        @lang('site.image')
+                    </th>
+                    
+                    <th>
+                        @lang('site.description')
+                    </th>
+                    <th class="text-right">
+                        @lang('site.actions')
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach($rows as $row)
+
+                <tr>
+                    <td>
+                        {{$row->id}}
+                    </td>
+                    <td>
+                        {{$row->order_id}}
+                    </td>
+                    <td>
+                        <img src="{{($row->image == null )  ? '': $row->imagePath}}" alt="" width='60' height='60'>
+                    </td>
+                    <td>
+                        {{$row->description}} 
+                    </td>
+                    <td class="td-actions text-right">
+                        <!-- @include('back-end.buttons.edit') -->
+                        @include('back-end.buttons.delete')
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        {{$rows->links()}}
+    </div>
+@endif
 @endcomponent
 
 @endsection

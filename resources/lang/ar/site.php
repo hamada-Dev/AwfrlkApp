@@ -238,6 +238,12 @@ return [
   'updated_at'=>'تاريخ الإنتهاء',
   'details_Orders'=>' تفاصيل الطلبات',
   'count'=>'تصفية',
+  'choose-typeofordre'=>'أختر نوع الطلب',
+  'usual'=>'عادى',
+  'fromto'=>' من مكان الى مكان ',
+  'from-area'=>'من منطقة',
+  'to-area'=>'إلى منطقة',
+  'type_count'=>'نوع الحساب',
   //orderDetails
   "orderdetails"=>"تفاصيل الطلب",
   "orderdetail"=>"تفاصيل الطلب",
