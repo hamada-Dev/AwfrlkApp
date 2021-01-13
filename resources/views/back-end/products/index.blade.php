@@ -76,7 +76,7 @@
 
 
                 <td>
-                    @lang('site.'.$row->unit)
+                    @lang($row->unit)
                 </td>
 
                 <td>
@@ -88,7 +88,7 @@
                 </td>
 
                 <td>
-                    {{ $row->description}}
+                    {!! $row->description !!}
                 </td>
 
                 <td class="td-actions text-right">

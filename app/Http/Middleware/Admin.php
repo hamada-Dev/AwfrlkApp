@@ -20,7 +20,8 @@ class Admin
         } else if (auth()->user()->group == 'admin' && auth()->user()->delivery_status != 3) {
             return $next($request);
         } else {
-            return redirect('/login');
+            return redirect()->route('order.index');
+            // return redirect('/login');
         }
 
         // if(auth()->guest()){

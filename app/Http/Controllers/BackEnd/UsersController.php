@@ -141,7 +141,7 @@ class UsersController extends BackEndController
             return redirect()->route('users.index');
     } //end of update
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $promo = User::findOrFail($id);
         $promo->update([

@@ -54,7 +54,7 @@
         <div class="form-group bmd-form-group">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.price')</label>
-                <input type="number" min="0" step="0.1" name="price" value="{{ isset($row) ? $row->price : old('price') }}"
+                <input type="number" min="0" step="0.01" name="price" value="{{ isset($row) ? $row->price : old('price') }}"
                     class="form-control @error('price') is-invalid @enderror">
                 @error('price')
                 <span class="invalid-feedback" role="alert">
@@ -89,7 +89,7 @@
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.description')</label>
             <textarea name="description" class="form-control @error('description') is-invalid @enderror" cols="30"
-                rows="5">{{ isset($row) ? $row->description : old('description') }}</textarea>
+                rows="5" style="font-size: 30px">{{ isset($row) ? $row->description : old('description') }}</textarea>
             @error('description')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

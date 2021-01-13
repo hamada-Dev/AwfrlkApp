@@ -132,7 +132,7 @@ class ProductsController extends BackEndController
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $product = Product::findOrFail($id);
         if ($product->image != 'default.png') {

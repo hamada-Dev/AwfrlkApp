@@ -84,7 +84,7 @@ class CategoriesController extends BackEndController
         return redirect()->route('categories.index');
     } //end of update
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $category = Category::findOrFail($id);
         if ($category->image != 'default.png') {

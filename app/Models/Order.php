@@ -34,8 +34,8 @@ class Order extends Model
     public function area()
     {
         return $this->belongsTo(Area::class);
-    }
-
+    }   
+    
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);

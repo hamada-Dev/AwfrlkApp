@@ -34,7 +34,7 @@ class UserUrgencyOrderController extends BaseController
 
         if ($newOrder) {
             if ($newOrder->client_id == auth()->user()->id) {
-                if ($newOrder->status == 0) {
+                if ($newOrder->status == 0) { 
 
                     if($newOrder->delivery_id == null){
                         $order_delivery  =  UserResource::collection(User::DeliveryActive()->get());

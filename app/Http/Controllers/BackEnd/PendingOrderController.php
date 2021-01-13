@@ -99,7 +99,7 @@ class PendingOrderController extends BackEndController
                     $order_delivery  =  new UserResource(User::find($newOrder->delivery_id));
                     $alert           = 'admin Forcing this delivery to take  this order';
 
-                    // $this->makeEvent($order_details, $order_delivery, $order_client, $alert);
+                    $this->makeEvent($order_details, $order_delivery, $order_client, $alert);
 
                     DB::commit();
                     session()->flash('success', "تم تكليف الطيار بنجاح ");
@@ -158,7 +158,7 @@ class PendingOrderController extends BackEndController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         //
     }
@@ -191,5 +191,5 @@ class PendingOrderController extends BackEndController
             'alert'            => $alert,
         ];
         event(new AdminForceDeliveryEvent($data));
-    }
+    } 
 }

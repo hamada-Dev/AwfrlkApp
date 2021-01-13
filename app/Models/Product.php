@@ -35,7 +35,17 @@ class Product extends Model
     }
     
     public function orderDetails()
-    {
+    { 
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function getUnitAttribute($val){
+
+        return $val == 'kilo' ? 'كيلو' :  ($val == 'number' ? 'قطعه' : 'لتر');
+    } 
+    
+    public function getPriceAttribute($val){
+
+        return $val . ' جنيه ';
     }
 }

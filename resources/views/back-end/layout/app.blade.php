@@ -231,13 +231,44 @@
             $("[data-toggle=popover]").popover();
         });
         $(document).ready(function() {
+
+            // start add order details from admin panel
+            var i = 0,
+                arrId = ["0"];
+          
             $('#addButton').click(function(){
-            var orderid=$('#order_id').val();
-            var productid=$('#product_id').val();
-            var amount=$('#amount').val();
-            var trContent="<tr><td>" +orderid+ "</td><td>" +productid+ "</td><td>"+amount+"</td></tr>";
-            $('#orderTable tbody').append(trContent);
+
+                productid    = $('#productId').val();
+
+                if(jQuery.inArray(productid, arrId) !== -1){
+                    console.log('id find in arrray is ' + productid);
+                }else{
+                    arrId.push(productid);
+                    
+                    var orderid   = $('#order_id').val(),
+                    productName  = $('#productId').find(':selected').data('proname'),
+                    productPrice = $('#productId').find(':selected').data('proprice'),
+                    amount       = $('#amount').val(),
+                    trContent= `<tr>
+                                    <td> ${++i}         <input type='hidden'  name='product_id[]' value='${productid}'></td>
+                                    <td> ${productName} </td>
+                                    <td> ${amount}      <input type='hidden' name='amount[]' value='${amount}'></td>
+                                    <td> ${amount * productPrice}   <input type='hidden' name='price[]' value='${amount * productPrice}'></td>
+                                    <td><button class='removeRow btn btn-danger' data-proid='${productid}'>R</button></td>
+                                </tr>`;
+                    $('#orderTable tbody').append(trContent);
+                 }
             });
+            $('form').on('click', '.removeRow', function(e){
+                e.preventDefault();
+                var xx = $(this).data('proid');
+                
+                arrId = jQuery.grep(arrId, function(value) {                    
+                    return value != xx;
+                });
+                $(this).closest('tr').remove();
+            })
+            // end add order details from admin panel
 
             $("#dataTable").DataTable();
             $().ready(function() {
@@ -477,7 +508,7 @@
             position: fixed;
             top: 150px;
             left: 150px; */
-            border-radius: 20% 0;
+        border-radius: 20% 0;
         }
 
         .navbar-wrapper .navbar-brand {
@@ -601,7 +632,7 @@ channel.bind('my-event-order', function(data) {
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?process=1&&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();
                     document.getElementById('audioNotifyNew').pause();
@@ -648,7 +679,7 @@ channel.bind('event-userUrgOrder', function(data) {
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?delivery=1&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                 // Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();

@@ -99,7 +99,7 @@ class AreasController extends BackEndController
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $area = Area::findOrFail($id);
         $area->update([

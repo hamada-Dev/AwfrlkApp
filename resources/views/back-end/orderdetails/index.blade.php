@@ -1,5 +1,4 @@
 @extends('back-end.layout.app')
-@extends('back-end.layout.app')
 
 @php
 
@@ -20,13 +19,13 @@
 
 @component('back-end.partial.table', ['module_name_plural'=>$module_name_plural ,
 'module_name_singular'=>$module_name_singular])
-<!-- @slot('add_button')
+@slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
-        @lang('site.add') @lang('site.'.$module_name_singular)
+    <a href="{{route($module_name_plural.'.edit', ['orderdetail' => request()->order_id, 'orderType' => $orderType]) }}" class="btn btn-white btn-round ">
+        @lang('site.edit') @lang('site.'.$module_name_singular)
     </a>
 </div>
-@endslot -->
+@endslot 
 <!-- order type is usauly -->
 @if(isset($orderType) && $orderType==0)
     <div class="table-responsive">
@@ -49,9 +48,7 @@
                         @lang('site.price')
                     </th>
             
-                    <th class="text-right">
-                        @lang('site.actions')
-                    </th>
+               
                 </tr>
             </thead>
             <tbody>
@@ -75,10 +72,7 @@
                         {{($row->price == null) ? 'after buy' :$row->price }}
                     </td>
                 
-                    <td class="td-actions text-right">
-                        <!-- @include('back-end.buttons.edit') -->
-                        @include('back-end.buttons.delete')
-                    </td>
+             
                 </tr>
                 @endforeach
 
@@ -101,9 +95,10 @@
                     <th>
                         @lang('site.description')
                     </th>
-                    <th class="text-right">
-                        @lang('site.actions')
+                    <th>
+                        @lang('site.adressFrom')
                     </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -121,10 +116,10 @@
                     <td>
                     {{$row->description}} 
                     </td>
-                    <td class="td-actions text-right">
-                        <!-- @include('back-end.buttons.edit') -->
-                        @include('back-end.buttons.delete')
+                    <td>
+                    {{$row->product_home}} 
                     </td>
+
                 </tr>
                 @endforeach
 
@@ -152,9 +147,7 @@
                     <th>
                         @lang('site.description')
                     </th>
-                    <th class="text-right">
-                        @lang('site.actions')
-                    </th>
+               
                 </tr>
             </thead>
             <tbody>
@@ -174,10 +167,7 @@
                     <td>
                         {{$row->description}} 
                     </td>
-                    <td class="td-actions text-right">
-                        <!-- @include('back-end.buttons.edit') -->
-                        @include('back-end.buttons.delete')
-                    </td>
+                   
                 </tr>
                 @endforeach
 

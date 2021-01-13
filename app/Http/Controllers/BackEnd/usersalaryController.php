@@ -126,7 +126,7 @@ class usersalaryController extends BackEndController
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $promo = Usersalary::findOrFail($id);
             $promo->update([

@@ -29,7 +29,7 @@
             {{--card body--}}
             <div class="card-body">
 
-                <form action="{{route($module_name_plural.'.update', $row->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{route($module_name_plural.'.update',['orderdetail' => $row[0]->order_id, 'orderType' => request()->orderType])}}" method="post" enctype="multipart/form-data">
                     {{method_field('PUT')}}
                     @include('back-end.'.$module_name_plural.'.form')
                     <button type="submit" class="btn btn-primary pull-right">@lang('site.edit') @lang('site.'.$module_name_singular)</button>

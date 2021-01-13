@@ -41,7 +41,7 @@ class BackEndController extends Controller
         return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('row', 'module_name_singular', 'module_name_plural'))->with($append);
     } //end of edit
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->model->findOrFail($id)->delete();
 

@@ -30,7 +30,8 @@
             <div class="card-body">
                 <form action="{{route($module_name_plural.'.store')}}" method="post" enctype="multipart/form-data">
                     @include('back-end.'.$module_name_plural.'.form')
-                    <button type="submit" class="btn btn-primary pull-right">@lang('site.add') @lang('site.'.$module_name_singular)</button>
+                    <button type="submit" class="btn btn-success pull-left">@lang('site.confirm_order')</button>
+                    <input  type="submit" class="btn btn-danger pull-right" value="@lang('site.cancel_order')" formmethod="GET" formaction="{{ route('orderdetails.show', [session()->get('delivery_id') ]) }}">
                     <div class="clearfix"></div>
                 </form>
             </div> {{--end of card body--}}

@@ -17,8 +17,9 @@
 
 @endcomponent
 
-@component('back-end.partial.table', ['module_name_plural'=>$module_name_plural ,
-'module_name_singular'=>$module_name_singular])
+@component('back-end.partial.table', ['module_name_plural'=>$module_name_plural
+,'module_name_singular'=>$module_name_singular])
+
 @slot('add_button')
 <div class="col-md-4 text-right">
     <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}"
@@ -29,7 +30,7 @@
 @endslot
 
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -72,9 +73,19 @@
             @php
             $sumtotal=0;
             $sumdel=0;
+            $orderType = 0;
             @endphp
             @foreach($rows as $row)
+            @php
+                if($row->area_id_from != null){
+                    $orderType = 1; // hom to home 
+                }elseif($row->orderDetails[0]->product_id  == null){ 
+                    $orderType = 2; // pharmacy 
+                }else{
+                    $orderType = 0; // product order
+                }
 
+            @endphp
             <tr>
                 <td>
                     <a class="btn btn-danger btn-sm" href="{{ route('orderdetails.index', ['order_id' => $row->id]) }}">
@@ -96,26 +107,26 @@
                 </td>
                 <td>
                     @if($row->type==0)
-                        @lang('site.usual')
+                    @lang('site.usual')
                     @elseif($row->type==1)
-                        @lang('site.offer')
+                    @lang('site.offer')
                     @else
-                        @lang('site.promocode')
+                    @lang('site.promocode')
                     @endif
                 </td>
                 <td>
                     {{$row->area->name}}
                 </td>
                 <td>
-                @if($row->delivery_id != null)
+                    @if($row->delivery_id != null)
                     @foreach ($users as $user)
                     @if($row->delivery_id==$user->id)
                     {{$user->name}} {{$user->lastName}}
                     @endif
                     @endforeach
-                @else 
+                    @else
                     <a href="" class="btn btn-success btn-sm">@lang("site.noDelivery")</a>
-                @endif   
+                    @endif
                 </td>
                 <td>
                     @foreach ($users as $user)
@@ -147,8 +158,11 @@
                 </td>
 
                 <td class="td-actions text-right">
-                    @include('back-end.buttons.edit')
-                    @include('back-end.buttons.delete')
+                    <a href="{{route('orderdetails.edit', ['orderdetail' => $row->id, 'orderType'=> $orderType]) }}" rel="tooltip" title=""
+                        class="btn btn-white btn-link btn-sm" data-original-title="@lang('site.edit')">
+                        <i class="material-icons">edit</i>
+
+                    </a> @include('back-end.buttons.delete')
                 </td>
             </tr>
             @endforeach

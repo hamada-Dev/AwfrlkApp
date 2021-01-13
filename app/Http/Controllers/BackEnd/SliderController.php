@@ -75,7 +75,7 @@ class SliderController extends BackEndController
         return redirect()->route('sliders.index');
     } //end of update
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $slider = Slider::findOrFail($id);
 
