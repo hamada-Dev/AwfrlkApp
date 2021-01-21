@@ -52,6 +52,9 @@
                 <th>
                     @lang('site.area_id')
                 </th>
+                <th>
+                    @lang('site.image')
+                </th>
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -90,6 +93,11 @@
                 </td>
                 <td>
                     {{ $row->area->name}}
+                </td>
+
+                <td>
+                    <img src="{{$row->image_path}}" alt="offer Image" style="height:60px; width:60px"
+                        class="img img-thumbnail">
                 </td>
 
                 <td class="td-actions text-right">

@@ -84,7 +84,7 @@ Route::group(['namespace' => 'Api'], function () {
         });
 
 
-        // Route::get('/user', function (Request $request) {
+        // Route::get('/user', function (Request $request) { 
         //     return $request->user();
         // });
 

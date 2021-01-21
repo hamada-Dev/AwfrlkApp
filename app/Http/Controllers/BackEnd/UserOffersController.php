@@ -35,6 +35,8 @@ class UserOffersController extends BackEndController
 
         $rows = $rows->whereHas('user')->whereHas("offer")->when($request->nonpay, function ($query) use ($request) {
             return $query->withOutGlobalScope(ConfirmedOffer::class)->where('user_id', $request->nonpay);
+        })->when($request->offerNotPay , function($qu) {
+                return  $qu->withOutGlobalScope(ConfirmedOffer::class);
         })->paginate(5);
 
         $module_name_plural = $this->getClassNameFromModel();

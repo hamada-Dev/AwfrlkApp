@@ -44,8 +44,8 @@ class Product extends Model
         return $val == 'kilo' ? 'كيلو' :  ($val == 'number' ? 'قطعه' : 'لتر');
     } 
     
-    public function getPriceAttribute($val){
+    // public function getPriceAttribute($val){
 
-        return $val . ' جنيه ';
-    }
+    //     return $val . ' جنيه ';
+    // }
 }

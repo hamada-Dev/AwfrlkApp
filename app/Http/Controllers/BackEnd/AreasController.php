@@ -48,7 +48,7 @@ class AreasController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:30', 'min:5'],
+            'name' => ['required', 'max:30', 'min:3', 'unique:areas'],
             'trans_price'   =>  ['required', 'numeric', 'min:1'],
             'parent_id'   =>  ['numeric'],
         ]);
@@ -83,7 +83,7 @@ class AreasController extends BackEndController
     public function update(Request $request, Area $area)
     {
         $request->validate([
-            'name' => ['required', 'max:30', 'min:5'],
+            'name' => ['required', 'max:30', 'min:3', 'unique:areas'],
             'trans_price'   =>  ['required', 'numeric', 'min:1'],
             'parent_id'   =>  ['numeric', 'exists:areas,id'],
         ]);

@@ -21,6 +21,7 @@ class UserOfferResource extends JsonResource
             'remaine_trip'     => $this->decrement_trip,
             'price'            => $this->price,
             'area'             => $this->offer->area->name,
+            'image'            => $this->image_path,
             'created_at'       => date('d-M-Y H:i A', strtotime($this->created_at)),
             'end_date'         => date('d-M-Y H:i A', strtotime($this->end_date)),
 

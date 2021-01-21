@@ -421,7 +421,7 @@ class OrderDetailsController extends BackEndController
             'user_data'        => $userData,
             'alert'            => $alert,
         ];
-        event(new AdminForceDeliveryEvent($data));
+        // event(new AdminForceDeliveryEvent($data));
     }
 
     protected function uploadImage($request)

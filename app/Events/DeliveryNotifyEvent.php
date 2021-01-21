@@ -14,17 +14,17 @@ class DeliveryNotifyEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user_id;
-    public $order_id;
-    public $first_name;
+    public $orderId;
+    public $userOrder;
+    public $orderData;
     public $activeDelivery;
 
     public function __construct($message)
     {
-        $this->user_id        = $message['user_id'];
-        $this->order_id       = $message['order_id'];
-        $this->first_name     = $message['firstName'];
-        $this->activeDelivery = $message['active_delivery'];
+        $this->orderId         = $message['order_id'];
+        $this->userOrder       = $message['user_Order'];
+        $this->orderData       = $message['order_Data'];
+        $this->activeDelivery  = $message['active_Delivery'];
     }
 
     public function broadcastOn()

@@ -622,17 +622,19 @@ var pusher = new Pusher('af2b4f6752717c614a6a', {
 var channel = pusher.subscribe('my-channel-order');
 channel.bind('my-event-order', function(data) {
     document.getElementById('audioNotifyNew').play();
-    var name     = data.first_name,
-        id = data.order_id;
+    var name     = data.userOrder['firstName'],
+        id = data.orderId;
+
+    // console.log(data);
        
     var order = new Noty({
-            text: "هناك طلب ما من العميل " + name ,
+            text: "هناك طلب ما من العميل " + name,
             type: "warning",
             layout: 'bottomRight',
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?process=1&&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="https://awfrlk.net/public/admin/order/pending?process=1&&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();
                     document.getElementById('audioNotifyNew').pause();
@@ -679,7 +681,7 @@ channel.bind('event-userUrgOrder', function(data) {
             killer: true,
             timeout: 60000,
             buttons: [
-                Noty.button( `<a href="http://awfrlk.net/public/admin/order/pending?delivery=1&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
+                Noty.button( `<a href="https://awfrlk.net/public/admin/order/pending?delivery=1&orderId=${id}"> @lang("site.details") </a>`, 'btn btn-success mr-2', function () {
                 // Noty.button("<a href=' {{ route("pending.store", ["orderId" =>"last"] )}} '> @lang('site.details') </a>", 'btn btn-success mr-2', function () {
                     // that.window.location = "";  
                     that.closest('form').submit();

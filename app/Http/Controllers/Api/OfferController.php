@@ -150,6 +150,6 @@ class OfferController extends BaseController
             'user_data'         =>  $userInfo,
             'active_delivery'   =>  $ActiveDelivery,
         ];
-        event(new DeliveryNotyOfferEvent($data));
+        // event(new DeliveryNotyOfferEvent($data));
     }
 }

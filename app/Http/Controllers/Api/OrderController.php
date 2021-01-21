@@ -34,9 +34,9 @@ class OrderController extends BaseController
     {
         $userOrder = OrderUserRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
         if (!empty($userOrder))
-            return $this->sendResponse($userOrder, 'order data');
+            return $this->sendResponse($userOrder, 'you have orders to show ', 200);
         else
-            return $this->sendError('300', 'there is no order for this user');
+            return $this->sendResponse($userOrder, 'there is no order ', 200);
     }
 
     /**
@@ -49,11 +49,13 @@ class OrderController extends BaseController
     {
         // get all active delivery 
         $ActiveDelivery = UserResource::collection(User::deliveryActive()->get());
-        
+
+        $user_id =  auth()->user()->id;
+
         // check if user has promocode or not 
-        $checkPromo = $this->checkUserPromo(auth()->user()->id);
+        $checkPromo = $this->checkUserPromo($user_id, $request);
         //  check if user has offer or not 
-        $checkOffer = $this->checkUserOffer(auth()->user()->id);
+        $checkOffer = $this->checkUserOffer($user_id, $request);
 
         // this is for col type in order 
         $orderType = 0;
@@ -64,19 +66,29 @@ class OrderController extends BaseController
             $orderType = 1;
         }
 
+        // this is for return 
+        // this is for return 
+
         if ($request->adress_from) {
             $request->validate([
                 'area_id_from'   =>  ['required', 'numeric', 'exists:areas,id'],
-                // 'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
+                'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
+                'adress'         =>  ['required', 'string', 'max:254'],
                 'product_home'   =>  ['required', 'string', 'max:254'],
-                'adress_from'   =>  ['required', 'string', 'max:222'],
+                'adress_from'    =>  ['required', 'string', 'max:222'],
             ]);
 
             try {
                 DB::beginTransaction();
+                // start this is for Know how much delivery price /////////
+                if ($request->hamada)
+                    return $this->deliveryPriceHOHO($request, $orderType, $checkOffer, $checkPromo);
+                // end this is for Know how much delivery price //////////
+
                 $deliveyPrice = $this->deliveryPriceHOHO($request, $orderType, $checkOffer, $checkPromo);
+
                 $newOrder = $this->model->create([
-                    'client_id'      =>  auth()->user()->id,
+                    'client_id'      =>  $user_id,
                     'area_id'        =>  $request->area_id ?? auth()->user()->area_id,
                     'adress'         =>  $request->adress ?? auth()->user()->adress,
                     'area_id_from'   =>  $request->area_id_from,
@@ -107,9 +119,20 @@ class OrderController extends BaseController
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
             }
         } elseif ($request->image) {
+            $request->validate([
+                'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
+                'adress'         =>  ['required', 'string', 'max:254'],
+                'image'          =>  ['Nullable', 'image',],
+                'description'    =>  ['Nullable', 'string', 'max:222'],
+            ]);
+
             try {
                 DB::beginTransaction();
 
+                // start this is for Know how much delivery price /////////
+                if ($request->hamada)
+                    return $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
+                // end this is for Know how much delivery price //////////
                 $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
                 $this->uploadImage($request);
                 $newOrder->orderDetails()->create([
@@ -121,7 +144,6 @@ class OrderController extends BaseController
                 if ($newOrder->offer_or_promo_id != null)
                     $this->updatePromoOffer($orderType, $checkOffer, $checkPromo);
 
-                    // return $data = ['order' => ($newOrder), 'deliveryActive' => $ActiveDelivery];
                 ////////////////////////////////////////////////
                 $this->makeEvent($newOrder, $ActiveDelivery);
                 ////////////////////////////////////////////////
@@ -134,9 +156,19 @@ class OrderController extends BaseController
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
             }
         } else {
+            $request->validate([
+                'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
+                'adress'         =>  ['required', 'string', 'max:254'],
+                'product_id'     =>  ['required', 'image','exists:products,id'],
+                'description'    =>  ['Nullable', 'string', 'max:222'],
+            ]);
+
             try {
                 DB::beginTransaction();
-
+                // start this is for Know how much delivery price /////////
+                if ($request->hamada)
+                    return $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
+                // end this is for Know how much delivery price //////////
                 $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
 
                 $orderDetailsData = json_decode(file_get_contents("php://input"), true);
@@ -205,19 +237,23 @@ class OrderController extends BaseController
 
 
 
-    protected function checkUserPromo($id)
+    protected function checkUserPromo($id, $request)
     {
         $avilablePromo = Promocode::where('user_id', $id)
             ->where('confirm', 1)
-            ->where('area_id', auth()->user()->area_id)->first();
+            ->where('area_id', $request->area_id)->first();
         return $avilablePromo;
     }
 
-    protected function checkUserOffer($id)
+    protected function checkUserOffer($id, $request)
     {
         $avilableOffer = UserOffer::where('user_id', $id)
             ->where('decrement_trip', '>', 0)
-            ->where('end_date', '>', now())->first();
+            ->where('end_date', '>', now())
+            ->whereHas('offer', function ($query) use ($request) {
+                return $query->where('area_id', $request->area_id);
+            })
+            ->first();
         return $avilableOffer;
     }
 
@@ -238,42 +274,46 @@ class OrderController extends BaseController
 
     protected function deliveryPriceHOHO($request, $orderType, $checkOffer = null, $checkPromo = null)
     {
-        $areaTransFrom = Area::select('trans_price')->where('id', $request->area_id_from)->first();
+        $areaTransFrom = Area::find($request->area_id_from);
+        $area_trans    = Area::find($request->area_id);
 
 
         if ($orderType == 1) { // if user have an offer 
-            if ($checkOffer->Offer->area_id  == auth()->user()->area_id && $checkOffer->Offer->area_id == $request->area_id_from) {
+            if ($checkOffer->Offer->area_id  == $request->area_id && $checkOffer->Offer->area_id == $request->area_id_from) {
                 $deliveryPrice = 0;
                 $offerOrPromoId = $checkOffer->id;
                 $orderTyoe  = 1;
             } else {
-                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $deliveryPrice = $area_trans->trans_price + $areaTransFrom->trans_price;
                 $offerOrPromoId = null;
                 $orderTyoe  = 0;
             }
         } elseif ($orderType == 2) { // if user have promo 
-            if ($checkPromo->area_id  == auth()->user()->area_id && $checkPromo->area_id  == $request->area_id_from) {
-                $deliveryPrice = auth()->user()->area->trans_price * $checkPromo->discount / 100;
+            if ($checkPromo->area_id  == $request->area_id && $checkPromo->area_id  == $request->area_id_from) {
+                $deliveryPrice = $area_trans->trans_price * $checkPromo->discount / 100;
                 $offerOrPromoId = $checkPromo->id;
                 $orderTyoe  = 2;
             } else {
-                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $deliveryPrice = $area_trans->trans_price + $areaTransFrom->trans_price;
                 $offerOrPromoId = null;
                 $orderTyoe  = 0;
             }
         } else { // if user not have promo or offer 
 
-            if (auth()->user()->area_id == $request->area_id_from) {
-                $deliveryPrice = auth()->user()->area->trans_price;
+            if ($request->area_id == $request->area_id_from) {
+                $deliveryPrice = $area_trans->trans_price;
                 $offerOrPromoId = null;
                 $orderTyoe  = 0;
             } else {
-                $deliveryPrice = auth()->user()->area->trans_price + $areaTransFrom['trans_price'];
+                $deliveryPrice = $area_trans->trans_price + $areaTransFrom->trans_price;
                 $offerOrPromoId = null;
                 $orderTyoe = 0;
             }
         }
-
+        // start this is for Know how much delivery price /////////
+        if ($request->hamada)
+            return $data = ['delivery_price' => $deliveryPrice, 'order_type' => $orderTyoe == 0 ? 'PAID' : ($orderTyoe == 1 ? 'OFFER' : 'PROMOCODE')];
+        // end this is for Know how much delivery price //////////
         $deliveryPriceData = ['deliveryPrice' => $deliveryPrice, 'offerOrPromoId' => $offerOrPromoId, 'orderTyoe' => $orderTyoe];
 
         return $deliveryPriceData;
@@ -284,35 +324,42 @@ class OrderController extends BaseController
 
     protected function insertOredr($request, $orderType, $checkOffer = null, $checkPromo = null)
     {
+        $area_trans = Area::find($request->area_id);
         if ($orderType == 1) { // if user have an offer 
-            if ($checkOffer->Offer->area_id  == auth()->user()->area_id || $checkOffer->Offer->area_id == $request->area_id) {
-                $deliveryPrice = 0;
+            if ($checkOffer->Offer->area_id == $request->area_id) {
+                $deliveryPrice  = 0;
                 $offerOrPromoId = $checkOffer->id;
                 $checkOrderType = 1;
             } else {
-                $deliveryPrice = auth()->user()->area->trans_price;
+                $deliveryPrice  = $area_trans->trans_price;
                 $offerOrPromoId = null;
                 $checkOrderType = 0;
             }
         } elseif ($orderType == 2) { // if user have promo 
-            if ($checkPromo->area_id  == auth()->user()->area_id || $checkPromo->area_id  == $request->area_id) {
-                $deliveryPrice = auth()->user()->area->trans_price * $checkPromo->discount / 100;
+            if ($checkPromo->area_id  == $request->area_id) {
+                $deliveryPrice  = $area_trans->trans_price * $checkPromo->discount / 100;
                 $offerOrPromoId = $checkPromo->id;
                 $checkOrderType = 2;
             } else {
-                $deliveryPrice = auth()->user()->area->trans_price;
+                $deliveryPrice  = $area_trans->trans_price;
                 $offerOrPromoId = null;
                 $checkOrderType = 0;
             }
         } else { // if user not have promo or offer 
-            $deliveryPrice = auth()->user()->area->trans_price;
+            $deliveryPrice  = $area_trans->trans_price;
             $offerOrPromoId = null;
             $checkOrderType = 0;
         }
+        // start this is for Know how much delivery price /////////
+        if ($request->hamada)
+            return $data = ['delivery_price' => $deliveryPrice, 'order_type' => $checkOrderType == 0 ? 'PAID' : ($checkOrderType == 1 ? 'OFFER' : 'PROMOCODE')];
+        // end this is for Know how much delivery price //////////
+
         $newOrder = $this->model->create([
             'client_id'      => auth()->user()->id,
             'delivery_price' => $deliveryPrice,
             'area_id'        => $request->area_id ?? auth()->user()->area_id,
+            'adress'         =>  $request->adress,
             'type'           => $checkOrderType,
             'offer_or_promo_id' => $offerOrPromoId,
         ]);
@@ -320,16 +367,15 @@ class OrderController extends BaseController
         return $newOrder;
     }
 
-
     protected function makeEvent($newOrder, $ActiveDelivery)
     {
         $data = [
-            'user_id'           =>  auth()->user()->id,
-            'firstName'         =>  auth()->user()->name,
-            'order_id'          =>  $newOrder->id,
-            'active_delivery'   => $ActiveDelivery,
+            'order_id'          => $newOrder->id,
+            'user_Order'        => new UserResource(User::find(auth()->user()->id)),
+            'order_Data'        =>  OrderDetailsRecourse::collection($newOrder->orderDetails),
+            'active_Delivery'   => $ActiveDelivery,
         ];
-        event(new DeliveryNotifyEvent($data));
+        // event(new DeliveryNotifyEvent($data));
     }
 
     protected function uploadImage($request)

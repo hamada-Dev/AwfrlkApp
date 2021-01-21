@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderDeliveryRecourse;
+use App\Http\Resources\OrderDetailsRecourse;
+use App\Http\Resources\PendingOrderResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -21,7 +23,7 @@ class DeliveryOrderController extends BaseController
         if ($delivryOrder->count() > 0)
             return $this->sendResponse(OrderDeliveryRecourse::collection($delivryOrder), 200);
         else
-            return $this->sendError('There is no order for this delivery', ['No Data'], 404);
+            return $this->sendError('There is no order for this delivery', ['No Data'], 200);
     }
 
     /**
@@ -43,7 +45,11 @@ class DeliveryOrderController extends BaseController
      */
     public function show($id)
     {
-        // return Order::where("day(created_at)" , $id)->get();
+        $delivryOrder =  Order::whereNull('delivery_id')->with('orderDetails')->with('user')->get();
+        if ($delivryOrder->count() > 0)
+            return $this->sendResponse(PendingOrderResource::collection($delivryOrder), 200);
+        else
+            return $this->sendError('there is no pending order', OrderDeliveryRecourse::collection($delivryOrder), 200);
     }
 
     /**

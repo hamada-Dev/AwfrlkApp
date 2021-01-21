@@ -68,6 +68,26 @@
         </div>
     </div>
 
+    <div class="col-md-3">
+        <div class="">
+            <label>@lang('site.image')</label>
+            <input type="file" name="image" class="form-control image @error('image') is-invalid @enderror">
+            @error('image')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+    <div class="col-md-3" width="100px" height="60px">
+        <div class="">
+            <img src="{{isset($row) ?  $row->image_path : asset('uploads/offers_images/offer.png')}}" width="100px"
+                style="height: 100px" class="img-thumbnail img-preview">
+        </div>
+    </div>
+
+
     <div class="col-md-12">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.areas')</label>

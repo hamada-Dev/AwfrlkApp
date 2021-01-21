@@ -25,6 +25,11 @@
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
+<div class="col-md-4 text-right">
+    <a href="{{route($module_name_plural.'.index', ['offerNotPay' => 1])}}" class="btn btn-info btn-round ">
+       @lang('site.offerNotPay')
+    </a>
+</div>
 @endslot
 
 <div class="table-responsive">

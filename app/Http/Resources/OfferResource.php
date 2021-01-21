@@ -17,11 +17,12 @@ class OfferResource extends JsonResource
         // return parent::toArray($request);
         return [
             'offer_id'    => $this->id,
-            'name'        => $this->name,
+            'name'        => $this->name, 
             'price'       => $this->price,
             'trips_count' => $this->trips_count,
             'offer_days'  => $this->offer_days,
-            'area_id'     => $this->area_id == null ? null : $this->area->name,        
+            'area_id'     => $this->area_id == null ? null : $this->area->name, 
+            'image'            => $this->image_path,       
         ];
     }
 }

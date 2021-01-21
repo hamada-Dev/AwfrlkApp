@@ -59,7 +59,7 @@ class UsersController extends BackEndController
             'password' => ['nullable', 'min:5'],
             'c_password' => ['nullable', 'same:password'],
             'gender' => ['required', Rule::in([0, 1])],
-            'phone' => ['required', 'unique:users'],
+            'phone' => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
             'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
             'ssn' => ['required', 'integer', 'unique:users'],
             'adress' => ['required', 'string', 'max:255'],

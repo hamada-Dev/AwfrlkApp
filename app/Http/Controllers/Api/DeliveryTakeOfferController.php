@@ -26,7 +26,7 @@ class DeliveryTakeOfferController extends BaseController
         if ($avilableOffer->count() > 0)
             return $this->sendResponse('you have offer but not collect money', ['userOffer' => UserOfferResource::collection($avilableOffer)], 200);
         else
-            return $this->sendResponse('u have no offer to earn money', ['No Data'], 200);
+            return $this->sendResponse('u have no offer to earn money',  ['userOffer' => UserOfferResource::collection($avilableOffer)], 200);
     }
 
     /**
@@ -110,7 +110,7 @@ class DeliveryTakeOfferController extends BaseController
             'user_data'         =>  $userInfo,
             'delivery_data'     =>  $deliveryInfo,
         ];
-        event(new DeliveryTakeOfferEvent($data));
+        // event(new DeliveryTakeOfferEvent($data));
     }
 
 }

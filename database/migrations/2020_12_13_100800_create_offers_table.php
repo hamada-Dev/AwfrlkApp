@@ -19,6 +19,7 @@ class CreateOffersTable extends Migration
             $table->float('price');
             $table->integer('trips_count');
             $table->integer('offer_days')->comment('number of offer day');
+            $table->text('image')->default('offer.png');
             $table->tinyInteger('avilable')->default(1)->comment('0=> notAvilable 1=> avilable');
             $table->bigInteger('area_id')->unsigned();
             $table->bigInteger('added_by')->unsigned()->comment('who added');
