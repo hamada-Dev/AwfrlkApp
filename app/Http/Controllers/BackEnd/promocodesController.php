@@ -39,13 +39,13 @@ class promocodesController extends BackEndController
 
     public function create(Request $request)
     {
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $append =$this->append();
-        $users=User::where('group','user')->get();
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        $append = $this->append();
+        $users = User::where('group', 'user')->get();
         $areas = Area::select(['id', 'name'])->get();
 
-        return view('back-end.'.$this->getClassNameFromModel().'.create', compact('areas', "users",'module_name_singular', 'module_name_plural'))->with($append);
+        return view('back-end.' . $this->getClassNameFromModel() . '.create', compact('areas', "users", 'module_name_singular', 'module_name_plural'))->with($append);
     } //en
     /**
      * Store a newly created resource in storage.
@@ -56,15 +56,15 @@ class promocodesController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:100','min:5'],
-            'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
-            'discount' =>['required', 'numeric'],
-            'end_date' =>['required', 'date'],
+            'name' => ['required', 'max:100', 'min:5'],
+            'confirm'   =>  ['required', 'numeric', rule::in([0, 1])],
+            'discount' => ['required', 'numeric'],
+            'end_date' => ['required', 'date'],
             'area_id'   => ['required', 'exists:areas,id'],
         ]);
-            $request['added_by'] = auth()->user()->id;
-            // $request['serial'] = uniqid("Awfrlk_");
-            $request['serial'] = 'Awfrlk_'. (time() * random_int(100,1000));
+        $request['added_by'] = auth()->user()->id;
+        // $request['serial'] = uniqid("Awfrlk_");
+        $request['serial'] = 'A-' . intval(time() / random_int(88, 968));
 
 
         $this->model->create($request->all());
@@ -81,33 +81,32 @@ class promocodesController extends BackEndController
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    
+
     public function edit($id)
     {
-        $module_name_plural=$this->getClassNameFromModel();
-        $module_name_singular=$this->getSingularModelName();
-        $append =$this->append();
-        $row=$this->model->findOrFail($id);
-        $users=User::where('group','user')->get();
+        $module_name_plural = $this->getClassNameFromModel();
+        $module_name_singular = $this->getSingularModelName();
+        $append = $this->append();
+        $row = $this->model->findOrFail($id);
+        $users = User::where('group', 'user')->get();
 
         $areas = Area::select(['id', 'name'])->get();
-        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('areas', 'users','row', 'module_name_singular', 'module_name_plural'))->with($append);
+        return view('back-end.' . $this->getClassNameFromModel() . '.edit', compact('areas', 'users', 'row', 'module_name_singular', 'module_name_plural'))->with($append);
     }
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'max:100','min:5'],
-            'confirm'   =>  ['required', 'numeric', rule::in([0,1])],
-            'end_date' =>['required', 'date'],
-            'discount' =>['required', 'numeric'],
+            'name' => ['required', 'max:100', 'min:5'],
+            'confirm'   =>  ['required', 'numeric', rule::in([0, 1])],
+            'end_date' => ['required', 'date'],
+            'discount' => ['required', 'numeric'],
             'area_id'   => ['required', 'exists:areas,id'],
         ]);
-            $request['added_by']=auth()->user()->id;
-            $promo=$this->model->find($id);
-            $promo->update($request->all());
-            session()->flash('success', __('site.updated_successfully'));
-            return redirect()->route('promocodes.index');
-        
+        $request['added_by'] = auth()->user()->id;
+        $promo = $this->model->find($id);
+        $promo->update($request->all());
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('promocodes.index');
     }
 
     /**
@@ -119,15 +118,13 @@ class promocodesController extends BackEndController
     public function destroy($id, Request $request)
     {
         $promo = Promocode::findOrFail($id);
-            $promo->update([
-                'deleted_by'    => auth()->user()->id,
-                'delete_date'   => now(),
-            ]);
-            // $product->delete();
+        $promo->update([
+            'deleted_by'    => auth()->user()->id,
+            'delete_date'   => now(),
+        ]);
+        // $product->delete();
 
-            session()->flash('success', __('site.deleted_successfully'));
-            return redirect()->route($this->getClassNameFromModel() . '.index');
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route($this->getClassNameFromModel() . '.index');
     }
-
-  
 }

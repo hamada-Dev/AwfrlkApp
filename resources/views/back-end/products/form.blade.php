@@ -31,14 +31,13 @@
 
     @php
     $unitsArray = ['kilo', 'liter', 'number'];
-    // $unitsArray = ['kilo', 'liter', 'number'];
     @endphp
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <select name="unit" class="form-control @error('unit') is-invalid @enderror">
                 <option value="0">@lang('site.choose-unit')</option>
                 @foreach($unitsArray as $unit)
-                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected @endif >{{$unit}}</option>
+                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected @endif >@lang('site.'.$unit)</option>
                 @endforeach
             </select>
             @error('unit')

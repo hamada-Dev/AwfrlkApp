@@ -31,7 +31,7 @@
                     <p>@lang('site.usersShow')</p>
                 </a>
             </li>
-            
+
             <li class="nav-item {{is_active('delivery')}}">
                 <a class="nav-link" href="{{route('users.delivery')}}">
                     <i class="material-icons">person</i>

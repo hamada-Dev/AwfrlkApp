@@ -53,17 +53,17 @@ class UsersController extends BackEndController
     {
         // return $request;
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['nullable', 'min:5'],
-            'c_password' => ['nullable', 'same:password'],
-            'gender' => ['required', Rule::in([0, 1])],
-            'phone' => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
-            'group' => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
-            'ssn' => ['required', 'integer', 'unique:users'],
-            'adress' => ['required', 'string', 'max:255'],
-            'area_id' => ['required', 'exists:areas,id'],
+            'name'      => ['required', 'string', 'max:255'],
+            'lastName'  => ['required', 'string', 'max:255'],
+            'email'     => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['nullable', 'min:5'],
+            'c_password'=> ['nullable', 'same:password'],
+            'gender'    => ['required', Rule::in([0, 1])],
+            'phone'     => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
+            'group'     => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
+            'ssn'       => ['required', 'integer', 'unique:users'],
+            'adress'    => ['required', 'string', 'max:255'],
+            'area_id'   => ['required', 'exists:areas,id'],
             'image'     => ['image'],
             'delivery_status' => ['required', Rule::in([0, 1, 2, 3, 4])],
         ]);

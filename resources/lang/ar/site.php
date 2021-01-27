@@ -65,6 +65,9 @@ return [
   'product_number' => 'عدد المنتجات',
   'choose-category' => 'أختر القسم',
   'choose-unit' => ' أختر الوحدة',
+  'kilo'        => 'كيلو ',
+   'liter'        => 'لتر',
+    'number'        => 'عدد',
   //promocodes
   'choose_confirm' => 'أختر الحالة',
   'valide' => "صالح",

@@ -53,13 +53,14 @@
             @enderror
         </div>
     </div>
-{{--  --}}
-{{-- pattern="^\d{3}-\d{3}-\d{4}$" --}}
+    {{--  --}}
+    {{-- pattern="^\d{3}-\d{3}-\d{4}$" --}}
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.phone')</label>
-            <input type="tel" pattern="(01)[0-9]{9}" title=" 11  رقم يجب ان  يكون" required name="phone" value="{{ isset($row) ? $row->phone : old('phone') }}"
+            <input type="tel" pattern="(01)[0-9]{9}" title=" 11  رقم يجب ان  يكون" required name="phone"
+                value="{{ isset($row) ? $row->phone : old('phone') }}"
                 class="form-control @error('phone') is-invalid @enderror">
             @error('phone')
             <span class="invalid-feedback" role="alert">
@@ -227,5 +228,4 @@
             @enderror
         </div>
     </div>
-
 </div>

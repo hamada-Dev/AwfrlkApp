@@ -110,7 +110,7 @@ class DeliveryTakeOfferController extends BaseController
             'user_data'         =>  $userInfo,
             'delivery_data'     =>  $deliveryInfo,
         ];
-        // event(new DeliveryTakeOfferEvent($data));
+        event(new DeliveryTakeOfferEvent($data));
     }
 
 }

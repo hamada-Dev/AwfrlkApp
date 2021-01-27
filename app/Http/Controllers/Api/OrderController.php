@@ -375,7 +375,7 @@ class OrderController extends BaseController
             'order_Data'        =>  OrderDetailsRecourse::collection($newOrder->orderDetails),
             'active_Delivery'   => $ActiveDelivery,
         ];
-        // event(new DeliveryNotifyEvent($data));
+        event(new DeliveryNotifyEvent($data));
     }
 
     protected function uploadImage($request)

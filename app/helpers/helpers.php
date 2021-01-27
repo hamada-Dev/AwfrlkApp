@@ -1,6 +1,6 @@
 <?php
 
-function is_active($routeName){
+function is_active($routeName){ 
     return null !== request()->segment('3') && request()->segment('3') == $routeName ? 'active' : '';
 }
 

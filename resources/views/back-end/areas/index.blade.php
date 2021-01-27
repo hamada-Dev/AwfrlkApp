@@ -70,14 +70,16 @@
                     {{$row->trans_price}}
                 </td>
                 <td>
-                    @if ( $row->getCount($row->id) > 0 )
+                    {{-- @if ( $row->getCount($row->id) > 0 )
                     <a href="{{route("areas.index",['parent' => $row->id])}}" class="btn btn-primary btn-sm">
                        {{$row->getCount($row->id)}}
                     </a>
                     @else
                         <span class="st-icon-pandora"> {{$row->getCount($row->id)}} </span>
-                    @endif
-
+                    @endif --}}
+                    <a href="{{route("areas.index",['parent' => $row->id])}}" class="btn btn-info  btn-sm">
+                        {{$row->getCount($row->id)}}
+                     </a>
                 </td>
 
                 {{-- <td>                    
