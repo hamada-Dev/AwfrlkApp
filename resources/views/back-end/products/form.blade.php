@@ -18,7 +18,9 @@
             <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
                 <option value="0">@lang('site.choose-category')</option>
                 @foreach($categories as $category)
-                <option value="{{$category->id}}" @if((isset($row) && $row->category_id == $category->id) || (request() != NULL && request()->category_id == $category->id ) || old('category_id') == $category->id) selected @endif>{{$category->name}}</option>
+                <option value="{{$category->id}}" @if((isset($row) && $row->category_id == $category->id) || (request()
+                    != NULL && request()->category_id == $category->id ) || old('category_id') == $category->id)
+                    selected @endif>{{$category->name}}</option>
                 @endforeach
             </select>
             @error('category_id')
@@ -37,7 +39,8 @@
             <select name="unit" class="form-control @error('unit') is-invalid @enderror">
                 <option value="0">@lang('site.choose-unit')</option>
                 @foreach($unitsArray as $unit)
-                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected @endif >@lang('site.'.$unit)</option>
+                <option value="{{$unit}}" @if((isset($row) && $row->unit == $unit) || old('unit') == $unit) selected
+                    @endif >@lang('site.'.$unit)</option>
                 @endforeach
             </select>
             @error('unit')
@@ -48,26 +51,13 @@
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
-                <option value="0">@lang('site.choose-product_cat')</option>
-                @foreach(App\Models\Product::where('parent_id',0)->get() as $product)
-                <option value="{{$product->id}}" @if((isset($row) && $product->id== $row->parent_id) || (request() != NULL && request()->product_id == $product->id ) || old('product_id') == $product->id) selected @endif>{{$product->name}} </option>
-                @endforeach
-            </select>
-            @error('parent_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
+
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">@lang('site.price')</label>
-                <input type="number" min="0" step="0.01" name="price" value="{{ isset($row) ? $row->price : old('price') }}"
+                <input type="number" min="0" step="0.01" name="price"
+                    value="{{ isset($row) ? $row->price : old('price') }}"
                     class="form-control @error('price') is-invalid @enderror">
                 @error('price')
                 <span class="invalid-feedback" role="alert">

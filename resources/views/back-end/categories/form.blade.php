@@ -12,6 +12,31 @@
             @enderror
         </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            <label>@lang('site.choose-category_cat')</label>
+            <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
+                <option value="0">@lang('site.choose-category_cat')</option>
+
+                @forelse(App\Models\Category::where('parent_id',0)->get() as $category)
+                <option value="{{$category->id}}" @if((isset($row) && $category->id== $row->parent_id) ||
+                    (isset(request()->parent_id) && request()->parent_id == $category->id) || (old('parent_id') ==
+                    $category->id)) selected
+                    @endif>{{$category->name}} </option>
+                @empty
+
+                @endforelse
+            </select>
+            @error('parent_id')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+
     <div class="col-md-3">
         <div class="">
             <label>@lang('site.image')</label>
@@ -27,12 +52,12 @@
     <div class="col-md-3" width="100px" height="60px">
         <div class="">
             <img src="{{isset($row) ?  $row->image_path : asset('uploads/categories_images/default.png')}}"
-             style="height:60px; width:60px" class="img img-thumbnail">
+                width="150px" style="height: 100px" class="img-thumbnail img-preview">
         </div>
     </div>
-    
-</div>
-<div class="row">
+
+
+
     <div class="col-md-12">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.description')</label>

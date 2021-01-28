@@ -21,14 +21,14 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create')}}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', ['parent_id' => request()->parent_id])}}" class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
 @endslot
 
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -40,11 +40,17 @@
                 <th>
                     @lang('site.description')
                 </th>
+
                 <th>
-                    @lang('site.image')
+                    @lang('site.split_category')
                 </th>
+
                 <th>
                     @lang('site.product_number')
+                </th>
+
+                <th>
+                    @lang('site.image')
                 </th>
                 <th class="text-right">
                     @lang('site.actions')
@@ -66,17 +72,22 @@
                 </td>
 
                 <td>
-                    {{ $row->description}}
+                    {!! $row->description !!}
+                    {{-- {{  $row->description }} --}}
                 </td>
 
                 <td>
-                    <img src="{{$row->image_path}}" alt="category Image" style="height:60px; width:60px" class="img img-thumbnail">
+                    <a href="{{ route('categories.index', ['parent_id' => $row->id]) }}"> {{$row->getChiledren($row->id)}}</a>
                 </td>
-
                 <td>
                     <a href="{{ route('products.index', ['category_id' => $row->id]) }}"> {{$row->product->count()}}</a>
-                    
                 </td>
+
+                <td>
+                    <img src="{{$row->image_path}}" alt="category Image" style="height:60px; width:60px"
+                        class="img img-thumbnail">
+                </td>
+
 
                 <td class="td-actions text-right">
                     @include('back-end.buttons.edit')

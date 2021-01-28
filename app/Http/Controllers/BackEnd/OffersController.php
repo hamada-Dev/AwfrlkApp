@@ -29,7 +29,7 @@ class OffersController extends BackEndController
 
         $rows = $rows->whereHas('area')->when($request->area_id, function ($query) use ($request) {
             $query->where('area_id', $request->area_id);
-        })->paginate(5);
+        })->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

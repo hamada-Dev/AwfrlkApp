@@ -20,7 +20,7 @@ class ProductUpdatesController extends BackEndController
         $rows = $this->filter($rows);
         $rows = $rows->with('product')->when($request->product_id, function($query) use($request){
             return $query->where('product_id', $request->product_id);
-        })->latest()->paginate(5);
+        })->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

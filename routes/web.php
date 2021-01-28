@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+define('PAG_COUNT', 10);
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -68,8 +70,8 @@ Route::group(
             //orderDetails
             Route::resource('orderdetails', 'OrderDetailsController');
             //to seperate the delivery
-            Route::get('/showDelivey','UsersController@showDelivery')->name('users.delivery');
-            Route::get('/showUser','UsersController@showUser')->name('users.usersShow');
+            Route::get('/showDelivey', 'UsersController@showDelivery')->name('users.delivery');
+            Route::get('/showUser', 'UsersController@showUser')->name('users.usersShow');
 
             //delivery history status
             Route::get("deliveystatus/{delivery_id}", 'UsersController@statusDelivery')->name('users.deliverystatus');
@@ -94,10 +96,10 @@ Route::group(
             Route::resource('usersalaries', 'usersalaryController');
 
             //slider fo android
-            Route::resource('sliders', 'SliderController');  
-            
+            Route::resource('sliders', 'SliderController');
+
             //chat 
-            Route::get('chat', 'ChatController@index')->name('chat'); 
+            Route::get('chat', 'ChatController@index')->name('chat');
         });
 
         Auth::routes();

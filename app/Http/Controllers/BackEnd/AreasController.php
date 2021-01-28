@@ -19,7 +19,7 @@ class AreasController extends BackEndController
         //get all data of Model
         $request->parent = !$request->parent ? 0 : $request->parent;
         
-        $rows = $this->model->where("parent_id", $request->parent)->paginate(5);
+        $rows = $this->model->where("parent_id", $request->parent)->paginate(PAG_COUNT);
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
         
@@ -116,8 +116,8 @@ class AreasController extends BackEndController
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
         $append = $this->append();
-        $areas = Area::where("parent_id", "0")->paginate(5);
-        $rows = Area::where("parent_id", $parent_id)->paginate(5);
+        $areas = Area::where("parent_id", "0")->paginate(PAG_COUNT);
+        $rows = Area::where("parent_id", $parent_id)->paginate(PAG_COUNT);
         return view('back-end.' . $this->getClassNameFromModel() . '.Childern', compact('areas', 'rows', 'module_name_singular', 'module_name_plural'))->with($append);
     }
 }

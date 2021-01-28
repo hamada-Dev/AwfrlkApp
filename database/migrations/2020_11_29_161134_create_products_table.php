@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->float('price')->nullable();
             $table->string('image')->default('default.png');
             $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('added_by')->unsigned()->comment('who added');
             $table->timestamps();
             

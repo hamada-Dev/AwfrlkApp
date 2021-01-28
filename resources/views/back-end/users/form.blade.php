@@ -197,7 +197,7 @@
 
 
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="">
             <label>@lang('site.image')</label>
             <input type="file" name="image" class="form-control image @error('image') is-invalid @enderror">
@@ -209,7 +209,7 @@
         </div>
     </div>
 
-    <div class="col-md-6" width="100px" height="60px">
+    <div class="col-md-3" width="100px" height="60px">
         <div class="">
             <img src="{{isset($row) ?  $row->image_path : asset('uploads/users_images/user.png')}}" width="100px"
                 style="height: 100px" class="img-thumbnail img-preview">

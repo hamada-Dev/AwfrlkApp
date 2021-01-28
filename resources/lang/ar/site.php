@@ -61,6 +61,7 @@ return [
   //categories
   'categories' => 'الأقسام',
   'category' => 'قسم',
+  'split_category' => 'الأقسام المشتقه',
   'trans_price' => ' تكلفة التوصيل',
   'product_number' => 'عدد المنتجات',
   'choose-category' => 'أختر القسم',
@@ -239,7 +240,7 @@ return [
   'from-area'=>'من منطقة',
   'to-area'=>'إلى منطقة',
   'type_count'=>'نوع الحساب',
-  'choose-product_cat'=>'أختر الفئة التابع لها ان وجدت',
+  'choose-category_cat'=>'أختر الفئة التابع لها ان وجدت',
   //orderDetails
   "orderdetails" => "تفاصيل الطلب",
   "orderdetail" => "تفاصيل الطلب",

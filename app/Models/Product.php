@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $guarded = [];
+    protected $hidden = ['image_path'];
 
     // fire global Scope where deleted_by == NULL
     protected static function boot()
@@ -39,13 +40,14 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    public function getUnitAttribute($val){
+    // public function getUnitAttribute($val){
 
-        return $val == 'kilo' ? 'كيلو' :  ($val == 'number' ? 'قطعه' : 'لتر');
+    //     return $val == 'kilo' ? 'كيلو' :  ($val == 'number' ? 'قطعه' : 'لتر');
+    // }  
+    
+    public function unitAr(){
+
+        return $this->unit == 'kilo' ? 'كيلو' :  ($this->unit == 'number' ? 'قطعه' : 'لتر');
     } 
     
-    // public function getPriceAttribute($val){
-
-    //     return $val . ' جنيه ';
-    // }
 }

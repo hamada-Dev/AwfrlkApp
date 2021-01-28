@@ -19,7 +19,7 @@ class SliderController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->paginate(5);
+        $rows = $rows->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

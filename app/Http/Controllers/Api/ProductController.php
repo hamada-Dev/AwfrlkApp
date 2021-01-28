@@ -37,13 +37,23 @@ class ProductController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)  
+    public function show($id, Request $request)
     {
         $cat = Category::find($id);
         if ($cat) {
-            $products = ProductRecourse::collection(Product::where('category_id', $id)->get());
+
+
+            $products = Product::when($request->prosearch, function ($query) use ($request) {
+                return $query->where('id', '<>', $request->prosearch);
+            })->where('category_id', $id)->get();
+
+            if (isset($request->prosearch)) {
+                $prosearch = Product::find($request->prosearch); // get item search on it 
+                $products = $products->prepend($prosearch);     // add item in the first of collection
+            }
+
             if ($products->count() > 0)
-                return $this->sendResponse($products, 'produc data');
+                return $this->sendResponse(ProductRecourse::collection($products), 'produc data');
             else
                 return $this->sendError('405', 'this category have ZERO product');
         } else {

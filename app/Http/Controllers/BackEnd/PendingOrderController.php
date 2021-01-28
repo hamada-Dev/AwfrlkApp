@@ -40,7 +40,7 @@ class PendingOrderController extends BackEndController
             return $quer->whereNotNull('delivery_id')->where('status', 0)->whereNotNull('end_shoping_date');
         })->with(['orderDetails' => function ($query) {
             return $query->with('product');
-        }])->with('user')->latest()->paginate(5);
+        }])->with('user')->latest()->paginate(PAG_COUNT);
 
 
         // active delivery 

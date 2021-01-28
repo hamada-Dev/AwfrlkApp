@@ -52,9 +52,7 @@
                 <th>
                     @lang('site.description')
                 </th>
-                <th>
-                    @lang('site.product_number')
-                </th>
+               
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
@@ -79,7 +77,7 @@
 
 
                 <td>
-                    @lang($row->unit)
+                    @lang($row->unitAr())
                 </td>
 
                 <td>
@@ -92,10 +90,6 @@
 
                 <td>
                     {!! $row->description !!}
-                </td>
-                <td>
-                <a class='btn btn-danger' href="{{ route('products.index', ['parent_id' => $row->id]) }}">@lang('site.product')</a>
-
                 </td>
 
                 <td class="td-actions text-right">

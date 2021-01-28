@@ -28,6 +28,12 @@ class Category extends Model
         return $this->product->count();
     } //end of product count in this category 
 
+    public function getChiledren($id)
+    {
+        return $this->where("parent_id", $id)->count();
+    }
+
+
     public function product()
     {
         return $this->hasMany(Product::class);

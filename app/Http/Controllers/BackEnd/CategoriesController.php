@@ -21,11 +21,16 @@ class CategoriesController extends BackEndController
     {
         //get all data of Model
         $rows = $this->model;
-        $rows = $this->filter($rows);
-        $rows = $rows->with('product')->latest()->paginate(5);
+
+        // $rows = $rows->where('parent_id', 0)->with('product')->latest()->paginate(PAG_COUNT);
+
+        $request->parent_id = !$request->parent_id ? 0 : $request->parent_id;
+        // return $request->parent_id;
+        $rows = $rows->where('parent_id', $request->parent_id)->with('product')->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
+
 
         return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));
     } //end of index
@@ -35,9 +40,11 @@ class CategoriesController extends BackEndController
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:191'],
+            'name'        => ['required', 'string', 'max:191'],
             'description' => ['nullable', 'string', 'max:500'],
-            'image' => ['image'],
+            'parent_id'   => ['nullable', 'numeric',],
+            // 'parent_id'   => ['nullable', 'numeric', 'exists:categories,id'],
+            'image'       => ['image'],
         ]);
 
         $request_data =  $request->except(['image', '_token']);
@@ -63,6 +70,7 @@ class CategoriesController extends BackEndController
         $request->validate([
             'name' => ['required', 'string', 'max:191'],
             'description' => ['nullable', 'string', 'max:500'],
+            'parent_id'   => ['nullable', 'numeric',],
             'image' => ['image'],
         ]);
 

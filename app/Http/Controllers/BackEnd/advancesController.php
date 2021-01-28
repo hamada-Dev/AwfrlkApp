@@ -28,7 +28,7 @@ class advancesController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->where('flag', 0)->paginate(5);
+        $rows = $rows->where('flag', 0)->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -141,7 +141,7 @@ class advancesController extends BackEndController
             'flag'=>1
         ]);
         $rows = $this->model;
-        $rows = $rows->where('flag', 0)->paginate(5);
+        $rows = $rows->where('flag', 0)->paginate(PAG_COUNT);
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
         return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('rows', 'module_name_singular', 'module_name_plural'));

@@ -27,10 +27,9 @@ class ProductsController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $request->parent_id = !$request->parent_id ? 0 : $request->parent_id;
-        $rows = $rows->where('parent_id',$request->parent_id)->whereHas('category')->when($request->category_id, function ($query) use ($request) {
+        $rows = $rows->whereHas('category')->when($request->category_id, function ($query) use ($request) {
             $query->where('category_id', $request->category_id);
-        })->latest()->paginate(5);
+        })->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -52,7 +51,7 @@ class ProductsController extends BackEndController
             'name' => ['required', 'string', 'max:191'],
             'category_id'   =>  ['required', 'numeric', 'exists:categories,id'],
             'image' => ['image'],
-            'unit' => [ Rule::in(['kilo', 'liter', 'number'])],
+            'unit' => [Rule::in(['kilo', 'liter', 'number'])],
             'description' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -71,7 +70,7 @@ class ProductsController extends BackEndController
         $this->model->create($request_data);
 
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('products.index');
+        return redirect()->route('categories.index');
     }
 
 
@@ -89,7 +88,7 @@ class ProductsController extends BackEndController
             'name' => ['required', 'string', 'max:191'],
             'category_id'   =>  ['required', 'numeric', 'exists:categories,id'],
             'image' => ['image'],
-            'unit' => [ Rule::in(['kilo', 'liter', 'number'])],
+            'unit' => [Rule::in(['kilo', 'liter', 'number'])],
             'description' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -153,6 +152,5 @@ class ProductsController extends BackEndController
         $img = \Intervention\Image\Facades\Image::make($request->image)->resize(912, 872);
 
         $img->save(public_path('uploads/products_images/' . $request->image->hashName()));
-
     }
 }

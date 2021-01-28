@@ -31,7 +31,7 @@ class usersalaryController extends BackEndController
 
         $rows = $rows->when($request->user_id,function($query) use ($request){
             $query->where('user_id',$request->user_id)->orderBy('moneyDay','desc');
-        })->orderBy('moneyDay','desc')->paginate(5);
+        })->orderBy('moneyDay','desc')->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();

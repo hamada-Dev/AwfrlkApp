@@ -19,11 +19,13 @@ class ProductRecourse extends JsonResource
             'id'           =>  $this->id,
             'name'         =>  $this->name,
             'description'  =>  $this->description,
-            'unit'         =>  $this->unit,
+            // 'unit'         =>  $this->unit,
+            'unit'         =>  $this->unitAr(),
             'price'        =>  $this->price,
             'image'        =>  $this->image_path,
             'updated_at'   =>  $this->updated_at->diffForHumans(),
             'category'     =>  $this->category ?  $this->category->name : '',
+            'category_id'  =>  $this->category ?  $this->category->id : '',
         ];
     }
 

@@ -24,7 +24,7 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->employee()->where('delivery_status', '<>', 3)->latest()->paginate(5);
+        $rows = $rows->employee()->where('delivery_status', '<>', 3)->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -166,7 +166,7 @@ class UsersController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->latest()->paginate(5);
+        $rows = $rows->where('group', 'delivery')->where('delivery_status', '<>', 3)->latest()->paginate(PAG_COUNT);
 
         // start for who take money
         $month_start = strtotime('first day of this month', time());
@@ -185,7 +185,7 @@ class UsersController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->where('group', 'user')->where('delivery_status', '<>', 3)->latest()->paginate(5);
+        $rows = $rows->where('group', 'user')->where('delivery_status', '<>', 3)->latest()->paginate(PAG_COUNT);
 
         // start for who take money
         $month_start = strtotime('first day of this month', time());
@@ -235,7 +235,7 @@ class UsersController extends BackEndController
     {
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->where('delivery_status', '3')->latest()->paginate(5);
+        $rows = $rows->where('delivery_status', '3')->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
