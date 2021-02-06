@@ -44,7 +44,7 @@
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.ssn')</label>
-            <input type="number" name="ssn" value="{{ isset($row) ? $row->ssn : old('ssn') }}"
+            <input type="text" name="ssn" pattern="[2-3]{1}[0-9]{13}" required title=" الرقم القومي لابد ان يكون 14 ويبدا 2 او 3" value="{{ isset($row) ? $row->ssn : old('ssn') }}"
                 class="form-control @error('ssn') is-invalid @enderror">
             @error('ssn')
             <span class="invalid-feedback" role="alert">

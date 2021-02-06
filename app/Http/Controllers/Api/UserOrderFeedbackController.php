@@ -15,12 +15,12 @@ class UserOrderFeedbackController extends BaseController
     // user make feedback about this order 
     public function userFeedbackOrder(Request $request)
     {
-        $newOrder = Order::find($request->order_id);
+        $newOrder = Order::whereNotNull('delivery_id')->whereNotNull('end_shoping_date')->find($request->order_id);
 
         if ($newOrder) {
             if ($newOrder->client_id == auth()->user()->id) {
                 $newOrder->update([
-                    // "feedback"       => $request->feedback,
+                    "feedback"       => $request->feedback,
                     "feedback_date"  => now(),
                 ]);
 

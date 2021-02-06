@@ -21,14 +21,15 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}" class="btn btn-white btn-round ">
+    <a href="{{route($module_name_plural.'.create', request() != NULL ? ['category_id'=> request()->category_id] : ''  ) }}"
+        class="btn btn-white btn-round ">
         @lang('site.add') @lang('site.'.$module_name_singular)
     </a>
 </div>
 @endslot
 
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -76,7 +77,7 @@
                     {{$row->price}}
                 </td>
                 <td>
-                        {{$row->trips_count}}
+                    {{$row->trips_count}}
                 </td>
 
 
@@ -86,9 +87,9 @@
 
                 <td>
                     @if($row->avilable==1)
-                         @lang('site.Active')
+                    @lang('site.Active')
                     @else
-                        @lang('site.NotActive')
+                    @lang('site.NotActive')
                     @endif
                 </td>
                 <td>

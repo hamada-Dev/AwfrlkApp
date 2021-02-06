@@ -157,12 +157,12 @@ class OrderController extends BaseController
             }
         } else {
             $request->validate([
-                'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
-                'adress'         =>  ['required', 'string', 'max:254'],
-                'product_id'     =>  ['required', 'image','exists:products,id'],
-                'description'    =>  ['Nullable', 'string', 'max:222'],
+                'area_id'         =>  ['required', 'numeric', 'exists:areas,id'],
+                'adress'          =>  ['required', 'string', 'max:254'],
+                // '*.product_id'    =>  ['required', 'numeric','exists:products,id'],
+                // '*.description'   =>  ['Nullable', 'string', 'max:222'],
             ]);
-
+            // return $request['adress'];
             try {
                 DB::beginTransaction();
                 // start this is for Know how much delivery price /////////
@@ -191,7 +191,7 @@ class OrderController extends BaseController
                 ////////////////////////////////////////////////
 
                 DB::commit();
-                return $this->sendResponse(['data' => 'add product || pharmacy order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
+                return $this->sendResponse(['data' => 'add product order   sucessfully', 'Delivery' => DeliveryRecourse::collection($ActiveDelivery)], 200);
             } catch (\Exception $ex) {
                 DB::rollback();
                 return $ex;
@@ -359,7 +359,7 @@ class OrderController extends BaseController
             'client_id'      => auth()->user()->id,
             'delivery_price' => $deliveryPrice,
             'area_id'        => $request->area_id ?? auth()->user()->area_id,
-            'adress'         =>  $request->adress,
+            'adress'         =>  $request->adress ?? auth()->user()->adress,
             'type'           => $checkOrderType,
             'offer_or_promo_id' => $offerOrPromoId,
         ]);

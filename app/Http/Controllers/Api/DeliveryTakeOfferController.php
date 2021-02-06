@@ -20,9 +20,8 @@ class DeliveryTakeOfferController extends BaseController
      */
     public function index()
     {
-        $avilableOffer = UserOffer::where('delivery_id', auth()->user()->id)
-            ->withoutGlobalScope(ConfirmedOffer::class)->get();
-
+        $avilableOffer = UserOffer::where('delivery_id', auth()->user()->id)->whereNull('confirm_date')->get();
+        // ->withoutGlobalScope(ConfirmedOffer::class)
         if ($avilableOffer->count() > 0)
             return $this->sendResponse('you have offer but not collect money', ['userOffer' => UserOfferResource::collection($avilableOffer)], 200);
         else
@@ -75,7 +74,12 @@ class DeliveryTakeOfferController extends BaseController
      */
     public function show($id)
     {
-        //
+        $CollectOffer = UserOffer::where('delivery_id', auth()->user()->id)->get();
+        // ->withoutGlobalScope(ConfirmedOffer::class)
+        if ($CollectOffer->count() > 0)
+            return $this->sendResponse('offer you earn money ', ['userOffer' => UserOfferResource::collection($CollectOffer)], 200);
+        else
+            return $this->sendResponse('no offer you earn money ',  ['userOffer' => UserOfferResource::collection($CollectOffer)], 200);
     }
 
     /**

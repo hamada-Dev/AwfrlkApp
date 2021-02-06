@@ -20,7 +20,7 @@ class OrderUserRecourse extends JsonResource
             'order_id'       => $this->id,
             'created_at'     => $this->created_at,
             'arrival_date'   => $this->arrival_date,
-            'order_price'    => $this->order_price,
+            'order_price'    => $this->order_price + $this->delivery_price, 
             'delivery_price' => $this->delivery_price,
             'order_pro_cnt'  => $this->product_count,
             'area'           => $this->area_id == null ? null : $this->area->name,

@@ -72,7 +72,7 @@ class OffersController extends BackEndController
             $request_data['image'] = $request->image->hashName();
         } //end of if
         else {
-            $request_data['image'] = "default.png";
+            $request_data['image'] = "offer.png";
         }
 
         $request_data['added_by'] = auth()->user()->id;

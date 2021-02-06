@@ -25,7 +25,7 @@ class UserOfferResource extends JsonResource
             'created_at'       => date('d-M-Y H:i A', strtotime($this->created_at)),
             'end_date'         => date('d-M-Y H:i A', strtotime($this->end_date)),
 
-            // 'userData'        => new UserResource( $this->user),
+            'userData'        => new UserResource( $this->user),
         ];
     }
 }
