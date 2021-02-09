@@ -24,6 +24,11 @@ class OrderDetailsRecourse extends JsonResource
             'image'        => $this->image == null ? null : $this->image_path ,
             'product_home' => $this->product_home,
             'created_at'   => $this->created_at->diffForHumans(),
+            
+            // this is i make for save to and not want to edit every event to add order 
+            'order_type'   => $this->product_id != null ? 'product' : ($this->product_home != null ? 'home' :'pharmacy'),
+            'order_id'     => $this->order_id,
+
         ];
     }
 }

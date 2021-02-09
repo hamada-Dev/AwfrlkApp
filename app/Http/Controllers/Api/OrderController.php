@@ -118,7 +118,7 @@ class OrderController extends BaseController
                 DB::rollback();
                 return $this->sendError(['data' => 'cant add this order please try again'], 404);
             }
-        } elseif ($request->image) {
+        } elseif ($request->pharmacy == 1) {
             $request->validate([
                 'area_id'        =>  ['required', 'numeric', 'exists:areas,id'],
                 'adress'         =>  ['required', 'string', 'max:254'],
@@ -134,9 +134,11 @@ class OrderController extends BaseController
                     return $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
                 // end this is for Know how much delivery price //////////
                 $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
-                $this->uploadImage($request);
+                if($request->image){
+                    $this->uploadImage($request);
+                }
                 $newOrder->orderDetails()->create([
-                    'image'       => $request->image->hashName(),
+                    'image'       => $request->image ? $request->image->hashName() : null,
                     'description' => $request->description,
                 ]);
 

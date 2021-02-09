@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ProductRecourse;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +18,24 @@ class SearchCatProController extends BaseController
         //         ->orwhere('description', 'like', '%' . $request->search . '%');
         // })->get();
 
+
         $searchProduct = Product::when($request->search, function ($qu) use ($request) {
             return $qu->where('name', 'like', '%' . $request->search . '%')
                 ->orwhere('price', 'like', '%' . $request->search . '%')
                 ->orwhere('description', 'like', '%' . $request->search . '%');
         })->get();
+
+        // this condition if user search about category
+        if ($searchProduct) {
+            $categoryId = Category::select('id')->when($request->search, function ($qu) use ($request) {
+                return $qu->where('name', 'like', '%' . $request->search . '%')
+                    ->orwhere('description', 'like', '%' . $request->search . '%');
+            })->get();
+
+            $searchProduct = Product::when($categoryId, function ($qu) use ($categoryId) {
+                return $qu->where('category_id', $categoryId[0]->id);
+            })->get();
+        }
 
         if ($searchProduct)
             return $this->sendResponse(ProductRecourse::collection($searchProduct), 200);

@@ -26,6 +26,7 @@ class UserOfferResource extends JsonResource
             'end_date'         => date('d-M-Y H:i A', strtotime($this->end_date)),
 
             'userData'        => new UserResource( $this->user),
+            'deliveryData'    => $this->delivery_id == null ? 'null' : new UserResource( $this->delivery),
         ];
     }
 }

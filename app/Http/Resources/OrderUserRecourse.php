@@ -27,6 +27,8 @@ class OrderUserRecourse extends JsonResource
             'address'        => auth()->user()->adress,
             'area_id_from'   => $this->area_id_from == null ? null : $this->area->name,
             'adress_from'    => $this->adress_from,
+            'order_type'     => $this->orderDetails[0]->product_id != null ? 'product' : ($this->area_id_from != null ? 'home' :'pharmacy'),
+            'end_order'      => $this->arrival_date != null ? 0 : ($this->delivery_id == null ? 1 : 2), // 0 => order ended 1=> no delivery take it 2 => under implement
             'products'       => OrderDetailsRecourse::collection( $this->orderDetails),
             'delivery'       => [
                 'delivery_name'  => $this->delivery_id == Null ? 'Not confirmed from any delivery' : $this->delivery->name . ' ' . $this->delivery->last_name ,

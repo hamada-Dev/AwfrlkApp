@@ -21,7 +21,7 @@ class UserOfferController extends BaseController
         if ($userOffer->count() > 0)
             return $this->sendResponse(UserOfferResource::collection($userOffer), 'user offer data');
         else
-            return $this->sendError('no data', 'this user has no offer', 500);
+            return $this->sendError('no data', 'this user has no offer', 200);
     }
 
     /**
@@ -50,7 +50,7 @@ class UserOfferController extends BaseController
         if ($userOffer->count() > 0)
             return $this->sendResponse(UserOfferOrderResource::collection($userOffer), 'user offer data');
         else
-            return $this->sendError('no data', 'this user has no offer', 500);
+            return $this->sendError('no data', 'this user has no offer', 200);
     }
 
     /**

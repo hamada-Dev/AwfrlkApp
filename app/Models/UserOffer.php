@@ -14,6 +14,11 @@ class UserOffer extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function delivery()
+    {
+        return $this->belongsTo(User::class, 'delivery_id');
+    }
     public function Offer()
     {
         return $this->belongsTo(Offer::class);

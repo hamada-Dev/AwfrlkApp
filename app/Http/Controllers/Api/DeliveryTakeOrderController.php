@@ -67,10 +67,11 @@ class DeliveryTakeOrderController extends BaseController
                     //         "price"             => $request->price,
                     //     ]);
                     // }
-
-                    $newOrder->update([
-                        "end_shoping_date"  => now(),
-                    ]);
+                    if ($request->endshoping == 1) {
+                        $newOrder->update([
+                            "end_shoping_date"  => now(),
+                        ]);
+                    }
 
                     $order_details   =  OrderDetailsRecourse::collection($newOrder->orderDetails);
                     $order_delivery  =  new UserResource(User::find($newOrder->delivery_id));

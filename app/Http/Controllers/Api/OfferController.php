@@ -64,7 +64,7 @@ class OfferController extends BaseController
                 // return $data = ['offerData' => $userOffer, 'userInfo' => $userInfo, 'ActiveDelivery' => $ActiveDelivery];
 
                 ////////////////////////////////////////////////
-                 $this->makeEvent($offerData, $userInfo, $ActiveDelivery);
+                //  $this->makeEvent($offerData, $userInfo, $ActiveDelivery);
                 ////////////////////////////////////////////////
 
                 DB::commit();

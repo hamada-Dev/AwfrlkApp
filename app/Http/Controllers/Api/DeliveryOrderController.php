@@ -18,7 +18,7 @@ class DeliveryOrderController extends BaseController
      */
     public function index()
     {
-        $delivryOrder =  Order::where('delivery_id', auth()->user()->id)->get();
+        $delivryOrder =  Order::where('delivery_id', auth()->user()->id)->latest()->get();
 
         if ($delivryOrder->count() > 0)
             return $this->sendResponse(OrderDeliveryRecourse::collection($delivryOrder), 200);
@@ -45,7 +45,7 @@ class DeliveryOrderController extends BaseController
      */
     public function show($id)
     {
-        $delivryOrder =  Order::whereNull('delivery_id')->with('orderDetails')->with('user')->get();
+        $delivryOrder =  Order::whereNull('delivery_id')->with('orderDetails')->with('user')->latest()->get();
         if ($delivryOrder->count() > 0)
             return $this->sendResponse(PendingOrderResource::collection($delivryOrder), 200);
         else

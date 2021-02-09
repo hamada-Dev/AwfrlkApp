@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserOffer;
 use App\Scopes\ConfirmedOffer;
+use Dotenv\Regex\Success;
 use Illuminate\Http\Request;
 
 class DeliveryTakeOfferController extends BaseController
@@ -18,10 +19,17 @@ class DeliveryTakeOfferController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $avilableOffer = UserOffer::where('delivery_id', auth()->user()->id)->whereNull('confirm_date')->get();
-        // ->withoutGlobalScope(ConfirmedOffer::class)
+        // return $request;
+        // $avilableOffer = UserOffer::where('delivery_id', auth()->user()->id)->withoutGlobalScope(ConfirmedOffer::class)->whereNull('confirm_date')->get();
+        $avilableOffer = UserOffer::when($request->notconfirmed, function ($query) use ($request) {
+            return $query->where('delivery_id', Null)->withoutGlobalScope(ConfirmedOffer::class);
+        })->when(!$request->notconfirmed, function ($que) {
+            return $que->where('delivery_id', auth()->user()->id)->withoutGlobalScope(ConfirmedOffer::class)->whereNull('confirm_date');
+        })
+            ->get();
+        // 
         if ($avilableOffer->count() > 0)
             return $this->sendResponse('you have offer but not collect money', ['userOffer' => UserOfferResource::collection($avilableOffer)], 200);
         else
@@ -37,8 +45,8 @@ class DeliveryTakeOfferController extends BaseController
     public function store(Request $request)
     {
         $findUserOffer = UserOffer::where('id', $request->id)
-                                    ->whereNull('delivery_id')
-                                    ->withoutGlobalScope(ConfirmedOffer::class)->first();
+            ->whereNull('delivery_id')
+            ->withoutGlobalScope(ConfirmedOffer::class)->first();
 
 
         if (!empty($findUserOffer)) {
@@ -56,7 +64,7 @@ class DeliveryTakeOfferController extends BaseController
             ]);
 
             ////////////////////////////////////////////////
-            $this->makeEvent($offerData, $userInfo, $deliveryInfo);
+            // $this->makeEvent($offerData, $userInfo, $deliveryInfo);
             ////////////////////////////////////////////////
 
 
@@ -89,9 +97,22 @@ class DeliveryTakeOfferController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // this is for delivery take money succsfully 
     {
-        //
+        $findUserOffer = UserOffer::where('delivery_id', auth()->user()->id)
+            ->withoutGlobalScope(ConfirmedOffer::class)->whereNull('confirm_date')->find($id);
+
+        if ($findUserOffer) {
+
+            $findUserOffer->update([
+                'confirm_date'  => now(),
+            ]);
+
+            return $this->sendResponse('you alrady take money Successfully', ['thanks'], 200);
+        } else {
+            return $this->sendResponse(' this user offer not find ', ['No Data'], 200);
+        }
+        return $findUserOffer;
     }
 
     /**
@@ -106,7 +127,7 @@ class DeliveryTakeOfferController extends BaseController
     }
 
 
-    
+
     protected function makeEvent($offerData, $userInfo, $deliveryInfo)
     {
         $data = [
@@ -116,5 +137,4 @@ class DeliveryTakeOfferController extends BaseController
         ];
         event(new DeliveryTakeOfferEvent($data));
     }
-
 }
