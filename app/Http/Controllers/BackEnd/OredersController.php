@@ -6,8 +6,10 @@ use App\Http\Controllers\BackEnd\BackEndController;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Area;
+use App\Models\OrderDetail;
 use App\Models\Promocode;
 use App\Models\UserOffer;
+use App\Scopes\NonDeleteIScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -29,9 +31,15 @@ class OredersController extends BackEndController
         //get all data of Model
         $rows = $this->model;
         $rows = $this->filter($rows);
-        $rows = $rows->when($request->delivery_id, function ($query) use ($request) {
+        $rows = $rows->when($request->delivery_id, function ($query) use ($request) { // this retuen all order for this deliver in this shift
             $query->where('delivery_id', $request->delivery_id)->where('created_at', '>', $request->created_at);
-        })->latest()->paginate(4);
+        })->when($request->trash, function ($que) {
+            return $que->withOutGlobalScope(NonDeleteIScope::class)->whereNotNull('deleted_by');
+        })->with(['orderDetails' => function ($que) use ($request) {
+            return $que->when($request->trash, function ($que) {
+                return $que->withOutGlobalScope(NonDeleteIScope::class); //->whereNotNull('deleted_by');
+            });
+        }])->latest()->paginate(PAG_COUNT);
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
@@ -60,7 +68,7 @@ class OredersController extends BackEndController
     {
 
         $request->validate([
-            'feedback'    =>  ['required', 'string', 'max:250', 'min:5'],
+            'note'    =>  ['required', 'string', 'max:250', 'min:5'],
             'client_id'   =>  ['required', 'numeric', 'exists:users,id'],
             'delivery_id' =>  ['required', 'numeric', 'exists:users,id'],
             'order_type'  =>  ['required', 'numeric', Rule::in([0, 1, 2])],
@@ -69,14 +77,14 @@ class OredersController extends BackEndController
         $ActiveDelivery = User::deliveryActive()->find($request->delivery_id);
         if (empty($ActiveDelivery)) {
             session()->flash('error', 'هذا الطيار مشغول الان برجاء اختيار طيار اخر ');
-            return redirect()->back()->with(['delivery_id' => $request->delivery_id, 'client_id' => $request->client_id, 'feedback' => $request->feedback,]);
+            return redirect()->back()->with(['delivery_id' => $request->delivery_id, 'client_id' => $request->client_id, 'note' => $request->note,]);
         }
 
 
         $this->changeDeliveryStatus($ActiveDelivery);
 
 
-        return redirect()->route('orderdetails.create', ['orderType' => $request->order_type])->with(['delivery_id' => $request->delivery_id, 'client_id' => $request->client_id, 'feedback' => $request->feedback,]);
+        return redirect()->route('orderdetails.create', ['orderType' => $request->order_type])->with(['delivery_id' => $request->delivery_id, 'client_id' => $request->client_id, 'note' => $request->note,]);
     }
 
 
@@ -108,7 +116,7 @@ class OredersController extends BackEndController
             'status' => ['numeric', Rule::in([0, 1])],
             'end_shoping_date' => [],
             'arrival_date'   =>  [],
-            'feedback'   =>  ['max:250', 'min:5'],
+            'feedback'   =>  ['required', 'string', 'max:250', 'min:5'],
             'client_id' => ['required', 'numeric', 'exists:users,id'],
             'area_id' => ['required', 'numeric', 'exists:areas,id'],
 
@@ -148,11 +156,39 @@ class OredersController extends BackEndController
             $order->deleted_by  = auth()->user()->id;
             $order->delete_date = now();
             $order->save();
+            $order->orderDetails()->update([
+                'deleted_by'  => auth()->user()->id,
+                'delete_date' =>  now(),
+            ]);
             session()->flash('success', __('site.deleted_successfully'));
             return redirect()->route($this->getClassNameFromModel() . '.index');
         } else {
             session()->flash('error', 'غير قادر علي الحذف حيث ان اعميل استلم الطلب');
             return redirect()->route($this->getClassNameFromModel() . '.index');
+        }
+    }
+
+    public function orderTrash(Request $request)
+    {
+        $trashOrder =  Order::withOutGlobalScope(NonDeleteIScope::class)->whereNotNull('deleted_by')->findOrFail($request->order_id);
+
+        try {
+            DB::beginTransaction();
+            $trashOrder->deleted_by = null;
+            $trashOrder->delete_date = null;
+            $trashOrder->save();
+
+            OrderDetail::where('order_id', $trashOrder->id)->withOutGlobalScope(NonDeleteIScope::class)->update([
+                'deleted_by'  =>  null,
+                'delete_date' =>  null,
+            ]);
+            DB::commit();
+            session()->flash('success', __('site.updated_successfully'));
+            return redirect()->route('orders.index');
+        } catch (\Exception $ex) {
+            DB::rollback();
+            session()->flash('error', 'برجاء المحاوله مره اخري ');
+            return redirect()->route('orders.index');
         }
     }
 

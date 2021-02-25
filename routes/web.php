@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-define('PAG_COUNT', 10);
+define('PAG_COUNT', 30);
+date_default_timezone_set('Africa/Cairo');
 
 Route::group(
     [
@@ -67,6 +68,8 @@ Route::group(
             Route::resource('useroffers', 'UserOffersController')->except('show');
             //orders
             Route::resource('orders', 'OredersController')->except("show");
+            //orders recycle 
+            Route::post('order/trash', 'OredersController@orderTrash')->name("order.trash");
             //orderDetails
             Route::resource('orderdetails', 'OrderDetailsController');
             //to seperate the delivery
@@ -97,6 +100,9 @@ Route::group(
 
             //slider fo android
             Route::resource('sliders', 'SliderController');
+
+            //analysis 
+            Route::get('analysis', 'analysisController@index')->name('analysis');
 
             //chat 
             Route::get('chat', 'ChatController@index')->name('chat');

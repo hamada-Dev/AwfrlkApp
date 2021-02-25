@@ -10,21 +10,25 @@
 <form action="{{route('advances.totalmoney')}}" method="POST">
 @csrf
     <div class='row'>
+        <div class="col-md-1">            
+            <label class="bmd-label-floating">@lang('site.from')</label>
+        </div>
         <div class="col-md-3">
             <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">@lang('site.from')</label>
-                <input type="date"  name="start_date" class='form-control'>
+                <input type="date" value="{{date('Y-m-01', time())}}"  name="start_date" class='form-control'>
              </div>
         </div>
 
+        <div class="col-md-1">            
+            <label class="bmd-label-floating">@lang('site.to')</label>
+        </div>
         <div class="col-md-3">
             <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">@lang('site.to')</label>
-                <input type="date"  name="end_date" class='form-control'>
+                <input type="date" value="{{date('Y-m-d', time())}}"  name="end_date" class='form-control'>
             </div>
         </div>
         <div class="col-md-2">
-            <button id="search_btn" class="btn btn-md btn-primary" type="submit">@lang('site.search')</button>
+            <button id="search_btn" class="btn btn-md btn-primary btn-block" type="submit">@lang('site.search')</button>
         </div>
     </div>
 

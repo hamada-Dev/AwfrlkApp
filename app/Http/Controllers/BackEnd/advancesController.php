@@ -150,7 +150,7 @@ class advancesController extends BackEndController
    public function showReport()
    {
        
-        return view('back-end.advances.counts');
+        return view('back-end.advances.counts'); 
 
    }
    public function countAllMoney(Request $request)
@@ -165,8 +165,7 @@ class advancesController extends BackEndController
     if (isset($request->start_date)) {
         $start_date   = date('Y-m-d h:i:s ', strtotime($request->start_date));
     } else {
-        $last2year = time() - (2 * 12 * 30 * 24 * 60 * 60);
-        $start_date   = date('Y-m-d h:i:s G', $last2year);
+        $start_date   = date('Y-m-01 h:i:s G', time());
     }
 
     if (isset($request->end_date)) {
@@ -174,7 +173,7 @@ class advancesController extends BackEndController
         $end_date   = date('Y-m-d', strtotime($request->end_date)) . ' 23:59:59';
     } else {
         // $end_date = date('Y-m-d h:i:s ', time() + 10*60*60 );
-        $end_date = date('Y-m-d', time()) . ' 23:59:59';
+        $end_date = date('Y-m-t', time()) ;
     }
     
 

@@ -3,7 +3,7 @@
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-    Tip 2: you can also add an image using data-image tag
+    Tip 2: you can also add an image using data-image tag 
 -->
     <div class="logo">
         <a href="{{route('home.index')}}" class="simple-text logo-normal" target="_blank">
@@ -12,27 +12,27 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item {{is_active('home')}}">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('home.index')}}">
                     <i class="material-icons">dashboard</i>
                     <p>@lang('site.home')</p>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ (request()->group == 'emp' ? 'active' :(request()->group == null ? is_active('users') : ''))}}">
                 <a class="nav-link" href="{{route('users.index')}}">
                     <i class="material-icons">person</i>
                     <p>@lang('site.users')</p>
                 </a>
             </li>
 
-            <li class="nav-item {{is_active('usersShow')}}">
+            <li class="nav-item {{( request()->group == 'user' ? 'active' : is_active('showUser'))}}">
                 <a class="nav-link" href="{{route('users.usersShow')}}">
                     <i class="material-icons">person</i>
                     <p>@lang('site.usersShow')</p>
                 </a>
             </li>
 
-            <li class="nav-item {{is_active('delivery')}}">
+            <li class="nav-item {{ request()->group == 'delivery' ? 'active' : is_active('showDelivey')}}">
                 <a class="nav-link" href="{{route('users.delivery')}}">
                     <i class="material-icons">person</i>
                     <p>@lang('site.delivery')</p>
@@ -45,7 +45,7 @@
                     <p>@lang('site.usersalaries')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('blcklist')}}">
+            <li class="nav-item {{is_active('blacklist')}}">
                 <a class="nav-link" href="{{route('users.showblacklist')}}">
                     <i class="material-icons">person</i>
                     <p>@lang('site.black_list')</p>
@@ -86,7 +86,7 @@
                     <p>@lang('site.deliverymotocycles')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('useroffer')}}">
+            <li class="nav-item {{is_active('useroffers')}}">
                 <a class="nav-link" href="{{route('useroffers.index')}}">
                     <i class="material-icons">redeem</i>
                     <p>@lang('site.useroffers')</p>
@@ -122,8 +122,15 @@
                     <p>@lang('site.sliders')</p>
                 </a>
             </li>
-            <li class="nav-item {{is_active('counts')}}">
+            <li class="nav-item {{is_active('showReport') .' ' . is_active('showmoney')}}">
                 <a class="nav-link" href="{{route('advances.counts')}}">
+                    <i class="material-icons">gift</i>
+                    <p>@lang('site.counts')</p>
+                </a>
+            </li>
+            
+            <li class="nav-item {{is_active('analysis') .' ' . is_active('analysis')}}">
+                <a class="nav-link" href="{{route('analysis')}}">
                     <i class="material-icons">gift</i>
                     <p>@lang('site.counts')</p>
                 </a>

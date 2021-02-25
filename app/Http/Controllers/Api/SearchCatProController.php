@@ -18,7 +18,6 @@ class SearchCatProController extends BaseController
         //         ->orwhere('description', 'like', '%' . $request->search . '%');
         // })->get();
 
-
         $searchProduct = Product::when($request->search, function ($qu) use ($request) {
             return $qu->where('name', 'like', '%' . $request->search . '%')
                 ->orwhere('price', 'like', '%' . $request->search . '%')
@@ -26,20 +25,21 @@ class SearchCatProController extends BaseController
         })->get();
 
         // this condition if user search about category
-        if ($searchProduct) {
+        if ($searchProduct->count() <= 0) {
             $categoryId = Category::select('id')->when($request->search, function ($qu) use ($request) {
                 return $qu->where('name', 'like', '%' . $request->search . '%')
                     ->orwhere('description', 'like', '%' . $request->search . '%');
             })->get();
-
-            $searchProduct = Product::when($categoryId, function ($qu) use ($categoryId) {
-                return $qu->where('category_id', $categoryId[0]->id);
-            })->get();
+            if ($categoryId->count() > 0) {
+                $searchProduct = Product::when($categoryId, function ($qu) use ($categoryId) {
+                    return $qu->where('category_id', $categoryId[0]->id);
+                })->get();
+            }
         }
 
         if ($searchProduct)
             return $this->sendResponse(ProductRecourse::collection($searchProduct), 200);
         else
-            return $this->sendError('theres No data  Yet', 400);
+            return $this->sendError('theres No data  Yet', 200);
     }
 }

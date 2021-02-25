@@ -148,7 +148,17 @@
 </head>
 
 <body class="dark-edition">
-
+    <div class="loader" style="position: fixed; top: 0; left: 0; background: #8b92a9; z-index: 9999; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center">
+        <img src="{{ asset('uploads/load/Spinner.gif') }}" alt="loading..." srcset="">
+    </div>
+    
+    <script>
+        window.addEventListener("load", function(){
+        const loader = document.querySelector(".loader");
+        loader.className += " hidden";
+        console.log('rrrrrrrrrrrr');
+    })
+    </script>
     <audio id="audioNotifyNew">
         <source src="{{asset('audio/amr.mp3')}}" type="audio/ogg">
         <source src="{{asset('audio/amr.mp3')}}" type="audio/mpeg">
@@ -174,7 +184,7 @@
             @include('back-end.layout.footer')
         </div>
     </div>
-
+  
     <!--   Core JS Files   -->
     {{--Jquery--}}
     <script src="{{asset('assets/js/core/jquery.min.js')}}"></script>
@@ -478,7 +488,8 @@
             e.preventDefault();
 
             var n = new Noty({
-                text: "<?php echo app('translator')->get('site.confirm_delete'); ?>",
+                text: "<?php echo app('translator')->get('site.confirmation'); ?>",
+                // text: "<?php echo app('translator')->get('site.confirm_delete'); ?>",
                 type: "warning",
                 killer: true,
                 buttons: [
@@ -532,6 +543,7 @@
             display: none;
         }
 
+
         div.dataTables_wrapper div.dataTables_filter input {
             width: 100%;
             margin: 20px;
@@ -550,6 +562,7 @@
         }
     </style>
     <script>
+      
         $('table, p, th').css('font-size', '18px');
     $('label').css('font-size', '15px');
     $(".invalid-feedback").css({'display':'block', 'font-size': '13px'});
@@ -560,6 +573,7 @@
         'height': '40px',
         'background': 'center',
     });
+   
     </script>
 
     {{-- more edit in ar local becouse package matrial have more than error  --}}
@@ -591,18 +605,18 @@
         $(this).children().css('display', 'flex');
     })
 
-    $('table tbody').each(function(){
+    $('table tbody, table tfoot').each(function(){
         $(this).css('text-align','center')
     })  
     
-    $('table thead th').each(function(){
+    $('table thead th, table tfoot th').each(function(){
         $(this).css('text-align','center')
     }) 
     
     $('.navbar-brand').each(function(){
         $(this).css({'font-size':'35px', 'padding':'20px'})
     })
-    
+      
     </script>
     @endif
     {{-- -------------------------   pusher plugin -------------------------- --}}

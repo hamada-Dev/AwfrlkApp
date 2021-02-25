@@ -99,6 +99,8 @@ return [
   'product' => 'منتج',
   'productupdates' => 'خطه اسعار المنتجات',
   'productupdate' => 'خطه اسعار المنتجات',
+  'date'          => 'تاريخ التحديث',
+  'supervisor'          => 'المشرف',
 
   //offers
   "offer_name" => "أسم العرض",
@@ -172,6 +174,7 @@ return [
   'Pending_orderes' => 'طلبات قيد التنفيذ',
   'order_type' => 'نوع الطلب',
   'pharmacy' => 'صيدليه',
+  'homeToHome'  => 'من منزل إلي منزل',
   'taklef' => 'تكليف الطيار',
   'cache' => 'غير معلوم',
   //deliverymotocycles
@@ -219,6 +222,7 @@ return [
   "end_shoping_date"=>' الانتهاء من التسوق',
   "arrival_date"=>'تاريخ التسليم',
   "feedback"=>'التعليق',
+  "note"=>'ملاحظات',
   "delivery_id"=>'الطيار',
   "choose-deliver"=>'أختر الطيار',
   "client_id"=>'العميل',
@@ -237,10 +241,12 @@ return [
   'choose-typeofordre'=>'أختر نوع الطلب',
   'usual'=>'عادى',
   'fromto'=>' من مكان الى مكان ',
+  'adressFrom'  => 'العنوان المقصود',
   'from-area'=>'من منطقة',
   'to-area'=>'إلى منطقة',
   'type_count'=>'نوع الحساب',
   'choose-category_cat'=>'أختر الفئة التابع لها ان وجدت',
+  'order_date'  => 'تاريخ الطلب',
   //orderDetails
   "orderdetails" => "تفاصيل الطلب",
   "orderdetail" => "تفاصيل الطلب",
@@ -258,6 +264,13 @@ return [
   "details" => "تفاصيل",
   "hide" => "إخفاء",
 
+  // analysis
+  'analysis'      => 'تحليل البيانات',
+  'mostDelivery'  => '  الطيار الاكثر عملا',
+  'mostUser'      => 'العميل الاكثر طلب',
+  'mostProduct'   => 'المنتج الأكثر استهلاك',
+  'mostCategory'  => 'القسم الاكثر طلب',
+
   //tags
   'tags' => 'الإشارات',
   'tag' => 'إشارة',
@@ -266,9 +279,11 @@ return [
   'yes' => 'نعم',
   'no' => 'لا',
   'confirm_delete' => 'تأكيد الحذف',
+  'confirmation' => 'تأكيد العمليه',
 
   //Noty Messages
   'added_successfully' => 'تم اضافة الحقل بنجاح',
   'deleted_successfully' => 'تم حذف الحقل بنجاح',
   'updated_successfully' => 'تم تعديل الحقل بنجاح',
+  'action_error'      => 'هناك خطا ما برجاء المحاوله مره اخري',
 ];

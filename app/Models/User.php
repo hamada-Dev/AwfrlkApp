@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('group', 'delivery');
     }
 
+    public function ScopeUser($query)
+    {
+        return $query->where('group', 'user');
+    }
+
     public function ScopeDeliveryActive($query)
     {
         return $query->where('group', 'delivery')->where('delivery_status', 1);
@@ -126,7 +131,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class, 'delivery_id');
     }
-
 
 
     public function promocodes()

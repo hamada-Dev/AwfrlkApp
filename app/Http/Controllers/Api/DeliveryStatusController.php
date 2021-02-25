@@ -19,10 +19,9 @@ class DeliveryStatusController extends BaseController
      */
     public function index()
     {
-        // return User::where('delivery_id', auth()->user()->id)->get();
-        $deliveryStatus = User::where('id', auth()->user()->id)->first();
+        $deliveryStatus = User::find(auth()->user()->id);
 
-        $deliverySTa = $deliveryStatus->delivery_status == 1 ? 'active' : 'Not Active';
+        $deliverySTa = $deliveryStatus->delivery_status == 1 ? 'active' : ($deliveryStatus->delivery_status == 0 ? 'busy' : 'Not Active');
 
         if ($deliveryStatus->count() > 0)
             return $this->sendResponse(['type' => $deliverySTa, 'from' => $deliveryStatus->updated_at->diffForHumans()], 200);
@@ -41,7 +40,7 @@ class DeliveryStatusController extends BaseController
         $request->validate([
             'status'    =>  ['numeric', Rule::in([1, 2]),],
         ]);
-        $userDelivery = User::delivery()->where('id', auth()->user()->id)->first();
+        $userDelivery = User::find(auth()->user()->id);
 
         if ($request->status != $userDelivery->delivery_status) {
             try {
@@ -58,7 +57,7 @@ class DeliveryStatusController extends BaseController
                 ]);
 
                 DB::commit();
-                return $this->sendResponse(['data' => $request->status == 1 ? 'you Active Now ' : 'yoy Not Active'], 200);
+                return $this->sendResponse(['data' => $request->status == 1 ? 'you Active Now ' : ($request->status == 0 ? 'you Busy' : 'you Not Active') ], 200);
             } catch (\Exception $ex) {
                 DB::rollback();
                 return $this->sendError('There is an errror when change status', ['No Data'], 404);

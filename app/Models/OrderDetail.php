@@ -13,7 +13,7 @@ class OrderDetail extends Model
 
     public function getImagePathAttribute()
     {
-        return asset('uploads/orders_images/' . $this->image);
+        return $this->image == null ? asset('uploads/orders_images/order.png') : asset('uploads/orders_images/' . $this->image);
     } //end of path
 
     public static function boot()
@@ -22,7 +22,7 @@ class OrderDetail extends Model
         static::addGlobalScope(new NonDeleteIScope);
     }
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
     
     public function order(){

@@ -206,41 +206,12 @@
     </div>
 
 
-    <a href="{{ route('chat') }}" title="chat" style="cursor: pointer">
+    {{-- <a href="{{ route('chat') }}" title="chat" style="cursor: pointer">
         <div  @if (app()->getLocale() == 'ar') style="position: fixed; left: 50px; bottom: 50px;" @else  style="position: fixed; right: 50px;" @endif>
             <i style="font-size: 60px; color: yellow" class="material-icons">message</i>
         </div>
-    </a>
+    </a> --}}
 
-    <!-- <div class="col-lg-12 col-md-12">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                {{-- <h4 style="display:inline-block;" class="card-title">@lang('site.comments') <sub>[ {{count($comments)}} ]</sub></h4> --}}
-                <p class="card-category">Latest Comments</p>
-            </div>
-            <div class="card-body table-responsive">
-                <table class="table table-hover">
-                    <thead class="text-warning">
-                    <tr><th>ID</th>
-                        <th>@lang('site.name')</th>
-                        <th>@lang('site.video')</th>
-                        <th>@lang('site.comment')</th>
-                        <th>@lang('site.date')</th>
-                    </tr></thead>
-                    <tbody>
-                    {{-- @foreach($comments as $index=>$comment)
-                    <tr>
-                        <td>{{++$index}}</td>
-                        <td><a href="{{route('users.edit', $comment->user->id)}}">{{$comment->user->name}}</a> </td>
-                        <td>{{$comment->comment}}</td>
-                        <td>{{$comment->created_at}}</td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                {!! $comments->links() !!} --}}
-            </div>
-        </div>
-    </div> -->
+
 
     @endsection

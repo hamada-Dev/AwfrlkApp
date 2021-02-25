@@ -29,21 +29,24 @@ class PendingOrderController extends BackEndController
         // return $request->process;
 
         //get all data of Model
+        // empty($request) ? $request->request->add(['delivery', 1]) = 14 : '';
+        // $request->request->add(['delivery' => 1]);
 
         $rows = $this->model->when($request->orderId, function ($que) use ($request) {
             return $que->where('id', $request->orderId);
         })->when($request->process, function ($qu) use ($request) {
             return $qu->whereNull('delivery_id')->where('status', 0);
         })->when($request->delivery, function ($q) use ($request) {
-            return $q->whereNotNull('delivery_id')->where('status', 0)->whereNull('end_shoping_date');
+            return $q->whereNotNull('delivery_id')->where('status', 0); //->whereNull('end_shoping_date');
         })->when($request->road, function ($quer) use ($request) {
             return $quer->whereNotNull('delivery_id')->where('status', 0)->whereNotNull('end_shoping_date');
         })->with(['orderDetails' => function ($query) {
             return $query->with('product');
-        }])->with('user')->latest()->paginate(PAG_COUNT);
+        }])->paginate(PAG_COUNT);
 
+        // return $rows;
 
-        // active delivery 
+        // active delivery  
         $activeDelivery = User::when($request->process, function ($query) use ($request) {
             return $query->deliveryActive();
         })->when($request->delivery, function ($quer) use ($request) {
@@ -103,18 +106,18 @@ class PendingOrderController extends BackEndController
 
                     DB::commit();
                     session()->flash('success', "تم تكليف الطيار بنجاح ");
-                    return redirect()->route('pending.index');
+                    return redirect()->back(); //->route('pending.index'); 
                 } catch (\Exception $ex) {
                     DB::rollback();
                     return $ex;
                 }
             } else {
                 session()->flash('error', "هذا الطيار مشغول بتوصيل طلب اخر ");
-                return redirect()->route('pending.index');
+                return redirect()->back(); //->route('pending.index'); 
             }
         } else {
             session()->flash('error', "تم الانتهاء من هذا الطلب");
-            return redirect()->route('pending.index');
+            return redirect()->back(); //->route('pending.index'); 
         }
     }
 

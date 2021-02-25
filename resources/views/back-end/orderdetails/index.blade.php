@@ -21,160 +21,170 @@
 'module_name_singular'=>$module_name_singular])
 @slot('add_button')
 <div class="col-md-4 text-right">
-    <a href="{{route($module_name_plural.'.edit', ['orderdetail' => request()->order_id, 'orderType' => $orderType]) }}" class="btn btn-white btn-round ">
+    @if (!request()->trash)
+    <a href="{{route($module_name_plural.'.edit', ['orderdetail' => request()->order_id, 'orderType' => $orderType]) }}"
+        class="btn btn-white btn-round ">
         @lang('site.edit') @lang('site.'.$module_name_singular)
     </a>
+    @endif
+
 </div>
-@endslot 
+@endslot
 <!-- order type is usauly -->
 @if(isset($orderType) && $orderType==0)
-    <div class="table-responsive">
-        <table  id="dataTable" class="table">
-            <thead class=" text-primary">
-                <tr>
-                    <th>
-                        @lang('site.id')
-                    </th>
-                    <th>
-                        @lang('site.product_id')
-                    </th>
-                    <th>
-                        @lang('site.order_id')
-                    </th>
-                    <th>
-                        @lang('site.amount')
-                    </th>
-                    <th>
-                        @lang('site.price')
-                    </th>
-            
-               
-                </tr>
-            </thead>
-            <tbody>
+<div class="table-responsive">
+    <table id="dataTable" class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @lang('site.id')
+                </th>
+                <th>
+                    @lang('site.product_id')
+                </th> 
+                <th>
+                    @lang('site.category')
+                </th>
+                <th>
+                    @lang('site.amount')
+                </th>
+                <th>
+                    @lang('site.unit')
+                </th>
+                <th>
+                    @lang('site.price')
+                </th>
 
-                @foreach($rows as $row)
 
-                <tr>
-                    <td>
-                        {{$row->id}}
-                    </td>
-                    <td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach($rows as $row)
+
+            <tr>
+                <td>
+                    {{$row->id}}
+                </td>
+                <td>
                     {{ ($row->product_id == null) ? 'image' : $row->product->name}}
-                    </td>
-                    <td>
-                        {{$row->order->client_id}}
-                    </td>
-                    <td>
-                    {{$row->amount}} 
-                    </td>
-                    <td>
-                        {{($row->price == null) ? 'after buy' :$row->price }}
-                    </td>
-                
-             
-                </tr>
-                @endforeach
+                </td> 
+                <td>
+                    {{ $row->product->category->name }}
+                </td>
+                <td>
+                    {{$row->amount}}
+                </td>
+                <td>
+                    {{__('site.'.$row->product->unit)}}
+                </td>
+                <td>
+                    {{($row->price == null) ? 'after buy' :$row->price }}
+                </td>
 
-            </tbody>
-        </table>
-        {{$rows->links()}}
-    </div>
+
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    {{$rows->links()}}
+</div>
 @elseif(isset($orderType) && $orderType==1)
 <!-- start place tp place -->
-    <div class="table-responsive">
-        <table  id="dataTable" class="table">
-            <thead class=" text-primary">
-                <tr>
-                    <th>
-                        @lang('site.id')
-                    </th>
-                    <th>
-                        @lang('site.order_id')
-                    </th>
-                    <th>
-                        @lang('site.description')
-                    </th>
-                    <th>
-                        @lang('site.adressFrom')
-                    </th>
+<div class="table-responsive">
+    <table id="dataTable" class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @lang('site.id')
+                </th>
+                <th>
+                    @lang('site.order_id')
+                </th>
+                <th>
+                    @lang('site.description')
+                </th>
+                <th>
+                    @lang('site.adressFrom')
+                </th>
 
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
 
-                @foreach($rows as $row)
+            @foreach($rows as $row)
 
-                <tr>
-                    <td>
-                        {{$row->id}}
-                    </td>
-            
-                    <td>
-                        {{$row->order_id}}
-                    </td>
-                    <td>
-                    {{$row->description}} 
-                    </td>
-                    <td>
-                    {{$row->product_home}} 
-                    </td>
+            <tr>
+                <td>
+                    {{$row->id}}
+                </td>
 
-                </tr>
-                @endforeach
+                <td>
+                    {{$row->order_id}}
+                </td>
+                <td>
+                    {{$row->description}}
+                </td>
+                <td>
+                    {{$row->product_home}}
+                </td>
 
-            </tbody>
-        </table>
-        {{$rows->links()}}
-    </div>
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    {{$rows->links()}}
+</div>
 @elseif(isset($orderType) && $orderType==2)
 <!-- order type is pharmacy -->
-    <div class="table-responsive">
-        <table  id="dataTable" class="table">
-            <thead class=" text-primary">
-                <tr>
-                    <th>
-                        @lang('site.id')
-                    </th>
-                
-                    <th>
-                        @lang('site.order_id')
-                    </th>
-                    <th>
-                        @lang('site.image')
-                    </th>
-                    
-                    <th>
-                        @lang('site.description')
-                    </th>
-               
-                </tr>
-            </thead>
-            <tbody>
+<div class="table-responsive">
+    <table id="dataTable" class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @lang('site.id')
+                </th>
 
-                @foreach($rows as $row)
+                <th>
+                    @lang('site.order_id')
+                </th>
+                <th>
+                    @lang('site.image')
+                </th>
 
-                <tr>
-                    <td>
-                        {{$row->id}}
-                    </td>
-                    <td>
-                        {{$row->order_id}}
-                    </td>
-                    <td>
-                        <img src="{{($row->image == null )  ? '': $row->imagePath}}" alt="" width='60' height='60'>
-                    </td>
-                    <td>
-                        {{$row->description}} 
-                    </td>
-                   
-                </tr>
-                @endforeach
+                <th>
+                    @lang('site.description')
+                </th>
 
-            </tbody>
-        </table>
-        {{$rows->links()}}
-    </div>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach($rows as $row)
+
+            <tr>
+                <td>
+                    {{$row->id}}
+                </td>
+                <td>
+                    {{$row->order_id}}
+                </td>
+                <td>
+                    <img src="{{$row->imagePath}}" alt="" width='60' height='60'>
+                </td>
+                <td>
+                    {{$row->description}}
+                </td>
+
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    {{$rows->links()}}
+</div>
 @endif
 @endcomponent
 

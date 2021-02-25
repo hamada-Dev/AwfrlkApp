@@ -52,6 +52,9 @@
                 <th>
                     @lang('site.description')
                 </th>
+                 <th>
+                    @lang('site.offer')
+                </th>
                
                 <th class="text-right">
                     @lang('site.actions')
@@ -62,7 +65,7 @@
 
             @foreach($rows as $row)
 
-            <tr>
+            <tr {{ $row->offer == 1 ? "style=background:#8e3a9f2b;"  : ''}}>
 
                 <td>
                     {{$row->id}}
@@ -90,6 +93,14 @@
 
                 <td>
                     {!! $row->description !!}
+                </td>
+                
+                <td>
+                    @if ($row->offer == 1 )
+                    <input type='checkbox' disabled class='form-control' checked>
+                    @else
+                        --
+                    @endif
                 </td>
 
                 <td class="td-actions text-right">

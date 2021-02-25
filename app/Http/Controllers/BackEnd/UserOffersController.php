@@ -143,7 +143,7 @@ class UserOffersController extends BackEndController
         // return $request;
 
         $userOfferDelete = UserOffer::when($request->userOfferNonPay, function($query) use($request){
-            return $query->withOutGlobalScope(ConfirmedOffer::class);
+            return $query->withOutGlobalScope(ConfirmedOffer::class)->whereNull('confirm_date');
         })->findOrFail($id);
 
 

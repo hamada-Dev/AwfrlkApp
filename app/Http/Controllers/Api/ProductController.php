@@ -55,9 +55,9 @@ class ProductController extends BaseController
             if ($products->count() > 0)
                 return $this->sendResponse(ProductRecourse::collection($products), 'produc data');
             else
-                return $this->sendError('405', 'this category have ZERO product');
+                return $this->sendError('200', 'this category have ZERO product');
         } else {
-            return $this->sendError('404', 'this cat is not find ');
+            return $this->sendError('200', 'this cat is not find ');
         }
     }
 

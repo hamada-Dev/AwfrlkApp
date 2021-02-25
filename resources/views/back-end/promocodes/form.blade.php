@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.discount')</label>
             <input type="text" name="discount" value="{{ isset($row) ? $row->discount : old('discount') }}"
@@ -64,6 +64,13 @@
             @enderror
         </div>
     </div>
+    <div class="col-md-1">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating"></label>
+            <output style="font-size: 20px; color: #fff">%</output>
+        </div>
+    </div>
+
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group">

@@ -15,9 +15,9 @@
                 {{--language dropdown--}}
                 <li class="nav-item dropdown show">
                     <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="material-icons" style="font-size: 16px">notifications</i>
+                        <i class="material-icons" style="font-size: 18px">power_settings_new</i>
                         <p class="d-lg-none d-md-block">
-                            notifications
+                            power_settings_new
                         </p>
                         <div class="ripple-container"></div></a>
                     <div class="dropdown-menu  @if (app()->getLocale() == 'ar') dropdown-menu-left @else dropdown-menu-right @endif  " aria-labelledby="navbarDropdownMenuLink">

@@ -57,7 +57,7 @@ class UsersController extends BackEndController
             'lastName'  => ['required', 'string', 'max:255'],
             'email'     => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['nullable', 'min:5'],
-            'c_password'=> ['nullable', 'same:password'],
+            'c_password' => ['nullable', 'same:password'],
             'gender'    => ['required', Rule::in([0, 1])],
             'phone'     => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
             'group'     => ['required', Rule::in(['admin', 'emp', 'delivery', 'user'])],
@@ -143,15 +143,34 @@ class UsersController extends BackEndController
 
     public function destroy($id, Request $request)
     {
-        $promo = User::findOrFail($id);
-        $promo->update([
-            'deleted_by'    => auth()->user()->id,
-            'delete_date'   => now(),
-        ]);
-        // $product->delete();
 
-        session()->flash('success', __('site.deleted_successfully'));
-        return redirect()->route($this->getClassNameFromModel() . '.index');
+
+        $userdeleted = User::findOrFail($id);
+
+   
+        try {
+            DB::beginTransaction();
+            $userdeleted->deleted_by   = auth()->user()->id;
+            $userdeleted->delete_date  = now();
+            $userdeleted->save();
+            $userdeleted->ordersUser()->update([ // if user update order
+                'deleted_by'   => auth()->user()->id,
+                'delete_date'  => now(),
+            ]);
+            $userdeleted->deliveryMoto()->update([ // if delivery update motosycle
+                'deleted_by'   => auth()->user()->id,
+                'delete_date'  => now(),
+            ]);
+            $userdeleted->AauthAcessToken()->delete(); // if user login from app will logout
+            DB::commit();
+            session()->flash('error', __('site.deleted_successfully'));
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            session()->flash('error', __('site.action_error'));
+        }
+
+        return redirect()->back();
+        // return redirect()->route($this->getClassNameFromModel() . '.index');
     }
 
     protected function uploadImage($request)

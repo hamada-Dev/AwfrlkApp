@@ -45,7 +45,7 @@
                 </th>
 
                 <th>
-                    @lang('site.user')
+                    @lang('site.supervisor')
                 </th>
                 {{-- <th class="text-right">
                     @lang('site.actions')
@@ -74,7 +74,7 @@
                 </td>
                 
                 <td>
-                    {{ $row->updated_by}}
+                    {{ $row->user->name .' '. $row->user->lastName}} 
                 </td>
 
                 {{-- <td class="td-actions text-right">

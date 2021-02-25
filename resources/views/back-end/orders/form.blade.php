@@ -33,7 +33,7 @@ $feedback = session()->has('feedback') ? session()->get('feedback') : '';
                 <option value="0">@lang('site.choose-client')</option>
                 @foreach($users as $user)
                 <option value="{{$user->id}}" @if((isset($row) && $user->id== $row->client_id) || (request() != NULL &&
-                    request()->client_id == $user->id ) || old('client_id') == $user->id) || ($client_id == $user->id)
+                    request()->client_id == $user->id ) || old('client_id') == $user->id) 
                     selected @endif>{{$user->name}}
                     {{$user->lastName  }} </option>
                 @endforeach
@@ -48,10 +48,10 @@ $feedback = session()->has('feedback') ? session()->get('feedback') : '';
 
     <div class="col-md-12">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">@lang('site.feedback')</label>
-            <textarea name="feedback" rows="5" cols="10"
-                class="form-control @error('feedback') is-invalid @enderror">{{ isset($row) ? $row->feedback : old('feedback') }}</textarea>
-            @error('feedback')
+            <label class="bmd-label-floating">@lang('site.note')</label>
+            <textarea name="note" rows="5" cols="10"
+                class="form-control @error('note') is-invalid @enderror">{{ isset($row) ? $row->note : old('note') }}</textarea>
+            @error('note')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

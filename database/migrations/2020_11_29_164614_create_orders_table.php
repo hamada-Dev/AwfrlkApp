@@ -20,6 +20,8 @@ class CreateOrdersTable extends Migration
             $table->dateTime('end_shoping_date')->nullable()->comment('from delivery');
             $table->dateTime('arrival_date')->nullable()->comment('from delivery');
             $table->float('delivery_price');
+            $table->text('note')->nullable()->comment('from client when confirme order');
+            $table->tinyInteger('rate')->nullable()->comment('from client for 10');
             $table->text('feedback')->nullable()->comment('from client');
             $table->dateTime('feedback_date')->nullable()->comment('from client');
             $table->bigInteger('delivery_id')->nullable()->unsigned();
@@ -28,6 +30,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('area_id')->unsigned();
             $table->string('adress')->nullable();
             $table->bigInteger('area_id_from')->nullable()->unsigned();
+            $table->string('host_phone')->nullable()->comment('phone for user');
+            $table->string('guest_phone')->nullable()->comment('phone for another user');
             $table->integer('type')->comment(" 0 is usual 1 is offer 2 is promo")->nullable();
             $table->integer('offer_or_promo_id')->comment("this contains offer_id(table many to many) or promo_id that about type val")->nullable();
             $table->string('adress_from')->nullable();

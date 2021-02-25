@@ -60,4 +60,9 @@ class Order extends Model
     {
         return $this->belongsTo(UserOffer::class, 'offer_or_promo_id');
     }
+    
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
 }

@@ -13,8 +13,10 @@ use App\Models\Product;
 use App\Models\Promocode;
 use App\Models\User;
 use App\Models\UserOffer;
+use App\Scopes\NonDeleteIScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class OrderDetailsController extends BackEndController
@@ -31,21 +33,29 @@ class OrderDetailsController extends BackEndController
         $rows = $this->model;
         $rows = $this->filter($rows);
 
-        $rows = $rows->whereHas('order')->when($request->order_id, function ($query) use ($request) {
-            $query->where('order_id', $request->order_id);
+        $rows = $rows->with(['order' => function ($que) use ($request) {
+            return $que->when($request->trash, function ($quer) {
+                return $quer->withOutGlobalScope(NonDeleteIScope::class); //->whereNotNull('deleted_by');
+            });
+        }])->when($request->trash, function ($quer) {
+            return $quer->withOutGlobalScope(NonDeleteIScope::class); //->whereNotNull('deleted_by');
+        })->when($request->order_id, function ($query) use ($request) {
+            $query->where('order_id', $request->order_id)->withOutGlobalScope(NonDeleteIScope::class);
         })->paginate(PAG_COUNT);
-
+        // return $rows;
 
         $module_name_plural = $this->getClassNameFromModel();
         $module_name_singular = $this->getSingularModelName();
         $orderType = 1;
-        $orederCheckType = $this->model->where('order_id', $request->order_id)->first();
-        if ($orederCheckType->amount != null) {
+        $orederCheckType = $this->model->when($request->trash, function ($quer) {
+            return $quer->withOutGlobalScope(NonDeleteIScope::class); //->whereNotNull('deleted_by');
+        })->where('order_id', $request->order_id)->first();
+        if ($orederCheckType->product_id != null) { // this is usaul order 
             $orderType = 0;
-        } elseif ($orederCheckType->image != null) {
-            $orderType = 2;
-        } else {
+        } elseif ($orederCheckType->product_home != null) { // this is from home to  home 
             $orderType = 1;
+        } else {    // this is pharmacy
+            $orderType = 2;
         }
         return view('back-end.' . $this->getClassNameFromModel() . '.index', compact('orderType', 'rows', 'module_name_singular', 'module_name_plural'));
     } //end of index
@@ -79,6 +89,8 @@ class OrderDetailsController extends BackEndController
     }
     public function store(Request $request)
     {
+        // make session becouse i not save my order when validate this have to retuen this data
+        $request->session()->put(['delivery_id' => $request->delivery_id, 'client_id' => $request->client_id, 'note' => $request->note,]);
 
         // return $request;
         if (!isset($request->client_id)) {
@@ -86,8 +98,8 @@ class OrderDetailsController extends BackEndController
             return redirect()->route('orders.create');
         }
         // get all active delivery 
-        $ActiveDelivery = User::find($request->delivery_id);
-        $clientOrder    = User::find($request->client_id);
+        $ActiveDelivery = User::findOrFail($request->delivery_id);
+        $clientOrder    = User::findOrFail($request->client_id);
 
         // check if user has promocode or not 
         $checkPromo = $this->checkUserPromo($request->client_id, $clientOrder);
@@ -125,6 +137,7 @@ class OrderDetailsController extends BackEndController
                     'delivery_price' =>  $deliveyPrice['deliveryPrice'],
                     'offer_or_promo_id' =>  $deliveyPrice['offerOrPromoId'],
                     'type'           => $deliveyPrice['orderTyoe'],
+                    'note'          => $request->note,
                 ]);
 
                 $newOrder->orderDetails()->create([
@@ -151,14 +164,19 @@ class OrderDetailsController extends BackEndController
                 DB::rollback();
                 return $ex;
             }
-        } elseif ($request->image) {
+        } elseif ($request->pharmacy) {
+            $request->validate([
+                'description'   => ['required', 'string', 'max:250'],
+                'image'         => ['nullable', 'image', 'max:1'],
+            ]);
             try {
                 DB::beginTransaction();
 
                 $newOrder = $this->insertOredr($request, $orderType, $clientOrder, $checkOffer, $checkPromo);
-                $this->uploadImage($request);
+
+                $request->image ? $this->uploadImage($request) : '';
                 $newOrder->orderDetails()->create([
-                    'image'       => $request->image->hashName(),
+                    'image'       => $request->image ?  $request->image->hashName() : null,
                     'description' => $request->description,
                 ]);
 
@@ -386,7 +404,7 @@ class OrderDetailsController extends BackEndController
             }
         } elseif ($orderType == 2) { // if user have promo 
             if ($checkPromo->area_id  == $clientOrder->area_id || $checkPromo->area_id  == $request->area_id) {
-                $deliveryPrice = $clientOrder->area->trans_price * $checkPromo->discount / 100;
+                $deliveryPrice = $clientOrder->area->trans_price - ($clientOrder->area->trans_price * $checkPromo->discount / 100);
                 $offerOrPromoId = $checkPromo->id;
                 $checkOrderType = 2;
             } else {
@@ -406,6 +424,7 @@ class OrderDetailsController extends BackEndController
             'area_id'        => $request->area_id ?? $clientOrder->area_id,
             'type'           => $checkOrderType,
             'offer_or_promo_id' => $offerOrPromoId,
+            'note'          => $request->note,
         ]);
 
         return $newOrder;
@@ -421,7 +440,7 @@ class OrderDetailsController extends BackEndController
             'user_data'        => $userData,
             'alert'            => $alert,
         ];
-        event(new AdminForceDeliveryEvent($data));
+        // event(new AdminForceDeliveryEvent($data));
     }
 
     protected function uploadImage($request)

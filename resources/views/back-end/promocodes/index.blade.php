@@ -60,11 +60,11 @@
         </thead>
         <tbody>
 
-            @foreach($rows as $row)
+            @foreach($rows as $index => $row)
 
             <tr>
                 <td>
-                    {{$row->id}}
+                    {{++$index}}
                 </td>
                 <td>
                     @if($row->user_id != null)

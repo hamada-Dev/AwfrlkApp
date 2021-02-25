@@ -27,7 +27,7 @@
 </div>
 @endslot
 <div class="table-responsive">
-    <table  id="dataTable" class="table">
+    <table id="dataTable" class="table">
         <thead class=" text-primary">
             <tr>
                 <th>
@@ -97,9 +97,13 @@
                     @endif
 
                 </td>
-
+                {{-- request()->group --}}
                 <td class="td-actions text-right">
-                    @include('back-end.buttons.edit')
+                    <a href="{{route($module_name_plural.'.edit', ['user' =>$row, 'group' => 'emp'])}}" rel="tooltip" title=""
+                        class="btn btn-white btn-link btn-sm" data-original-title="@lang('site.edit')">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    {{-- @include('back-end.buttons.edit') --}}
                     @include('back-end.buttons.delete')
                     @if($row->delivery_status != 3)
 

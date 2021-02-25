@@ -27,7 +27,7 @@
 </div>
 <div class="col-md-4 text-right">
     <a href="{{route($module_name_plural.'.index', ['offerNotPay' => 1])}}" class="btn btn-info btn-round ">
-       @lang('site.offerNotPay')
+        @lang('site.offerNotPay')
     </a>
 </div>
 @endslot
@@ -51,9 +51,14 @@
                 <th>
                     @lang('site.decrement_trip')
                 </th>
+                <th>
+                    @lang('site.user_id')
+                </th>
+                @if(isset(request()->nonpay) || isset(request()->offerNotPay))
                 <th class="text-right">
                     @lang('site.actions')
                 </th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -75,10 +80,15 @@
                 <td>
                     {{$row->decrement_trip}}
                 </td>
+                <td>
+                    {{$row->delivery_id == null ? '-' : $row->delivery->name .' '. $row->delivery->lastName}}
+                </td>
+                
+                @if(isset(request()->nonpay) || isset(request()->offerNotPay))
                 <td class="td-actions text-right">
-                    @include('back-end.buttons.edit')
+                    {{-- @include('back-end.buttons.edit') --}}
 
-                    @if(isset(request()->nonpay))
+
                     <form action="{{route($module_name_plural.'.destroy', $row)}}" method="POST"
                         style="display: inline-block">
                         {{csrf_field()}}
@@ -90,10 +100,9 @@
                         </button>
                     </form>
 
-                    @else
-                    @include('back-end.buttons.delete')
-                    @endif
+                    {{-- @include('back-end.buttons.delete') --}}
                 </td>
+                @endif
             </tr>
             @endforeach
 

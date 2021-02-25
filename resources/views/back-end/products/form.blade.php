@@ -1,11 +1,23 @@
 {{csrf_field()}}
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">@lang('site.name')</label>
             <input type="text" name="name" value="{{ isset($row) ? $row->name : old('name') }}"
                 class="form-control @error('name') is-invalid @enderror">
             @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group bmd-form-group">
+            <label class="bmd-label-floating">@lang('site.offer')</label>
+            <input type="checkbox" name="offer"  value="1" {{ ((isset($row) && $row->offer == 1 ) || ( old('offer') == 1)) ? 'checked' : '' }}  class="form-control @error('offer') is-invalid @enderror">
+            @error('offer')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

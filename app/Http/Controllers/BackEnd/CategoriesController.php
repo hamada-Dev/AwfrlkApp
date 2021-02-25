@@ -19,6 +19,8 @@ class CategoriesController extends BackEndController
 
     public function index(Request $request)
     {
+        // dd( ini_get('date.timezone') );
+        // dd( ini_get('intl.version') );
         //get all data of Model
         $rows = $this->model;
 

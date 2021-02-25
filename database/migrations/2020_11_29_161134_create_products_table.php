@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->enum('unit',['kilo', 'number', 'liter']);
             $table->float('price')->nullable();
             $table->string('image')->default('default.png');
+            $table->tinyInteger('offer')->default(0)->comment('0 =>product has no offer, 1=> product has offer');
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('added_by')->unsigned()->comment('who added');
             $table->timestamps();

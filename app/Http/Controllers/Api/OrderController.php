@@ -30,9 +30,16 @@ class OrderController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $userOrder = OrderUserRecourse::collection($this->model->where('client_id', auth()->user()->id)->get());
+        $userOrder = $this->model->where('client_id', auth()->user()->id)
+            ->when($request->curent, function ($query) {
+                return $query->whereNull('arrival_date');
+            })->when(!$request->curent, function ($quer) {
+                return $quer->whereNotNull('arrival_date');
+            })->latest()->get();
+
+        $userOrder = OrderUserRecourse::collection($userOrder);
         if (!empty($userOrder))
             return $this->sendResponse($userOrder, 'you have orders to show ', 200);
         else
@@ -47,8 +54,9 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
+
         // get all active delivery 
-        $ActiveDelivery = UserResource::collection(User::deliveryActive()->get());
+        $ActiveDelivery = UserResource::collection(User::deliveryActive()->where('area_id', $request->area_id)->get());
 
         $user_id =  auth()->user()->id;
 
@@ -76,6 +84,9 @@ class OrderController extends BaseController
                 'adress'         =>  ['required', 'string', 'max:254'],
                 'product_home'   =>  ['required', 'string', 'max:254'],
                 'adress_from'    =>  ['required', 'string', 'max:222'],
+                'note'           =>  ['nullable', 'string', 'max:200'],
+                'guest_phone'    =>  ['nullable', 'numeric', 'regex:/(01)[0-9]{9}/'],
+                'guest_phone'    =>  ['nullable', 'numeric', 'regex:/(01)[0-9]{9}/'],
             ]);
 
             try {
@@ -96,6 +107,9 @@ class OrderController extends BaseController
                     'delivery_price' =>  $deliveyPrice['deliveryPrice'],
                     'offer_or_promo_id' =>  $deliveyPrice['offerOrPromoId'],
                     'type'           => $deliveyPrice['orderTyoe'],
+                    'note'           => $request->note,
+                    'host_phone'     => $request->host_phone,
+                    'guest_phone'    => $request->guest_phone,
                 ]);
 
                 $newOrder->orderDetails()->create([
@@ -134,7 +148,7 @@ class OrderController extends BaseController
                     return $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
                 // end this is for Know how much delivery price //////////
                 $newOrder = $this->insertOredr($request, $orderType, $checkOffer, $checkPromo);
-                if($request->image){
+                if ($request->image) {
                     $this->uploadImage($request);
                 }
                 $newOrder->orderDetails()->create([
@@ -233,9 +247,34 @@ class OrderController extends BaseController
      */
     public function destroy($id)
     {
-        //
-    }
 
+        $orderDeleted =  Order::where('client_id', auth()->user()->id)
+            ->whereNull('delivery_id')->find($id);
+
+        $orderCancel  =  Order::where('client_id', auth()->user()->id)
+            ->whereNull('arrival_date')->whereNotNull('delivery_id')->find($id);
+
+
+        if ($orderDeleted) {  // this is order has no delivery take it so user can deleted it directly
+            $orderDeleted->deleted_by    = auth()->user()->id;
+            $orderDeleted->delete_date   =  now();
+            $orderDeleted->save();
+            $orderDeleted->orderDetails()->update([
+                'deleted_by'  => auth()->user()->id,
+                'delete_date'  => now(),
+            ]);
+            return $this->sendResponse('you deleted this order Successfully because no delivery take it', 200);
+        } elseif ($orderCancel) {  // this is order will deleted when user confirmed
+            $orderCancel->delete_date   =  now();
+            $orderCancel->save();
+            $orderCancel->orderDetails()->update([
+                'delete_date'  => now(),
+            ]);
+            return $this->sendResponse('this order will deleted when delivery confirmed ', 200);
+        } else {
+            return $this->sendError('you cant delete this order after take ', 'not find', 200);
+        }
+    }
 
 
 
@@ -243,7 +282,8 @@ class OrderController extends BaseController
     {
         $avilablePromo = Promocode::where('user_id', $id)
             ->where('confirm', 1)
-            ->where('area_id', $request->area_id)->first();
+            ->where('area_id', $request->area_id)
+            ->where('end_date', '>', now())->first();
         return $avilablePromo;
     }
 
@@ -256,6 +296,7 @@ class OrderController extends BaseController
                 return $query->where('area_id', $request->area_id);
             })
             ->first();
+
         return $avilableOffer;
     }
 
@@ -339,7 +380,7 @@ class OrderController extends BaseController
             }
         } elseif ($orderType == 2) { // if user have promo 
             if ($checkPromo->area_id  == $request->area_id) {
-                $deliveryPrice  = $area_trans->trans_price * $checkPromo->discount / 100;
+                $deliveryPrice  = $area_trans->trans_price  - ($area_trans->trans_price * $checkPromo->discount / 100);
                 $offerOrPromoId = $checkPromo->id;
                 $checkOrderType = 2;
             } else {
@@ -364,6 +405,7 @@ class OrderController extends BaseController
             'adress'         =>  $request->adress ?? auth()->user()->adress,
             'type'           => $checkOrderType,
             'offer_or_promo_id' => $offerOrPromoId,
+            'note'           => $request->note,
         ]);
 
         return $newOrder;

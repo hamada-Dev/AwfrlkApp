@@ -1,13 +1,13 @@
 {{csrf_field()}}
 <input type="hidden" name="delivery_id" value="{{session()->get('delivery_id')}}">
 <input type="hidden" name="client_id" value="{{session()->get('client_id')}}">
-<input type="hidden" name="feedback" value="{{session()->get('feedback')}}">
+<input type="hidden" name="note" value="{{session()->get('note')}}">
 <div class="row">
 
 
     @if(request()->orderType==2)
     {{-- orderType==2 that mean this is a pharmacy order   --}}
-
+    <input type="hidden" name="pharmacy" value="1">
     <div class="col-md-6">
         <div class="">
             <label>@lang('site.image')</label>

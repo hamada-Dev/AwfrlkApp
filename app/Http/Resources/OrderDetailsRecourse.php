@@ -23,6 +23,7 @@ class OrderDetailsRecourse extends JsonResource
             'description'  => $this->description,
             'image'        => $this->image == null ? null : $this->image_path ,
             'product_home' => $this->product_home,
+            'category_id'  => $this->product->category_id ??  0, //if this has no cat this mean this is phar or home
             'created_at'   => $this->created_at->diffForHumans(),
             
             // this is i make for save to and not want to edit every event to add order 

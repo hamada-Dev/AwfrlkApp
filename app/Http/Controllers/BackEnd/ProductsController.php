@@ -47,14 +47,16 @@ class ProductsController extends BackEndController
      */
     public function store(Request $request)
     {
+      
         $request->validate([
             'name' => ['required', 'string', 'max:191'],
             'category_id'   =>  ['required', 'numeric', 'exists:categories,id'],
-            'image' => ['image'],
+            'image' => ['required', 'image', 'max:2048'],
             'unit' => [Rule::in(['kilo', 'liter', 'number'])],
             'description' => ['nullable', 'string', 'max:500'],
+            'offer' => ['nullable', 'numeric', Rule::in([1])],
         ]);
-
+        // return $request;
         $request_data =  $request->except(['image', '_token']);
 
         // store image  products_images
@@ -90,9 +92,11 @@ class ProductsController extends BackEndController
             'image' => ['image'],
             'unit' => [Rule::in(['kilo', 'liter', 'number'])],
             'description' => ['nullable', 'string', 'max:500'],
+            'offer' => ['nullable', 'numeric', Rule::in([1])],
         ]);
 
-        $request_data =  $request->except(['image', '_token']);
+        $request_data =  $request->except(['image', '_token', 'offer']);
+        $request_data['offer'] = $request->offer ? 1 : 0; // this is for checkbox
 
         if ($request->image) {
             if ($product->image != 'default.png') {

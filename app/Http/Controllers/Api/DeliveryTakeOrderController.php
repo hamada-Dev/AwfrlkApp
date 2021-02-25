@@ -30,7 +30,7 @@ class DeliveryTakeOrderController extends BaseController
                         'delivery_id'   =>  auth()->user()->id,
                     ]);
 
-                    $this->changeDeliveryStatus(auth()->user()->id);
+                    $this->changeDeliveryStatus(auth()->user()->id, 0);
                     DB::commit();
                 } catch (\Exception $ex) {
                     DB::rollback();
@@ -71,6 +71,7 @@ class DeliveryTakeOrderController extends BaseController
                         $newOrder->update([
                             "end_shoping_date"  => now(),
                         ]);
+                        $this->changeDeliveryStatus(auth()->user()->id, 1);
                     }
 
                     $order_details   =  OrderDetailsRecourse::collection($newOrder->orderDetails);
@@ -116,11 +117,11 @@ class DeliveryTakeOrderController extends BaseController
     }
 
 
-    protected function changeDeliveryStatus($id)
+    protected function changeDeliveryStatus($id, $status)
     {
         $user = User::find($id);
         $user->update([
-            'delivery_status'   => 0,
+            'delivery_status'   => $status,
         ]);
         $deliveryStatus = $user->deliveryStatus()->orderBy('created_at', 'DESC')->first();
 
@@ -128,7 +129,7 @@ class DeliveryTakeOrderController extends BaseController
             'updated_at'    => now(),
         ]);
         $user->deliveryStatus()->create([
-            'status'    => 0,
+            'status'    => $status,
         ]);
     }
 }

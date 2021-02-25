@@ -54,6 +54,13 @@ __('site.orderRoad') ) ;
                         </th>
                         <th>
                             @lang('site.order_type')
+                        </th> 
+                        
+                        <th>
+                            @lang('site.trans_price')
+                        </th>  
+                        <th>
+                            @lang('site.order_date')
                         </th>
 
                     </tr>
@@ -70,20 +77,25 @@ __('site.orderRoad') ) ;
                             {{$row->user->phone}}
                         </td>
                         <td>
-                            {{$row->user->adress}}
+                            {{$row->adress == null ? $row->user->adress : $row->adress}}
                         </td>
                         <td>
                             @if($row->orderDetails[0]->product_id != null) @lang('site.products')
-                            @elseif($row->orderDetails[0]->image != null) @lang('site.pharmacy') @else
-                            @lang('site.homeToHome') @endif
+                            @elseif($row->area_id_from != null) @lang('site.homeToHome') @else
+                            @lang('site.pharmacy') @endif
                         </td>
                         <td>
-                            {{$row->area->name}}
+                            {{$row->area == null ? $row->user->area->name : $row->area->name}}
                         </td>
-
 
                         <td>
                             {{ $row->type == 0 ? 'نقدي': ($row->type == 1  ? 'عرض' : 'برومو') }}
+                        </td>
+                        <td>
+                            {{$row->delivery_price}} جنيه
+                        </td> 
+                        <td>
+                            {{$row->created_at}} 
                         </td>
                     </tr>
                 </tbody>
@@ -98,15 +110,21 @@ __('site.orderRoad') ) ;
                     </div>
                     <div class="col-md-4">
                         <div class="form-group bmd-form-group">
+                            @if (request()->process)
                             <select name="delivery_id" class="form-control @error('status') is-invalid @enderror"
                                 {{$row->delivery_id != null? 'disabled' : ''}}>
                                 <option value="0">@lang('site.choose_user_delivery')</option>
                                 @foreach ($activeDelivery as $delivery)
+                                @if ($delivery->area_id == $row->area_id)
                                 <option value="{{$delivery->id}}" data-valu='{{ $row->delivery_id }}'
-                                    {{ (isset($row) && $row->delivery_id == $delivery->id) || old('delivery_id') ==  $delivery->id  ? 'selected' : ''}}>
+                                    {{ (isset($row) && $row->delivery_id == $delivery->id)  || old('delivery_id') ==  $delivery->id  ? 'selected' : ''}}>
                                     {{$delivery->name . ''. $delivery->lasstName}}</option>
+                                @endif
                                 @endforeach
                             </select>
+                            @else
+                            <input type="text" value="{{$row->delivery->name}}" class="form-control">
+                            @endif
                             @error('status')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -152,7 +170,7 @@ __('site.orderRoad') ) ;
                     @foreach($row->orderDetails as $detail)
                     <tr>
                         <td>
-                            @if($detail->product_id != null) {{$detail->product->name}}
+                            @if($detail->product_id != null)   {{$detail->product->name}}
                             @elseif($detail->image != null) <img src="" alt="">
                             @else {{$detail->product_home}} @endif
                         </td>
@@ -182,7 +200,7 @@ __('site.orderRoad') ) ;
 <hr>
 @endforeach
 
-{{ $rows->links() }}
+{{$rows->appends(request()->query())->links()}}
 
 
 @endcomponent
